@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+    <AnchorPane fx:controller="Controller.testerController" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" prefHeight="432.0" prefWidth="647.0">
+      <children>
+         <TableView fx:id="contactTable" layoutX="-2.0" prefHeight="429.0" prefWidth="651.0">
+           <columns>
+             <TableColumn fx:id="contactId" prefWidth="75.0" text="contact id" />
+             <TableColumn fx:id="contactName" prefWidth="110.0" text="contact name" />
+               <TableColumn fx:id="contactEmail" prefWidth="83.0" text="contact email" />
+           </columns>
+         </TableView>
+      </children></AnchorPane>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainAppointmentController">
+   <children>
+      <TableView fx:id="appointmentTable" layoutX="23.0" layoutY="65.0" prefHeight="375.0" prefWidth="757.0">
+        <columns>
+            <TableColumn fx:id="appointmentId" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="appointmentTitle" prefWidth="75.0" text="Title" />
+            <TableColumn fx:id="appointmentType" prefWidth="75.0" text="Type" />
+            <TableColumn fx:id="appointmentLocation" prefWidth="75.0" text="Location" />
+            <TableColumn fx:id="appointmentDescription" prefWidth="75.0" text="Description" />
+            <TableColumn fx:id="appointmentStartDate" prefWidth="75.0" text="Date" />
+            <TableColumn fx:id="appointmentStartTime" prefWidth="75.0" text="Start" />
+            <TableColumn fx:id="appointmentEndTime" prefWidth="75.0" text="End" />
+            <TableColumn fx:id="customerName" prefWidth="75.0" text="Customer" />
+            <TableColumn fx:id="appointmentContact" prefWidth="75.0" text="Contact" />
+        </columns>
+      </TableView>
+      <Button fx:id="addAppointmentButton" layoutX="793.0" layoutY="119.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />
+      <Button fx:id="modifyAppointmentButton" layoutX="786.0" layoutY="171.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
+      <Button fx:id="deleteAppointment" layoutX="787.0" layoutY="225.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" text="Delete Appointment" />
+      <Button layoutX="828.0" layoutY="367.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button fx:id="appointmentsWeekly" layoutX="30.0" layoutY="23.0" mnemonicParsing="false" onAction="#getWeeklyAppointments" text="Weekly Appontments" />
+      <Button fx:id="appointmentsMonthly" layoutX="342.0" layoutY="23.0" mnemonicParsing="false" onAction="#getMonthlyAppointments" text="Monthly Appointments" />
+      <DatePicker fx:id="monthPicker" layoutX="491.0" layoutY="23.0" promptText="pick month" />
+      <Button fx:id="allAppointments" layoutX="197.0" layoutY="23.0" mnemonicParsing="false" onAction="#showAllAppointments" text="All Appointments" />
+      <Button layoutX="832.0" layoutY="413.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+   </children>
+</Pane>
