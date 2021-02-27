@@ -8,7 +8,11 @@ import java.time.LocalTime;
 public final class Appointment {
 
     private Integer appointmentId;
-    private String customerName;
+
+
+    private Integer customerId;
+
+
     private String appointmentTitle;
     private String appointmentType;
     private String appointmentLocation;
@@ -32,13 +36,12 @@ public final class Appointment {
         this.appointmentId = appointmentId;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public Integer getCustomerId() { return customerId;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setCustomerId(Integer customerId) { this.customerId = customerId;
     }
+
 
     public String getAppointmentTitle() {
         return appointmentTitle;
@@ -104,9 +107,9 @@ public final class Appointment {
         this.appointmentEndTime = appointmentEndTime;
     }
 
-    public Appointment(Integer appointmentId, String customerName, String appointmentTitle, String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
+    public Appointment(Integer appointmentId, String appointmentTitle, Integer customerId,String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
         this.appointmentId = appointmentId;
-        this.customerName = customerName;
+
         this.appointmentTitle = appointmentTitle;
         this.appointmentType = appointmentType;
         this.appointmentLocation = appointmentLocation;
@@ -115,6 +118,7 @@ public final class Appointment {
         this.appointmentStartDate = appointmentStartDate;
         this.appointmentStartTime = appointmentStartTime;
         this.appointmentEndTime = appointmentEndTime;
+        this.customerId = customerId;
     }
 
 

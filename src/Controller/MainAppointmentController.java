@@ -3,6 +3,7 @@ package Controller;
 import Database.AppointmentDatabase;
 import Database.UserDatabase;
 import Model.Appointment;
+import Model.Customer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -17,7 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import javax.swing.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -33,19 +34,19 @@ import java.util.logging.Logger;
 public class MainAppointmentController implements Initializable {
 
     public TableView appointmentTable;
-    @FXML private Pane customerID;
-    @FXML private Button appointmentsMonthly;
+
+
     @FXML private Button exit;
     @FXML private Button allAppointments;
-    @FXML private Button appointmentsWeekly;
+
     @FXML private TableView<Appointment> AppointmentTable;
-    @FXML private DatePicker monthPicker;
+
     @FXML private TableColumn<Appointment, Integer> appointmentId;
     @FXML private TableColumn<Appointment, String> appointmentType;
     @FXML private TableColumn<Appointment, String> appointmentTitle;
     @FXML private TableColumn<Appointment, String> appointmentLocation;
     @FXML private TableColumn<Appointment, String> appointmentDescription;
-    @FXML private TableColumn<Appointment, String> customerName;
+    @FXML private TableColumn<Appointment, Integer> customerId;
     @FXML private TableColumn<Appointment, String> appointmentContact;
     @FXML private TableColumn<Appointment, LocalDate> appointmentStartDate;
     @FXML private TableColumn<Appointment, LocalTime> appointmentStartTime;
@@ -103,7 +104,7 @@ public class MainAppointmentController implements Initializable {
             appointmentTable.getItems().clear();
             appointmentTable.setItems(AppointmentDatabase.getAllAppointments());
 
-            System.out.println(AppointmentDatabase.getWeeklyAppointments());
+
         } catch (ParseException | SQLException ex) {
             Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,37 +121,9 @@ public class MainAppointmentController implements Initializable {
         System.out.println("modifyAppointment");
     }
 
-    @FXML
-    void getMonthlyAppointments(ActionEvent event) throws IOException {
-        try {
-            appointmentTable.getItems().clear();
-
-            appointmentTable.setItems(AppointmentDatabase.getMonthlyAppointments(monthPicker.getValue().getMonthValue()));
-
-            if(monthPicker.getValue() == null){
-                System.out.println("error");
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 
 
 
-    @FXML
-    void getWeeklyAppointments(ActionEvent event) throws IOException {
-        try {
-            appointmentTable.getItems().clear();
-            appointmentTable.setItems(AppointmentDatabase.getWeeklyAppointments());
-
-            System.out.println(AppointmentDatabase.getWeeklyAppointments());
-        } catch (ParseException ex) {
-            Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -159,7 +132,7 @@ public class MainAppointmentController implements Initializable {
         appointmentLocation.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
 
         appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
-        customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         appointmentType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
         appointmentContact.setCellValueFactory(new PropertyValueFactory<>("appointmentContact"));
         appointmentStartTime.setCellValueFactory(new PropertyValueFactory<>("appointmentStartTime"));
