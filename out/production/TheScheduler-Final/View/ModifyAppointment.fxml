@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyAppointmentController">
+   <children>
+      <TextField fx:id="titleModify" layoutX="84.0" layoutY="151.0" prefHeight="27.0" prefWidth="150.0" />
+      <Label fx:id="test" layoutX="605.0" layoutY="284.0" text="test" />
+      <ComboBox fx:id="starHourModify" layoutX="363.0" layoutY="82.0" prefHeight="27.0" prefWidth="130.0" />
+      <ComboBox fx:id="startMinuteModify" layoutX="587.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" />
+      <ComboBox fx:id="endHourModify" layoutX="363.0" layoutY="124.0" prefHeight="27.0" prefWidth="130.0" />
+      <ComboBox fx:id="endMinuteModify" layoutX="587.0" layoutY="124.0" prefHeight="27.0" prefWidth="101.0" />
+      <ComboBox fx:id="locationModify" layoutX="84.0" layoutY="325.0" prefWidth="150.0" />
+      <TextArea layoutX="304.0" layoutY="303.0" prefHeight="89.0" prefWidth="200.0" />
+      <Label layoutX="363.0" layoutY="267.0" text="Description" />
+      <ComboBox fx:id="contactModify" layoutX="84.0" layoutY="253.0" prefWidth="150.0" />
+      <Label layoutX="29.0" layoutY="258.0" text="Contact" />
+      <Button fx:id="modifyButton" layoutX="510.0" layoutY="418.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
+      <Button layoutX="548.0" layoutY="451.0" mnemonicParsing="false" text="Cancel" />
+      <DatePicker fx:id="dateModify" layoutX="387.0" layoutY="199.0" />
+      <Label layoutX="347.0" layoutY="204.0" text="Date" />
+      <ComboBox fx:id="customerModify" layoutX="84.0" layoutY="204.0" prefWidth="150.0" />
+      <Label layoutX="24.0" layoutY="209.0" text="Customer" />
+      <Label layoutX="27.0" layoutY="330.0" text="Location" />
+      <Label layoutX="304.0" layoutY="87.0" text="Start Hour" />
+      <Label layoutX="307.0" layoutY="129.0" text="End Hour" />
+      <Label layoutX="36.0" layoutY="38.0" text="Modify Appointment">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="510.0" layoutY="87.0" text="Start Minute" />
+      <Label layoutX="513.0" layoutY="129.0" text="End Minute" />
+   </children>
+</AnchorPane>
