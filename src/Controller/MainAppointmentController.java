@@ -143,6 +143,18 @@ public class MainAppointmentController implements Initializable {
 
     @FXML
     void modifyAppointment(ActionEvent event) throws IOException {
+        if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
+            selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select appointment to modify.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+        }
+
+
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
         Parent root = null;
@@ -218,10 +230,6 @@ public class MainAppointmentController implements Initializable {
         Calendar now = Calendar.getInstance();
 
         pickMonth.getSelectionModel().select(now.get(Calendar.MONTH));
-
-
-
-
 
         try {
            appointmentTable.setItems(AppointmentDatabase.getAllAppointments());
