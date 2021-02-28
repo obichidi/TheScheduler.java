@@ -64,4 +64,21 @@ public class CustomerDatabase {
         }
     }
 
+
+    public static ObservableList<String> CustomerList() {
+        ObservableList<String> customers = FXCollections.observableArrayList();
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Customer_Name FROM customers ORDER BY Customer_Name ASC;");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                if(!customers.contains(rs.getString("Customer_Name"))){
+                    customers.add(rs.getString("Customer_Name"));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+        }
+        return customers;
+    }
+
 }

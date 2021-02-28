@@ -2,7 +2,6 @@ package Model;
 
 
 import java.time.LocalDate;
-
 import java.time.LocalTime;
 
 public final class Appointment {
@@ -125,7 +124,8 @@ public final class Appointment {
 
 
 
-    }
+
+}
 
 
 
