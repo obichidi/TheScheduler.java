@@ -189,6 +189,7 @@ public class MainAppointmentController implements Initializable {
 
     @FXML
     void test(ActionEvent event){
+        selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
         System.out.println(selectAppointment);
     }
 
