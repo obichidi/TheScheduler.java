@@ -48,6 +48,7 @@ public class MainAppointmentController implements Initializable {
     @FXML private TableColumn<Appointment, String> appointmentLocation;
     @FXML private TableColumn<Appointment, String> appointmentDescription;
     @FXML private TableColumn<Appointment, Integer> customerId;
+    @FXML private TableColumn<Appointment, String> customerName;
     @FXML private TableColumn<Appointment, String> appointmentContact;
     @FXML private TableColumn<Appointment, LocalDate> appointmentStartDate;
     @FXML private TableColumn<Appointment, LocalTime> appointmentStartTime;
@@ -217,7 +218,7 @@ public class MainAppointmentController implements Initializable {
         appointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
         appointmentLocation.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-
+        customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
         customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         appointmentType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));

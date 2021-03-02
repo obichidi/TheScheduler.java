@@ -38,6 +38,9 @@ import java.util.Calendar;
             return sdf.format(cal.getTime());
         }
 
+
+
+
         public static Timestamp generateStartTimestamp(DatePicker datePicker, ComboBox<String> startTime, ComboBox<String> startMinute, ComboBox<String> locationAdd) {
             LocalDate day = datePicker.getValue();
             Integer startHours = Integer.parseInt((startTime.getValue()).substring(0, (startTime.getValue().length() - 5)));
@@ -103,7 +106,7 @@ import java.util.Calendar;
         }
 
 
-        //        /**
+
 
         public static Calendar convertToLocalTimezone (Calendar cal, String location){
             int offsetFromUtc;

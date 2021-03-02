@@ -58,7 +58,7 @@ public class AppointmentDatabase {
     public static ObservableList<Appointment> getAllAppointments() throws ParseException, SQLException {
         ObservableList<Appointment> allAppointments=FXCollections.observableArrayList();
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
-            String query = "SELECT a.Appointment_ID,a.Customer_ID,a.Title,a.Type,a.Location,a.Description,co.Contact_Name,a.Start,a.End\n" +
+            String query = "SELECT a.Appointment_ID,a.Customer_ID,c.Customer_Name,a.Title,c.Customer_Name, a.Type,a.Location,a.Description,co.Contact_Name,a.Start,a.End\n" +
                     " From appointments   as a   \n" +
                     " inner join customers as c\n" +
                     " on c.Customer_ID = a.Customer_ID\n" +
@@ -69,7 +69,7 @@ public class AppointmentDatabase {
             while(rs.next()) {
 
                 int appointmentId = rs.getInt("a.Appointment_ID");
-
+//                String customerName = rs.getString("c.Customer_Name");
                 String appointmentTitle = rs.getString("a.Title");
                 int  customerId = rs.getInt("a.Customer_ID");
                 String appointmentDescription = rs.getString("a.Description");
@@ -80,7 +80,7 @@ public class AppointmentDatabase {
                 LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
                 LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
 
-                Appointment appointment = new Appointment(appointmentId, appointmentTitle, customerId, appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
+                Appointment appointment = new Appointment(appointmentId,appointmentTitle, customerId, appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
                 allAppointments.add(appointment);
                 System.out.println(appointmentType);
             }
@@ -101,15 +101,15 @@ public class AppointmentDatabase {
                     " INNER JOIN contacts as c " +
                     " ON c.Contact_ID = a.Contact_ID" +
                     " INNER JOIN customers as cu " +
-                    " ON a.Customer_ID = cu.Customer_ID "
+                    " ON cu.Customer_ID = a.Customer_ID "
                     + "  WHERE a.Start >= '" + now + "' AND a.End <= '" + week + "';";
 
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
                 int appointmentId = rs.getInt("a.Appointment_ID");
-                String customerName = rs.getString("cu.Customer_Name");
+//                String customerName = rs.getString("cu.Customer_Name");
                 String appointmentTitle = rs.getString("a.Title");
-                int  customerId = rs.getInt("a.Customer_ID");
+                int  customerId = rs.getInt("cu.Customer_ID");
                 String appointmentDescription = rs.getString("a.Description");
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
@@ -144,21 +144,19 @@ public class AppointmentDatabase {
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
                 int appointmentId = rs.getInt("a.Appointment_ID");
-                String customerName = rs.getString("cu.Customer_Name");
+//                String customerName = rs.getString("cu.Customer_Name");
                 String appointmentTitle = rs.getString("a.Title");
                 int  customerId = rs.getInt("a.Customer_ID");
                 String appointmentDescription = rs.getString("a.Description");
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
-                String appointmentContact= rs.getString("c.Contact_Name");
+                String appointmentContact= rs.getString("co.Contact_Name");
                 LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
                 LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
                 LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
 
 
-
-
-                Appointment appointment = new Appointment(appointmentId, appointmentTitle, customerId, appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
+                Appointment appointment = new Appointment(appointmentId,  appointmentTitle, customerId, appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
                 allAppointments.add(appointment);
             }
         } catch (SQLException ex) {
@@ -204,19 +202,15 @@ public class AppointmentDatabase {
 
 
 
-    public static void addAppointment(int customerId, String title, String location, String description, String type, int contactId,
-                                      Timestamp start, Timestamp end ){
+    public static void addAppointment(int customerId, String customerName, String title, String location, String description, String type, int contactId,
+                                      Timestamp start, Timestamp end){
 //        appointmentId = AppointmentDatabase.generateAppointmentId();
 
         PreparedStatement statement;
         try {
-            statement = ConnectorDb.connectDb().prepareStatement("INSERT INTO appointments( Title,Contact_ID, Description, Location, Type," +
+            statement = ConnectorDb.connectDb().prepareStatement("INSERT INTO appointments( Title,Contact_ID,  Description, Location, Type," +
                     " Start, End, User_ID, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID)"
                     + "VALUES ('" + title + "','" + contactId + "' ,'" + description + "','" + location + "','" + type+ "','" + start + "','" + end + "','" + User.currentUser.getUserId()+"', CURRENT_TIMESTAMP,  '" + User.currentUser.getUsername()+ "',CURRENT_TIMESTAMP,'" + User.currentUser.getUsername()+ "','" + customerId + "');");
-
-
-
-
 
 
             statement.executeUpdate();

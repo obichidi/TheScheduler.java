@@ -132,7 +132,7 @@ public class AddAppointmentController implements Initializable {
 
              selectContact = contactTable.getSelectionModel().getSelectedItem();
              selectCustomer = customerTable.getSelectionModel().getSelectedItem();
-
+             String customerName = selectCustomer.getCustomerName();
             int customerId = selectCustomer.getCustomerId();
             int contactId = selectContact.getContactId();
             String contactName = selectContact.getContactName();
@@ -140,7 +140,7 @@ public class AddAppointmentController implements Initializable {
             String description = appointmentDescription.getText();
             String location = locationAdd.getValue();
             String title = appointmentTitleAdd.getText();
-            String customerName = selectCustomer.getCustomerName();
+
             String zero = ":00";
             String startTimes = startTime.getValue();
             String endTimes = endTime.getValue();
@@ -157,7 +157,7 @@ public class AddAppointmentController implements Initializable {
         }
 
 
-        AppointmentDatabase.addAppointment(customerId, title,  location,  description, type, contactId,
+        AppointmentDatabase.addAppointment(customerId, customerName, title,  location,  description, type, contactId,
         start,  end );
         try {
             ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -193,8 +193,8 @@ public class AddAppointmentController implements Initializable {
 
 //        Timestamp timestamp = Timestamp.valueOf(String.valueOf(startDateTime));
 
-            appointmentInfo.setText(" Contact Name: "+ contactId + "\nCustomer ID: " + customerId
-               +"\nCustomer Name: "  +  customerName + "\nLocation: " + location + "\n Description: "+ description +"\nTitle:  "+ title + "\nS: "
+            appointmentInfo.setText(" Contact Name: "+ contactId + "\nCustomer ID: " + customerId +
+                 customerName + "\nLocation: " + location + "\n Description: "+ description +"\nTitle:  "+ title + "\nS: "
                     + start+ "\n End: " + end +"\n End Time: "+
                      "\nDate: " + date +  "\nUser: " + currentUser.getUserId());
 

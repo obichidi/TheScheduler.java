@@ -12,6 +12,9 @@ public final class Appointment {
     private Integer customerId;
 
 
+
+
+//    private String customerName;
     private String appointmentTitle;
     private String appointmentType;
     private String appointmentLocation;
@@ -27,18 +30,23 @@ public final class Appointment {
 
 
 
-    public Integer getAppointmentId() {
+    public int getAppointmentId() {
         return appointmentId;
     }
 
     public void setAppointmentId(Integer appointmentId) {
         this.appointmentId = appointmentId;
     }
-
-    public Integer getCustomerId() { return customerId;
+//    public String getCustomerName() { return customerName;
+//    }
+//
+//    public void setCustomerName(String customerName) { this.customerName = customerName;
+//    }
+    public int getCustomerId() { return customerId;
     }
 
-    public void setCustomerId(Integer customerId) { this.customerId = customerId;
+
+    public void setCustomerId(int customerId) { this.customerId = customerId;
     }
 
 
@@ -106,7 +114,7 @@ public final class Appointment {
         this.appointmentEndTime = appointmentEndTime;
     }
 
-    public Appointment(Integer appointmentId, String appointmentTitle, Integer customerId,String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
+    public Appointment(int appointmentId, String appointmentTitle, int customerId,  String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
         this.appointmentId = appointmentId;
 
         this.appointmentTitle = appointmentTitle;
@@ -117,6 +125,7 @@ public final class Appointment {
         this.appointmentStartDate = appointmentStartDate;
         this.appointmentStartTime = appointmentStartTime;
         this.appointmentEndTime = appointmentEndTime;
+//      this.customerName = customerName;
         this.customerId = customerId;
     }
 
