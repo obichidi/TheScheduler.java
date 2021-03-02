@@ -81,4 +81,22 @@ public class CustomerDatabase {
         return customers;
     }
 
+    public static String locateCustomerName(int customerId){
+        String  foundName= "";
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
+                    "SELECT Customer_ID, Customer_Name FROM customers" );
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                if (customerId == (rs.getInt("Customer_ID"))){
+                    foundName = rs.getString("Customer_Name");
+                }
+            }
+            System.out.println("Customer ID Found!");
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex);
+        }
+        return foundName;
+    }
+
 }

@@ -59,11 +59,11 @@ public class AppointmentDatabase {
         ObservableList<Appointment> allAppointments=FXCollections.observableArrayList();
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
             String query = "SELECT a.Appointment_ID,a.Customer_ID,a.Title,a.Type,a.Location,a.Description,co.Contact_Name,a.Start,a.End\n" +
-                    " From appointments as a\n" +
+                    " From appointments   as a   \n" +
                     " inner join customers as c\n" +
                     " on c.Customer_ID = a.Customer_ID\n" +
                     " inner join contacts as co\n" +
-                    " On co.Contact_ID = a.Contact_ID";
+                    " On co.Contact_ID = a.Contact_ID  ORDER BY Appointment_ID  ASC";
 
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
@@ -227,16 +227,16 @@ public class AppointmentDatabase {
         }
     }
 
-    public static void modifyAppointment(int apptId, int cusId, String title, String location,
-                                         String description, String contact, String url, Timestamp start, Timestamp end){
+    public static void modifyAppointment(int appointmentId, int customerId, String type, String title, String location,
+                                         String description, String contact, Timestamp start, Timestamp end){
         PreparedStatement statement;
         try {
             statement = ConnectorDb.connectDb().prepareStatement("UPDATE appointments "
-                    + "SET Customer_ID = '" + cusId + "', Title = '"
+                    + "SET Customer_ID = '" + customerId + "', Title = '"
                     + title + "', Location = '" + location + "', Description = '" + description
                     + "', contact = '" + contact + "', Start = '" + start
                     + "', End = '" + end + "', Last_Update = CURRENT_TIMESTAMP, Last_Update_By = '"
-                    + User.currentUser +  "' WHERE Appointment_ID = '" + apptId + "';");
+                    + User.currentUser +  "' WHERE Appointment_ID = '" + appointmentId + "';");
             statement.executeUpdate();
             System.out.println("Appointment successfully modified!");
         } catch (SQLException ex) {
@@ -300,7 +300,7 @@ public class AppointmentDatabase {
     }
 
 
-    public static String isAppointmentOverlapping(Timestamp start, Timestamp end, int customerId,  int appointmentId){
+    public static String isAppointmentOverlapping(Timestamp start, Timestamp end, int customerId, String contact, int appointmentId){
         String overlapMessage = "";
         Boolean errorMessage1 = false;
         Boolean errorMessage2 = false;

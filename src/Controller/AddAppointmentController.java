@@ -257,6 +257,7 @@ public class AddAppointmentController implements Initializable {
 
 
 
+
     }
     @FXML
     void addAppointmentType(ActionEvent event){
