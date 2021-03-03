@@ -33,7 +33,7 @@ public class ModifyAppointmentController implements Initializable {
 
     @FXML private TextArea descriptionModify;
     @FXML private ComboBox<String> startHourModify;
-//    @FXML private ComboBox<String> typeModify;
+   @FXML private ComboBox<String> typeModify;
     @FXML private ComboBox<String> startMinuteModify;
     @FXML private ComboBox<String> endHourModify;
     @FXML private ComboBox<String> endMinuteModify;
@@ -97,6 +97,7 @@ public class ModifyAppointmentController implements Initializable {
 //        Timestamp end = Time.generateEndTimestampModify(dateModify, endHourModify, endMinuteModify, locationModify);
 
         String description = descriptionModify.getText();
+        String type = typeModify.getValue();
         int customerId = appointmentToUpdate.getCustomerId();
         int appointmentId = appointmentToUpdate.getAppointmentId();
         String title = titleModify.getText();
@@ -105,13 +106,13 @@ public class ModifyAppointmentController implements Initializable {
         String startTime = startHourModify.getValue();
         String endTime = endHourModify.getValue();
         LocalDate date =  dateModify.getValue();
-//       String type = typeModify.getValue();
+
 
 
 
 
         tester.setText("Description: "+ description+ "\n CustomerId " + customerId+ "\n Start: " + startTime
-                        + "\n End: " + endTime + "\n Date: " + date
+                        + "\n End: " + endTime + "\n Date: " + date +"\n Type: " + type
                         + "\n Appointment Id: " + appointmentId + "\n title: " + title
                 +"\nContact: " + contact+ "\nLocation: "+ location
                       );
@@ -181,7 +182,7 @@ public class ModifyAppointmentController implements Initializable {
             appointmentToUpdate = MainAppointmentController.getSelectedAppointment();
 
 
-//            typeModify.setPromptText(appointmentToUpdate.getAppointmentType());
+            typeModify.setPromptText(appointmentToUpdate.getAppointmentType());
 
             startHourModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString());
 
@@ -199,8 +200,8 @@ public class ModifyAppointmentController implements Initializable {
 
 //    starHourModify.setItems();
             customerModify.setItems(CustomerDatabase.CustomerList());
-
- customerModify.setPromptText(appointmentToUpdate.getCustomerName());
+            typeModify.setItems(AppointmentDatabase.TypeList());
+            customerModify.setPromptText(appointmentToUpdate.getCustomerName());
 
             contactModify.setItems(AppointmentDatabase.ContactList());
             contactModify.setPromptText(appointmentToUpdate.getAppointmentContact());
