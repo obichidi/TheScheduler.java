@@ -149,7 +149,7 @@ public class MainAppointmentController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
-            alert.setContentText("Please select appointment to modify.");
+            alert.setContentText("You must select an appointment In order to modify it..");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
             return;
@@ -192,7 +192,7 @@ public class MainAppointmentController implements Initializable {
     void test(ActionEvent event){
         selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
 
-        System.out.println(selectAppointment);
+          System.out.println(selectAppointment.getCustomerName());
     }
 
     @FXML
@@ -218,7 +218,7 @@ public class MainAppointmentController implements Initializable {
         appointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
         appointmentLocation.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-        customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+//        customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
         customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         appointmentType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));

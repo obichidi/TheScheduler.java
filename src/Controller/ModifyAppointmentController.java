@@ -35,6 +35,7 @@ public class ModifyAppointmentController implements Initializable {
 
     @FXML private TextArea descriptionModify;
     @FXML private ComboBox<String> startHourModify;
+//    @FXML private ComboBox<String> typeModify;
     @FXML private ComboBox<String> startMinuteModify;
     @FXML private ComboBox<String> endHourModify;
     @FXML private ComboBox<String> endMinuteModify;
@@ -53,17 +54,30 @@ public class ModifyAppointmentController implements Initializable {
     ObservableList<String> endsMinutes = FXCollections.observableArrayList();
     ObservableList<String> Locations = FXCollections.observableArrayList();
     ObservableList<String> zero = FXCollections.observableArrayList();
+
     private static Appointment appointmentToUpdate;
 
+
+
+
+    @FXML
+    void cancel(ActionEvent event) throws ParseException, SQLException, IOException {
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+           Stage stage = new Stage();
+           Parent root = FXMLLoader.load(getClass().getResource("/view/MainAppointment.fxml"));
+            Scene scene = new Scene(root);
+           stage.setScene(scene);
+           stage.show();
+    }
 
     @FXML
     void test(ActionEvent event) throws ParseException, SQLException {
 
-        ;
-//        int customerId = .getAppointmentId();
-////        int customerId = CustomerDatabase.findCustomerId(customerName.getValue());
+
+//
+      // int customerId = CustomerDatabase.findCustomerId(customerName.getValue());
 //       String title = titleModify.getText();
-//        String description = descriptionModify.getText();
+//
 //        String location = locationModify.getValue();
 //        String contact = contactModify.getValue();
 //
@@ -80,7 +94,31 @@ public class ModifyAppointmentController implements Initializable {
 
     @FXML
     void modifyAppointment(ActionEvent event) throws ParseException, SQLException {
+
+//        Timestamp start = Time.generateStartTimestampModify( dateModify, startHourModify, startMinuteModify, locationModify);
+//        Timestamp end = Time.generateEndTimestampModify(dateModify, endHourModify, endMinuteModify, locationModify);
+
+        String description = descriptionModify.getText();
+        int customerId = appointmentToUpdate.getCustomerId();
+        int appointmentId = appointmentToUpdate.getAppointmentId();
+        String title = titleModify.getText();
+        String location = locationModify.getValue();
+        String contact = contactModify.getValue();
+        String startTime = startHourModify.getValue();
+        String endTime = endHourModify.getValue();
+        LocalDate date =  dateModify.getValue();
+//       String type = typeModify.getValue();
+
+
+
+
+        tester.setText("Description: "+ description+ "\n CustomerId " + customerId+ "\n Start: " + startTime
+                        + "\n End: " + endTime + "\n Date: " + date
+                        + "\n Appointment Id: " + appointmentId + "\n title: " + title
+                +"\nContact: " + contact+ "\nLocation: "+ location
+                      );
     }
+
 
 
 
@@ -99,13 +137,9 @@ public class ModifyAppointmentController implements Initializable {
 //        ObservableList<Appointment> customerName = AppointmentDatabase.getAllAppointments();
 //       int customerId = appointmentToUpdate.getCustomerId();
 //
-//        String title = titleModify.getText();
-//        String description = descriptionModify.getText();
-//        String location = locationModify.getValue();
-//        String contact = contactModify.getValue();
-//        String type = typeModify.getValue();
 //
-//        Timestamp start = Time.generateStartTimestamp(dateModify, starHourModify, startMinuteModify, locationModify);
+//
+//
 //        Timestamp end = Time.generateEndTimestamp(dateModify, endHourModify, endMinuteModify, locationModify);
 //  //      String overlap = AppointmentDatabase.isAppointmentOverlapping(start, end,  contact, appointmentId);
 //
@@ -149,6 +183,8 @@ public class ModifyAppointmentController implements Initializable {
             appointmentToUpdate = MainAppointmentController.getSelectedAppointment();
 
 
+//            typeModify.setPromptText(appointmentToUpdate.getAppointmentType());
+
             startHourModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString());
 
             endHourModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString());
@@ -157,13 +193,16 @@ public class ModifyAppointmentController implements Initializable {
 
 
             dateModify.setPromptText(appointmentToUpdate.getAppointmentStartDate().toString());
+
 //            startHourModify.setItems(AppointmentDatabase.);
+//            typeModify.setItems(AppointmentDatabase.TypeList());
 
             descriptionModify.setText(appointmentToUpdate.getAppointmentDescription());
 
 //    starHourModify.setItems();
             customerModify.setItems(CustomerDatabase.CustomerList());
-//  customerModify.setPromptText(appointmentToUpdate.);
+
+ customerModify.setPromptText(appointmentToUpdate.getCustomerName());
 
             contactModify.setItems(AppointmentDatabase.ContactList());
             contactModify.setPromptText(appointmentToUpdate.getAppointmentContact());
@@ -203,7 +242,7 @@ public class ModifyAppointmentController implements Initializable {
 //            locationBox.setValue(appointmentToModify.getAppointmentLocation());
 //            employeeContactBox.setValue(appointmentToModify.getEmployeeContact());
 //
-//           startHourModify.setValue(Time.calToStringMin(appointmentToUpdate.getAppointmentStartTime()));
+//
 //            endTimeMinuteBox.setValue(DateTimeConverters.calToStringMin(appointmentToModify.getAppointmentEndTime()));
 //            startTimeHourBox.setValue(DateTimeConverters.calToComboBoxHour(appointmentToModify.getAppointmentStartTime(), appointmentToModify.getAppointmentLocation()));
 //            endTimeHourBox.setValue(DateTimeConverters.calToComboBoxHour(appointmentToModify.getAppointmentEndTime(), appointmentToModify.getAppointmentLocation()));

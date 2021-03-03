@@ -7,7 +7,7 @@
 <AnchorPane fx:id="typeModify" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyAppointmentController">
    <children>
       <TextField fx:id="titleModify" layoutX="84.0" layoutY="151.0" prefHeight="27.0" prefWidth="150.0" />
-      <Label fx:id="test" layoutX="605.0" layoutY="284.0" text="test" />
+      <Label fx:id="tester" layoutX="517.0" layoutY="231.0" prefHeight="187.0" prefWidth="175.0" />
       <ComboBox fx:id="startHourModify" layoutX="363.0" layoutY="82.0" prefHeight="27.0" prefWidth="130.0" />
       <ComboBox fx:id="startMinuteModify" layoutX="587.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" />
       <ComboBox fx:id="endHourModify" layoutX="363.0" layoutY="124.0" prefHeight="27.0" prefWidth="130.0" />
@@ -18,7 +18,7 @@
       <ComboBox fx:id="contactModify" layoutX="84.0" layoutY="253.0" prefWidth="150.0" />
       <Label layoutX="29.0" layoutY="258.0" text="Contact" />
       <Button fx:id="modifyButton" layoutX="510.0" layoutY="418.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
-      <Button layoutX="548.0" layoutY="451.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="cancel" layoutX="548.0" layoutY="451.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
       <DatePicker fx:id="dateModify" layoutX="387.0" layoutY="199.0" />
       <Label layoutX="347.0" layoutY="204.0" text="Date" />
       <ComboBox fx:id="customerModify" layoutX="84.0" layoutY="204.0" prefWidth="150.0" />

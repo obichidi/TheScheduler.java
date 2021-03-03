@@ -58,31 +58,35 @@ public class AppointmentDatabase {
     public static ObservableList<Appointment> getAllAppointments() throws ParseException, SQLException {
         ObservableList<Appointment> allAppointments=FXCollections.observableArrayList();
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
-            String query = "SELECT a.Appointment_ID,a.Customer_ID,c.Customer_Name,a.Title,c.Customer_Name, a.Type,a.Location,a.Description,co.Contact_Name,a.Start,a.End\n" +
+            String query = "SELECT a.Appointment_ID, a.Customer_ID, cu.Customer_Name, a.Title , a.Type , a.Location , a.Description, c.Contact_Name, a.Start,a.End\n" +
                     " From appointments   as a   \n" +
-                    " inner join customers as c\n" +
-                    " on c.Customer_ID = a.Customer_ID\n" +
-                    " inner join contacts as co\n" +
-                    " On co.Contact_ID = a.Contact_ID  ORDER BY Appointment_ID  ASC";
+                    " inner join customers as cu\n" +
+                    " on cu.Customer_ID = a.Customer_ID\n" +
+                    " inner join contacts as c\n" +
+                    " On c.Contact_ID = a.Contact_ID  ORDER BY Appointment_ID  ASC";
 
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
 
                 int appointmentId = rs.getInt("a.Appointment_ID");
-//                String customerName = rs.getString("c.Customer_Name");
+
+                String customerName = rs.getString("cu.Customer_Name");
                 String appointmentTitle = rs.getString("a.Title");
+
                 int  customerId = rs.getInt("a.Customer_ID");
+
                 String appointmentDescription = rs.getString("a.Description");
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
-                String appointmentContact= rs.getString("co.Contact_Name");
+                String appointmentContact= rs.getString("c.Contact_Name");
+
                 LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
                 LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
                 LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
 
-                Appointment appointment = new Appointment(appointmentId,appointmentTitle, customerId, appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
+                Appointment appointment = new Appointment(appointmentId,customerName, customerId, appointmentTitle,appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
                 allAppointments.add(appointment);
-                System.out.println(appointmentType);
+
             }
         }
         return allAppointments;
@@ -94,8 +98,8 @@ public class AppointmentDatabase {
         LocalDate now = LocalDate.now();
         LocalDate week = LocalDate.now().plusWeeks(1);
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
-            String query = "SELECT a.Appointment_ID, cu.Customer_Name, a.Title, a.Type, a.Customer_ID, c.Contact_Name, "
-                    + " a.Description, a.Location,  "
+            String query = "SELECT a.Appointment_ID,  a.Title, a.Type, a.Customer_ID, cu.Customer_Name, "
+                    + " a.Description, a.Location, cu.Customer_ID, c.Contact_Name, "
                     + " a.Start, a.End " +
                     " FROM appointments as a " +
                     " INNER JOIN contacts as c " +
@@ -107,9 +111,9 @@ public class AppointmentDatabase {
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
                 int appointmentId = rs.getInt("a.Appointment_ID");
-//                String customerName = rs.getString("cu.Customer_Name");
                 String appointmentTitle = rs.getString("a.Title");
-                int  customerId = rs.getInt("cu.Customer_ID");
+                String customerName = rs.getString("cu.Customer_Name");
+                int  customerId = rs.getInt("a.Customer_ID");
                 String appointmentDescription = rs.getString("a.Description");
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
@@ -118,7 +122,8 @@ public class AppointmentDatabase {
                 LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
                 LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
 
-                Appointment appointment = new Appointment(appointmentId, appointmentTitle, customerId, appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
+
+                Appointment appointment = new Appointment(appointmentId,customerName, customerId, appointmentTitle,appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
                 weeklyAppointments.add(appointment);
             }
         } catch (SQLException ex) {
@@ -144,19 +149,19 @@ public class AppointmentDatabase {
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
                 int appointmentId = rs.getInt("a.Appointment_ID");
-//                String customerName = rs.getString("cu.Customer_Name");
+                String customerName = rs.getString("cu.Customer_Name");
                 String appointmentTitle = rs.getString("a.Title");
                 int  customerId = rs.getInt("a.Customer_ID");
                 String appointmentDescription = rs.getString("a.Description");
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
-                String appointmentContact= rs.getString("co.Contact_Name");
+                String appointmentContact= rs.getString("c.Contact_Name");
                 LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
                 LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
                 LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
 
 
-                Appointment appointment = new Appointment(appointmentId,  appointmentTitle, customerId, appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
+                Appointment appointment = new Appointment( appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 allAppointments.add(appointment);
             }
         } catch (SQLException ex) {
@@ -239,10 +244,10 @@ public class AppointmentDatabase {
     }
 
 
-    public static void deleteAppointment(Appointment apptToDelete){
+    public static void deleteAppointment(Appointment deleteAppointment){
         try {
             PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
-                    "DELETE FROM appointments WHERE Appointment_ID = '" + apptToDelete.getAppointmentId() + "';");
+                    "DELETE FROM appointments WHERE Appointment_ID = '" + deleteAppointment.getAppointmentId() + "';");
             statement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex);

@@ -4,6 +4,7 @@ import Database.AppointmentDatabase;
 import Database.CustomerDatabase;
 import Model.Contact;
 import Model.Customer;
+import Model.User;
 import Util.Time;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,9 +80,9 @@ public class AddAppointmentController implements Initializable {
         nameCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         contactId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         contactName.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-// userInfo.setText("Welcome " + User.currentUser.getUsername());
+         userInfo.setText("Welcome " + User.currentUser.getUsername());
 
-            appointmentType.setItems(AppointmentDatabase.TypeList());
+        appointmentType.setItems(AppointmentDatabase.TypeList());
 //            appointmentAdd.getEditor().textProperty().addListener((obs, oldText, newText) -> {
 //            appointmentAdd.setValue(newText);
         locationAdd.setItems(AppointmentDatabase.LocationList());
@@ -135,8 +136,10 @@ public class AddAppointmentController implements Initializable {
              String customerName = selectCustomer.getCustomerName();
             int customerId = selectCustomer.getCustomerId();
             int contactId = selectContact.getContactId();
-            String contactName = selectContact.getContactName();
+           String contactName = selectContact.getContactName();
+
             String type = appointmentType.getValue();
+
             String description = appointmentDescription.getText();
             String location = locationAdd.getValue();
             String title = appointmentTitleAdd.getText();

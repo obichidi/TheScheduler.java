@@ -16,8 +16,7 @@
             <TableColumn fx:id="appointmentStartTime" text="Start Time" />
             <TableColumn fx:id="appointmentEndTime" prefWidth="76.0" text="End Time" />
             <TableColumn fx:id="customerId" prefWidth="75.0" text="customer Id" />
-            <TableColumn fx:id="appointmentContact" prefWidth="69.0" text="Contact" />
-            <TableColumn fx:id="customerName" prefWidth="110.0" text="Customer Name" />
+            <TableColumn fx:id="appointmentContact" prefWidth="114.0" text="Contact Name" />
         </columns>
       </TableView>
       <Button fx:id="addAppointmentButton" layoutX="1024.0" layoutY="114.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />

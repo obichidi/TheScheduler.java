@@ -55,8 +55,8 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       usernameText.setText("Zach");
-       passwordText.setText("password");
+       usernameText.setText("test");
+       passwordText.setText("test");
        location.setText(Locale.getDefault().getCountry());
     }
 

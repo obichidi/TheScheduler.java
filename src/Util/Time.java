@@ -1,4 +1,5 @@
 package Util;
+import Controller.ModifyAppointmentController;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
@@ -106,8 +107,68 @@ import java.util.Calendar;
         }
 
 
+    public static Timestamp generateStartTimestampModify(DatePicker datePicker, ComboBox<String> startHourModify, ComboBox<String> startMinuteModify, ComboBox<String> locationModify) {
+        LocalDate day = datePicker.getValue();
+        Integer startHours = Integer.parseInt((startHourModify.getValue()).substring(0, (startHourModify.getValue().length() - 5)));
+
+        if (startHours < 8) startHours += 12;
+
+        Integer startMinutes = Integer.parseInt(startMinuteModify.getValue());
+
+        int utcOffset;
+        switch (locationModify.getValue()) {
+            case "London, England":
+                utcOffset = -1;
+                break;
+            case "New York, New York":
+                utcOffset = 5;
+                break;
+            case "Paris, France":
+                utcOffset = 1;
+                break;
+            default:
+                utcOffset = 7;
+                break;
+        }
+        LocalDateTime startLocal = LocalDateTime.of(day.getYear(), day.getMonthValue(),
+                day.getDayOfMonth(), (startHours + utcOffset), startMinutes);
+        Timestamp startTimestamp = Timestamp.valueOf(startLocal);
 
 
+        return startTimestamp;
+    }
+
+    public static Timestamp generateEndTimestampModify(DatePicker datePicker, ComboBox<String> endHourModify, ComboBox<String> endMinuteModify, ComboBox<String> locationModify) {
+        LocalDate day = datePicker.getValue();
+
+        Integer endHours = Integer.parseInt((endHourModify.getValue()).substring(0, (endHourModify.getValue().length() - 5)));
+
+        if (endHours < 8) endHours += 12;
+        Integer endMinutes = Integer.parseInt(endMinuteModify.getValue());
+
+        int utcOffset;
+        switch (locationModify.getValue()) {
+            case "London, England":
+                utcOffset = -1;
+                break;
+            case "New York, New York":
+                utcOffset = 5;
+                break;
+            case "Paris, France":
+                utcOffset = 1;
+                break;
+            default:
+                utcOffset = 7;
+                break;
+        }
+        LocalDateTime endLocal = LocalDateTime.of(day.getYear(), day.getMonthValue(),
+                day.getDayOfMonth(), (endHours + utcOffset), endMinutes);
+        Timestamp endTimestamp = Timestamp.valueOf(endLocal);
+
+
+        return endTimestamp;
+
+    }
         public static Calendar convertToLocalTimezone (Calendar cal, String location){
             int offsetFromUtc;
             switch (location) {

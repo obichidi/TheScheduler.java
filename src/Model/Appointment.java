@@ -14,7 +14,7 @@ public final class Appointment {
 
 
 
-//    private String customerName;
+   private String customerName;
     private String appointmentTitle;
     private String appointmentType;
     private String appointmentLocation;
@@ -37,84 +37,55 @@ public final class Appointment {
     public void setAppointmentId(Integer appointmentId) {
         this.appointmentId = appointmentId;
     }
-//    public String getCustomerName() { return customerName;
-//    }
-//
-//    public void setCustomerName(String customerName) { this.customerName = customerName;
-//    }
-    public int getCustomerId() { return customerId;
-    }
+
+    public String getCustomerName() { return customerName; }
+
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
 
 
-    public void setCustomerId(int customerId) { this.customerId = customerId;
-    }
+    public int getCustomerId() { return customerId; }
 
 
-    public String getAppointmentTitle() {
-        return appointmentTitle;
-    }
+    public void setCustomerId(int customerId) { this.customerId = customerId; }
 
-    public void setAppointmentTitle(String appointmentTitle) {
-        this.appointmentTitle = appointmentTitle;
-    }
 
-    public String getAppointmentType() {
-        return appointmentType;
-    }
+    public String getAppointmentTitle() { return appointmentTitle; }
 
-    public void setAppointmentType(String appointmentType) {
-        this.appointmentType = appointmentType;
-    }
+    public void setAppointmentTitle(String appointmentTitle) { this.appointmentTitle = appointmentTitle; }
 
-    public String getAppointmentLocation() {
-        return appointmentLocation;
-    }
+    public String getAppointmentType() { return appointmentType; }
 
-    public void setAppointmentLocation(String appointmentLocation) {
-        this.appointmentLocation = appointmentLocation;
-    }
+    public void setAppointmentType(String appointmentType) { this.appointmentType = appointmentType; }
 
-    public String getAppointmentDescription() {
-        return appointmentDescription;
-    }
+    public String getAppointmentLocation() { return appointmentLocation; }
 
-    public void setAppointmentDescription(String appointmentDescription) {
-        this.appointmentDescription = appointmentDescription;
-    }
+    public void setAppointmentLocation(String appointmentLocation) { this.appointmentLocation = appointmentLocation; }
 
-    public String getAppointmentContact() {
-        return appointmentContact;
-    }
+    public String getAppointmentDescription() { return appointmentDescription; }
 
-    public void setAppointmentContact(String appointmentContact) {
-        this.appointmentContact = appointmentContact;
-    }
+    public void setAppointmentDescription(String appointmentDescription) { this.appointmentDescription = appointmentDescription; }
 
-    public LocalDate getAppointmentStartDate() {
-        return appointmentStartDate;
-    }
+    public String getAppointmentContact() { return appointmentContact; }
 
-    public void setAppointmentStartDate(LocalDate appointmentStartDate) {
-        this.appointmentStartDate = appointmentStartDate;
-    }
+    public void setAppointmentContact(String appointmentContact) { this.appointmentContact = appointmentContact; }
 
-    public LocalTime getAppointmentStartTime() {
-        return appointmentStartTime;
-    }
+    public LocalDate getAppointmentStartDate() { return appointmentStartDate; }
 
-    public void setAppointmentStartTime(LocalTime appointmentStartTime) {
-        this.appointmentStartTime = appointmentStartTime;
-    }
+    public void setAppointmentStartDate(LocalDate appointmentStartDate) { this.appointmentStartDate = appointmentStartDate; }
 
-    public LocalTime getAppointmentEndTime() {
-        return appointmentEndTime;
-    }
 
-    public void setAppointmentEndTime(LocalTime appointmentEndTime) {
-        this.appointmentEndTime = appointmentEndTime;
-    }
+    public LocalTime getAppointmentStartTime() { return appointmentStartTime; }
 
-    public Appointment(int appointmentId, String appointmentTitle, int customerId,  String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
+    public void setAppointmentStartTime(LocalTime appointmentStartTime) { this.appointmentStartTime = appointmentStartTime; }
+
+    public LocalTime getAppointmentEndTime() { return appointmentEndTime; }
+
+    public void setAppointmentEndTime(LocalTime appointmentEndTime) { this.appointmentEndTime = appointmentEndTime; }
+
+    public Appointment(int appointmentId, String appointmentTitle, int customerId, String customerName, String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
+
+
+
         this.appointmentId = appointmentId;
 
         this.appointmentTitle = appointmentTitle;
@@ -125,7 +96,7 @@ public final class Appointment {
         this.appointmentStartDate = appointmentStartDate;
         this.appointmentStartTime = appointmentStartTime;
         this.appointmentEndTime = appointmentEndTime;
-//      this.customerName = customerName;
+         this.customerName = customerName;
         this.customerId = customerId;
     }
 
