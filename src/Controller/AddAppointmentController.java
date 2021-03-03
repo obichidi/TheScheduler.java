@@ -136,7 +136,7 @@ public class AddAppointmentController implements Initializable {
              String customerName = selectCustomer.getCustomerName();
             int customerId = selectCustomer.getCustomerId();
             int contactId = selectContact.getContactId();
-           String contactName = selectContact.getContactName();
+             String contactName = selectContact.getContactName();
 
             String type = appointmentType.getValue();
 

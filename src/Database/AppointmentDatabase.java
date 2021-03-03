@@ -84,7 +84,7 @@ public class AppointmentDatabase {
                 LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
                 LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
 
-                Appointment appointment = new Appointment(appointmentId,customerName, customerId, appointmentTitle,appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
+                Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 allAppointments.add(appointment);
 
             }
@@ -123,7 +123,7 @@ public class AppointmentDatabase {
                 LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
 
 
-                Appointment appointment = new Appointment(appointmentId,customerName, customerId, appointmentTitle,appointmentDescription, appointmentLocation,appointmentType,   appointmentContact, appointmentStartDate, appointmentStartTime, appointmentEndTime);
+                Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 weeklyAppointments.add(appointment);
             }
         } catch (SQLException ex) {
@@ -144,7 +144,7 @@ public class AppointmentDatabase {
                     " INNER JOIN contacts as c " +
                     " ON c.Contact_ID = a.Contact_ID " +
                     " INNER JOIN customers as cu ON cu.Customer_ID "
-                    + " = a.Customer_ID" +
+                    + " = a.Customer_ID " +
                     " WHERE  MONTH(Start) = '" + monthPlusOne+ "';";
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {

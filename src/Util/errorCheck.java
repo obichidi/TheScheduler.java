@@ -13,7 +13,7 @@ public class errorCheck {
         String validationExceptions = "";
         if(name.isEmpty()) validationExceptions += "Please enter a customer name.\n";
         if(address.isEmpty()) validationExceptions += "Customer address can not be empty.\n";
-        if(postalCode.isEmpty()) validationExceptions += "Please enter a vaild postal code.\n";
+        if(postalCode.isEmpty()) validationExceptions += "Please enter a valid postal code.\n";
         if(phone.length()<10||phone.length()>15) validationExceptions += "Please enter a valid phone number including area code.\n";
         if(boxToValidate.getSelectionModel().isEmpty()) validationExceptions += "Please select a city from the drop down menu.\n";
         return validationExceptions;

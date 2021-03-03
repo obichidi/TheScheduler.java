@@ -3,9 +3,7 @@ package Controller;
 import Database.AppointmentDatabase;
 import Database.CustomerDatabase;
 import Model.Appointment;
-import Model.Contact;
-import Model.Customer;
-import Util.Time;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,16 +14,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
+
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalTime;
+
 import java.util.ResourceBundle;
 
 public class ModifyAppointmentController implements Initializable {
@@ -53,7 +51,7 @@ public class ModifyAppointmentController implements Initializable {
     ObservableList<String> startsMinutes = FXCollections.observableArrayList();
     ObservableList<String> endsMinutes = FXCollections.observableArrayList();
     ObservableList<String> Locations = FXCollections.observableArrayList();
-    ObservableList<String> zero = FXCollections.observableArrayList();
+
 
     private static Appointment appointmentToUpdate;
 
