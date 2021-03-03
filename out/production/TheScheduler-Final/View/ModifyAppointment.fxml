@@ -8,9 +8,9 @@
     <children>
         <TextField fx:id="titleModify" layoutX="84.0" layoutY="151.0" prefHeight="27.0" prefWidth="150.0" />
         <Label fx:id="tester" layoutX="517.0" layoutY="231.0" prefHeight="187.0" prefWidth="175.0" />
-        <ComboBox fx:id="startHourModify" layoutX="363.0" layoutY="82.0" prefHeight="27.0" prefWidth="130.0" />
+        <ComboBox fx:id="startTimeModify" layoutX="363.0" layoutY="82.0" prefHeight="27.0" prefWidth="130.0" />
         <ComboBox fx:id="startMinuteModify" layoutX="587.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" />
-        <ComboBox fx:id="endHourModify" layoutX="363.0" layoutY="124.0" prefHeight="27.0" prefWidth="130.0" />
+        <ComboBox fx:id="endTimeModify" layoutX="363.0" layoutY="124.0" prefHeight="27.0" prefWidth="130.0" />
         <ComboBox fx:id="endMinuteModify" layoutX="587.0" layoutY="124.0" prefHeight="27.0" prefWidth="101.0" />
         <ComboBox fx:id="locationModify" layoutX="84.0" layoutY="325.0" prefWidth="150.0" />
         <TextArea fx:id="descriptionModify" layoutX="304.0" layoutY="303.0" prefHeight="89.0" prefWidth="200.0" />
@@ -19,7 +19,7 @@
         <Label layoutX="29.0" layoutY="258.0" text="Contact" />
         <Button fx:id="modifyButton" layoutX="510.0" layoutY="418.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
         <Button fx:id="cancel" layoutX="548.0" layoutY="451.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-        <DatePicker fx:id="dateModify" layoutX="387.0" layoutY="199.0" />
+        <DatePicker fx:id="datePickerModify" layoutX="387.0" layoutY="199.0" />
         <Label layoutX="347.0" layoutY="204.0" text="Date" />
         <ComboBox fx:id="customerModify" layoutX="84.0" layoutY="204.0" prefWidth="150.0" />
         <Label layoutX="24.0" layoutY="209.0" text="Customer" />
