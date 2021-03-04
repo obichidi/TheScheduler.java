@@ -122,7 +122,7 @@ public class ModifyAppointmentController implements Initializable {
         try {
             ((Node) (event.getSource())).getScene().getWindow().hide();
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentMain.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MainAppointment.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

@@ -226,7 +226,11 @@ public class MainAppointmentController implements Initializable {
         appointmentStartTime.setCellValueFactory(new PropertyValueFactory<>("appointmentStartTime"));
         appointmentEndTime.setCellValueFactory(new PropertyValueFactory<>("appointmentEndTime"));
         appointmentStartDate.setCellValueFactory(new PropertyValueFactory<>("appointmentStartDate"));
-
+        try {
+            System.out.println(AppointmentDatabase.getAppointmentsFor15Mins());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         months.addAll("January", "February", "March", "April", "May" ,"June" ,"July" ,"August" ,"September" ,"October" ,"November" ,"December");
 
         pickMonth.setItems(months);

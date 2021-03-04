@@ -180,20 +180,22 @@ public class AppointmentDatabase {
         LocalDateTime localInFifteen = localNow.plusMinutes(15);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
-            String query = "SELECT appointments.Appointment_ID, customers.Customer_Name, appointments.Title, "
-                    + "appointments.Description, appointments.Location, contacts.Contact_Name,  "
-                    + "appointments.Start, appointments.End  "
-                    + " FROM appointments " +
-                    "INNER JOIN contacts ON contacts.Contact_ID = appointments.Contact_ID " +
-                    "INNER JOIN customers ON appointments.Customer_ID = customers.Customer_ID"
+            String query = "SELECT a.Appointment_ID, cu.Customer_Name, a.Title, "
+                    + " a.Description, a.Location, c.Contact_Name,  "
+                    + "a.Start, a.End  "
+                    + " FROM appointments as a " +
+                    " INNER JOIN contacts as c" +
+                    " ON c.Contact_ID = a.Contact_ID " +
+                    " INNER JOIN customers  as cu " +
+                    " ON a.Customer_ID = cu.Customer_ID"
                     + " WHERE Start BETWEEN '" + localNow + "' AND '" + localInFifteen + "';";
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
-                String customer = rs.getString("customers.Customer_Name");
-                Timestamp startTimeStamp = rs.getTimestamp("appointments.Start");
+                String customer = rs.getString("cu.Customer_Name");
+                Timestamp startTimeStamp = rs.getTimestamp("a.Start");
                 LocalDateTime startTime = startTimeStamp.toLocalDateTime();
-                String location = rs.getString("appointments.Location");
-                String contact = rs.getString("appointments.Contact_Name");
+                String location = rs.getString("a.Location");
+                String contact = rs.getString("c.Contact_Name");
                 LocalDateTime localDateTime = LocalDateTime.parse(startTime.toString());
                 ZonedDateTime startZonedTime = localDateTime.atZone(ZoneId.of("UTC"));
                 ZonedDateTime localStart = startZonedTime.withZoneSameInstant(zoneId);
@@ -202,7 +204,10 @@ public class AppointmentDatabase {
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex);
         }
+
+        System.out.println(upcomingAppointments);
         return upcomingAppointments;
+
     }
 
 
@@ -231,16 +236,20 @@ public class AppointmentDatabase {
         PreparedStatement statement;
         try {
             statement = ConnectorDb.connectDb().prepareStatement(
-                    "update appointments as a  INNER JOIN contacts as co  on co.Contact_ID = a.Contact_ID  INNER JOIN customers  as c On c.Customer_ID = a.Customer_ID set  Title = '" + title + "', Location = '" + location + "', Type = '" + type + "', c.Customer_Name = '" + customerName + "', Description ='" + description + "', Contact_Name = '" + contact + "', Start  = '" + start + "', End = '" + end + "', a.Last_Update = CURRENT_TIMESTAMP, a.Last_Updated_By = '" + User.currentUser + "' WHERE a.Appointment_ID = '" + appointmentId + "';");
+                    "UPDATE appointments AS a " +
+                            " INNER JOIN contacts AS c " +
+                            " ON c.Contact_ID = a.Contact_ID " +
+                            " INNER JOIN customers  AS cu " +
+                            " ON cu.Customer_ID = a.Customer_ID  " +
+                            " SET  Title = '" + title + "', Location = '" + location + "'," +
+                            " Type = '" + type + "', cu.Customer_Name = '" + customerName + "'," +
+                            " Description ='" + description + "', c.Contact_Name = '" + contact + "', Start  = '" + start + "'," +
+                            " End = '" + end + "', a.Last_Update = CURRENT_TIMESTAMP, a.Last_Updated_By = '" + User.currentUser + "' " +
+                            " WHERE a.Appointment_ID = '" + appointmentId + "';");
 
 
 
-// /                   /                    + "SET Customer_ID = '" + customerId + "', Title = '"
-//                    + title + "', Location = '" + location + "',Type= '" + type + "', Customer_Name= '" + customerName + "',Description = '" + description
-//                    + "', Contact_Name = '" + contact + "', Start = '" + start
-//                    + "', End = '" + end + "', Last_Update = CURRENT_TIMESTAMP, Last_Update_By = '"
-//                    + User.currentUser +  "' WHERE Appointment_ID = '" + appointmentId + "'" +
-//                    "INNER JOIN customers On c.Customer_ID = a.Customer_ID;");
+
             statement.executeUpdate();
             System.out.println("Appointment successfully modified!");
         } catch (SQLException ex) {
