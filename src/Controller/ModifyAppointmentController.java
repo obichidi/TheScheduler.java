@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -74,20 +75,7 @@ public class ModifyAppointmentController implements Initializable {
     void test(ActionEvent event) throws ParseException, SQLException {
 
 
-//
-      // int customerId = CustomerDatabase.findCustomerId(customerName.getValue());
-//       String title = titleModify.getText();
-//
-//        String location = locationModify.getValue();
-//        String contact = contactModify.getValue();
-//
-//        Timestamp start = Time.generateStartTimestamp(dateModify, startHourModify, startMinuteModify, locationModify);
-//        Timestamp end = Time.generateEndTimestamp(dateModify, endHourModify, endMinuteModify, locationModify);
-////        String overlap = AppointmentDatabase.isAppointmentOverlapping(start, end, customerId, contact, appointmentId);
 
-
-//        String toka = appointmentToUpdate.getAppointmentStartTime().toString();
-//        System.out.println(toka);
     }
 
 
@@ -95,7 +83,7 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     void modifyAppointment(ActionEvent event) throws ParseException, SQLException {
 
-
+        errorChecks();
 
         String description = descriptionModify.getText();
         String customerName = customerModify.getValue();
@@ -110,10 +98,37 @@ public class ModifyAppointmentController implements Initializable {
         LocalDate date =  datePickerModify.getValue();
         Timestamp start = Time.generateStartTimestampModify( datePickerModify, startTimeModify, startMinuteModify, locationModify);
        Timestamp end = Time.generateEndTimestampModify(datePickerModify, endTimeModify, endMinuteModify, locationModify);
-        System.out.println(start);
+        String overlap = AppointmentDatabase.OverlappedAppointment(start, end, customerId, contact, appointmentId);
 
 
+        if (start.after(end)){
+          Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+           errorAlert.setHeaderText("Check appointment times");
+            errorAlert.setContentText("Ensure the end Must be after the start time.");
+            errorAlert.showAndWait();
+           return;
+      }
 
+        if (!overlap.isEmpty()){
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Appointment is overlapping");
+            errorAlert.setContentText(overlap);
+            errorAlert.showAndWait();
+            return;
+        }
+
+        AppointmentDatabase.modifyAppointment( appointmentId,  customerId,  type,  customerName,  title, location,
+                 description, contact,  start, end);
+        try {
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentMain.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println("IO Exception: " + ex.getMessage());
+        }
 
         tester.setText("Description: "+ description+ "\n CustomerId " + customerId+ "\n Start: " + start
                         + "\n End: " + end + "\n Date: " + date +"\n Type: " + type
@@ -186,31 +201,37 @@ public class ModifyAppointmentController implements Initializable {
             appointmentToUpdate = MainAppointmentController.getSelectedAppointment();
             typeModify.setPromptText(appointmentToUpdate.getAppointmentType());
 
+
+
+
+
             startTimeModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString());
-            startMinuteModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString().substring(2,5));
+            startMinuteModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString().substring(3,5));
 
             endTimeModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString());
-            endMinuteModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString().substring(2,5));
+            endMinuteModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString().substring(3,5));
 
 
 
-            datePickerModify.setPromptText(appointmentToUpdate.getAppointmentStartDate().toString());
-
+           datePickerModify.setPromptText(appointmentToUpdate.getAppointmentStartDate().toString());
+           datePickerModify.setValue(LocalDate.parse(appointmentToUpdate.getAppointmentStartDate().toString()));
 //            startHourModify.setItems(AppointmentDatabase.);
-//            typeModify.setItems(AppointmentDatabase.TypeList());
+            typeModify.setItems(AppointmentDatabase.TypeList());
+            typeModify.setValue(typeModify.getPromptText());
 
             descriptionModify.setText(appointmentToUpdate.getAppointmentDescription());
 
 //    starHourModify.setItems();
             customerModify.setItems(CustomerDatabase.CustomerList());
-            typeModify.setItems(AppointmentDatabase.TypeList());
             customerModify.setPromptText(appointmentToUpdate.getCustomerName());
+            customerModify.setValue(customerModify.getPromptText());
 
             contactModify.setItems(AppointmentDatabase.ContactList());
             contactModify.setPromptText(appointmentToUpdate.getAppointmentContact());
 
             locationModify.setItems(AppointmentDatabase.LocationList());
             locationModify.setPromptText(appointmentToUpdate.getAppointmentLocation());
+            locationModify.setValue(locationModify.getPromptText());
 
             titleModify.setText(appointmentToUpdate.getAppointmentTitle());
 
@@ -227,31 +248,90 @@ public class ModifyAppointmentController implements Initializable {
         Locations.addAll("New York, New York", "London, England", "Paris, France");
         locationModify.setItems(Locations);
 
-//            zeroOnly.add("00");
-//            hourList.addAll("9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.");
-//            minuteList.addAll("00", "15", "30", "45");
-//
-//            startTimeHourBox.setItems(hourList);
-//            endTimeHourBox.setItems(hourList);
-//            startTimeMinuteBox.setItems(minuteList);
-//
-//            endTimeMinuteBox.setItems(minuteList);
-//            officeLocations.addAll("Pheonix, Arizona", "New York, New York", "London, England");
-//            locationBox.setItems(officeLocations);
-//
-//            descriptionText.setText(appointmentToModify.getAppointmentDescription());
-//            calendarBox.setValue(DateTimeConverters.calToLocalDate(appointmentToModify.getAppointmentStartTime()));
-//            locationBox.setValue(appointmentToModify.getAppointmentLocation());
-//            employeeContactBox.setValue(appointmentToModify.getEmployeeContact());
-//
-//
-//            endTimeMinuteBox.setValue(DateTimeConverters.calToStringMin(appointmentToModify.getAppointmentEndTime()));
-//            startTimeHourBox.setValue(DateTimeConverters.calToComboBoxHour(appointmentToModify.getAppointmentStartTime(), appointmentToModify.getAppointmentLocation()));
-//            endTimeHourBox.setValue(DateTimeConverters.calToComboBoxHour(appointmentToModify.getAppointmentEndTime(), appointmentToModify.getAppointmentLocation()));
-//            customerName.setValue(appointmentToModify.getCustomerName());
 
 
         }
+
+    public void errorChecks(){
+
+
+        if(titleModify.getText().isEmpty()){
+//            titleModify.setValue(titleModify.getPromptText());
+            return;
+        }
+
+        if(contactModify.getSelectionModel().isEmpty()){
+            contactModify.setValue(contactModify.getPromptText());
+            return;
+        }
+
+        if(locationModify.getSelectionModel().isEmpty()){
+
+            return;
+        }
+
+        if(datePickerModify.getValue() == null){
+
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a date.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+
+            return;
+        }
+        if(startTimeModify.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a Start Hour.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+
+
+            return;
+        }
+
+        if(startMinuteModify.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a start minute.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+        }
+        if(endTimeModify.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select an End Hour.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+        }
+        if(endMinuteModify.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select an End Minute.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+        }
+        if(typeModify.getSelectionModel().isEmpty()){
+
+            return;
+        }
+
+        if(customerModify.getSelectionModel().isEmpty()){
+
+            return;
+        }
+
+        if(descriptionModify.getText().isEmpty()){
+//            descriptionModify.setValue(locationModify.getPromptText());
+            return;
+        }
+
+
+    }
 }
 
 

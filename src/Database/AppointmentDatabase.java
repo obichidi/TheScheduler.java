@@ -226,16 +226,21 @@ public class AppointmentDatabase {
         }
     }
 
-    public static void modifyAppointment(int appointmentId, int customerId, String type, String title, String location,
+    public static void modifyAppointment(int appointmentId, int customerId, String type, String customerName, String title, String location,
                                          String description, String contact, Timestamp start, Timestamp end){
         PreparedStatement statement;
         try {
-            statement = ConnectorDb.connectDb().prepareStatement("UPDATE appointments "
-                    + "SET Customer_ID = '" + customerId + "', Title = '"
-                    + title + "', Location = '" + location + "', Description = '" + description
-                    + "', contact = '" + contact + "', Start = '" + start
-                    + "', End = '" + end + "', Last_Update = CURRENT_TIMESTAMP, Last_Update_By = '"
-                    + User.currentUser +  "' WHERE Appointment_ID = '" + appointmentId + "';");
+            statement = ConnectorDb.connectDb().prepareStatement(
+                    "update appointments as a  INNER JOIN contacts as co  on co.Contact_ID = a.Contact_ID  INNER JOIN customers  as c On c.Customer_ID = a.Customer_ID set  Title = '" + title + "', Location = '" + location + "', Type = '" + type + "', c.Customer_Name = '" + customerName + "', Description ='" + description + "', Contact_Name = '" + contact + "', Start  = '" + start + "', End = '" + end + "', a.Last_Update = CURRENT_TIMESTAMP, a.Last_Updated_By = '" + User.currentUser + "' WHERE a.Appointment_ID = '" + appointmentId + "';");
+
+
+
+// /                   /                    + "SET Customer_ID = '" + customerId + "', Title = '"
+//                    + title + "', Location = '" + location + "',Type= '" + type + "', Customer_Name= '" + customerName + "',Description = '" + description
+//                    + "', Contact_Name = '" + contact + "', Start = '" + start
+//                    + "', End = '" + end + "', Last_Update = CURRENT_TIMESTAMP, Last_Update_By = '"
+//                    + User.currentUser +  "' WHERE Appointment_ID = '" + appointmentId + "'" +
+//                    "INNER JOIN customers On c.Customer_ID = a.Customer_ID;");
             statement.executeUpdate();
             System.out.println("Appointment successfully modified!");
         } catch (SQLException ex) {
@@ -382,6 +387,45 @@ public class AppointmentDatabase {
             System.out.println("SQL Exception: " + ex.getMessage());
         }
         return locations;
+    }
+
+
+
+
+    public static String OverlappedAppointment(Timestamp start, Timestamp end, int customerId, String contactName, int appointmentId){
+        String overlapMessage = "";
+        Boolean errorMessage1 = false;
+        Boolean errorMessage2 = false;
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT COUNT(*) FROM appointment as a  WHERE (Contact_Name = '" + contactName + "') AND (( '" + start + "' BETWEEN start AND end) OR ( '" +
+                    end + "' BETWEEN Start AND End) OR (Start < '" + start + "' AND End > '" + end + "')) and (Appointment_ID <> '" + appointmentId + "'" +
+                    "INNER JOIN  contacts as c" +
+                    " ON c.Contact_ID = a.Contact_ID);");
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+                if (rs.getInt(1)>0){
+                    errorMessage1 = true;
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex);
+        }
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT COUNT(*) FROM appointments WHERE (Customer_ID = '" + customerId + "') AND (( '" + start + "' BETWEEN start AND end) OR ( '" +
+                    end + "' BETWEEN Start AND End) OR (Start < '" + start + "' AND End > '" + end + "')) and (Appointment_ID <> '" + appointmentId + "');");
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+                if (rs.getInt(1)>0){
+                    errorMessage2 = true;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex);
+        }
+        if (errorMessage1) overlapMessage = overlapMessage + "The selected contact has an overlapping appointment.\n";
+        if (errorMessage2) overlapMessage = overlapMessage + "The selected customer has an overlapping appointment.\n";
+        return overlapMessage;
     }
 //
 //
