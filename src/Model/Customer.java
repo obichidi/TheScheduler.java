@@ -13,12 +13,17 @@ public final class Customer {
 
 
 
-    public Customer(Integer customerId, String customerName, String customerAddress, String customerPhone, String customerZipCode) {
+    private int customerDivision;
+
+
+
+    public Customer(Integer customerId, String customerName, String customerAddress, String customerPhone, String customerZipCode, int customerDivision) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPhone = customerPhone;
         this.customerZipCode = customerZipCode;
+        this.customerDivision = customerDivision;
     }
 
 
@@ -28,6 +33,12 @@ public final class Customer {
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public int getCustomerDivision() { return customerDivision;
+    }
+
+    public void setCustomerDivision(int customerDivision) { this.customerDivision = customerDivision;
     }
 
     public String getCustomerName() {

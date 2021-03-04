@@ -192,7 +192,7 @@ public class MainAppointmentController implements Initializable {
     void test(ActionEvent event){
         selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
 
-          System.out.println(selectAppointment.getCustomerName());
+
     }
 
     @FXML
@@ -208,10 +208,7 @@ public class MainAppointmentController implements Initializable {
     }
 
 
-//    public Appointment getSelectedAppointment(){
-//
-//        return getSelectedAppointment();
-//    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

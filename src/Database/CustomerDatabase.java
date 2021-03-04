@@ -28,7 +28,8 @@ public class CustomerDatabase {
                      String customerAddress = rs.getString("Address");
                      String customerPhone = rs.getString("Phone");
                      String customerZipCode = rs.getString("Postal_Code");
-                          Customer customer = new Customer(customerId,customerName,customerPhone, customerAddress, customerZipCode);
+                     int  customerDivision = rs.getInt("Division_ID");
+                    Customer customer = new Customer(customerId,customerName,customerPhone, customerAddress, customerZipCode, customerDivision);
                     allCustomers.add(customer);
                 }
             }
@@ -37,6 +38,7 @@ public class CustomerDatabase {
             System.out.println("SQLException: " + e.getMessage());
             return null;
         }
+
         return allCustomers;
     }
 
@@ -81,22 +83,24 @@ public class CustomerDatabase {
         return customers;
     }
 
-    public static String locateCustomerName(int customerId){
-        String  foundName= "";
+    public static void deleteCustomer( int  customerId){
+
         try {
             PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
-                    "SELECT Customer_ID, Customer_Name FROM customers" );
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()){
-                if (customerId == (rs.getInt("Customer_ID"))){
-                    foundName = rs.getString("Customer_Name");
-                }
-            }
-            System.out.println("Customer ID Found!");
+                    "DELETE FROM appointments WHERE Customer_ID = '" + customerId + "';");
+            statement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex);
         }
-        return foundName;
+
+
+      try {
+        PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
+                "DELETE FROM customers WHERE Customer_ID = '" + customerId + "';");
+        statement.executeUpdate();
+    } catch (SQLException ex) {
+        System.out.println("SQL Exception: " + ex);
     }
 
+}
 }

@@ -39,19 +39,6 @@ public class AppointmentDatabase {
     }
 
 
-//    public static int generateContactId() {
-//        int contactIdNum = 0;
-//        try {
-//            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Contact_Id FROM appointments ORDER BY Contact_ID ASC;");
-//            ResultSet rs = statement.executeQuery();
-//            if (rs.last()){
-//                contactIdNum = ((Number) rs.getObject(1)).intValue() + 1;
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println(ex);
-//        }
-//        return contactIdNum;
-//    }
 
 
 
