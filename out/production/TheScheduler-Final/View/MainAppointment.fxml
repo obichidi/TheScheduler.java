@@ -5,7 +5,7 @@
 
 <Pane fx:id="monthPicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1204.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainAppointmentController">
    <children>
-      <TableView fx:id="appointmentTable" layoutX="85.0" layoutY="69.0" prefHeight="375.0" prefWidth="942.0">
+      <TableView fx:id="appointmentTable" layoutX="85.0" layoutY="69.0" prefHeight="416.0" prefWidth="942.0">
         <columns>
             <TableColumn fx:id="appointmentId" prefWidth="99.0" text="Appointment Id" />
             <TableColumn fx:id="appointmentTitle" prefWidth="69.0" text="Title" />
@@ -20,11 +20,11 @@
             <TableColumn fx:id="customerNameC" prefWidth="114.0" text="Customer Name" />
         </columns>
       </TableView>
-      <Button fx:id="addAppointmentButton" layoutX="1043.0" layoutY="114.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />
-      <Button fx:id="modifyAppointmentButton" layoutX="1036.0" layoutY="164.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
-      <Button fx:id="deleteAppointment" layoutX="1037.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" text="Delete Appointment" />
-      <Button layoutX="1078.0" layoutY="366.0" mnemonicParsing="false" onAction="#back" text="Back" />
-      <Button layoutX="1081.0" layoutY="409.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+      <Button fx:id="addAppointmentButton" layoutX="1061.0" layoutY="113.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />
+      <Button fx:id="modifyAppointmentButton" layoutX="1058.0" layoutY="164.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
+      <Button fx:id="deleteAppointment" layoutX="1060.0" layoutY="230.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" text="Delete Appointment" />
+      <Button layoutX="1096.0" layoutY="362.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button layoutX="1104.0" layoutY="409.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
       <RadioButton fx:id="showMonthly" layoutX="381.0" layoutY="28.0" mnemonicParsing="false" onAction="#showMonthlyAppointments" text="Monthly" />
       <RadioButton fx:id="showWeekly" layoutX="554.0" layoutY="28.0" mnemonicParsing="false" onAction="#showWeeklyAppointments" text="Weekly" />
       <RadioButton fx:id="allAppointments" layoutX="658.0" layoutY="28.0" mnemonicParsing="false" onAction="#showAllAppointments" text="All Appointments" />

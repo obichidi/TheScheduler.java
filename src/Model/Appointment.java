@@ -14,12 +14,15 @@ public final class Appointment {
 
 
 
+
    private String customerName;
     private String appointmentTitle;
     private String appointmentType;
     private String appointmentLocation;
     private String appointmentDescription;
     private String appointmentContact;
+
+
 
 
     private LocalDate appointmentStartDate;
@@ -37,6 +40,8 @@ public final class Appointment {
     public void setAppointmentId(Integer appointmentId) {
         this.appointmentId = appointmentId;
     }
+
+
 
     public String getCustomerName() { return customerName; }
 
@@ -82,7 +87,7 @@ public final class Appointment {
 
     public void setAppointmentEndTime(LocalTime appointmentEndTime) { this.appointmentEndTime = appointmentEndTime; }
 
-    public Appointment(int appointmentId, String appointmentTitle, int customerId, String customerName, String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
+    public Appointment(int appointmentId,String appointmentTitle, int customerId, String customerName, String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
 
 
 
@@ -97,6 +102,7 @@ public final class Appointment {
         this.appointmentStartTime = appointmentStartTime;
         this.appointmentEndTime = appointmentEndTime;
          this.customerName = customerName;
+
         this.customerId = customerId;
     }
 

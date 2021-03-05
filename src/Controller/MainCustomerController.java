@@ -12,10 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -37,7 +34,9 @@ public class MainCustomerController  implements Initializable {
     @FXML private TableColumn<Customer, String> addressTable;
     @FXML private TableColumn<Customer, String> postalCodeTable;
     @FXML private TableColumn<Customer, String> phoneTable;
-    @FXML private TableColumn<Customer, String> divisionTable;
+    @FXML private TableColumn<Customer, String> divisionIdTable;
+    @FXML private TableColumn<Customer, String> customerCountry;
+    @FXML private TableColumn<Appointment, String> customerDivisionTable;
     @FXML private Button customerAddButton;
     @FXML private Button editCustomer;
     @FXML private Button deleteCustomer;
@@ -105,19 +104,19 @@ public class MainCustomerController  implements Initializable {
     void editCustomer(ActionEvent event) {
 
     }
-    @FXML
-    void test(ActionEvent event) {
 
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
+
         customerIdTable.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         nameTable.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         addressTable.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         postalCodeTable.setCellValueFactory(new PropertyValueFactory<>("customerZipCode"));
         phoneTable.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-        divisionTable.setCellValueFactory(new PropertyValueFactory<>("customerDivision"));
+        divisionIdTable.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
+        customerDivisionTable.setCellValueFactory(new  PropertyValueFactory<>("customerDivision"));
+        customerCountry.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
         try {
             customerTable.setItems(CustomerDatabase.getAllCustomers());
 
@@ -127,6 +126,11 @@ public class MainCustomerController  implements Initializable {
         }
 
     }
+    @FXML
+    void test(ActionEvent event) throws ParseException, SQLException {
+        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        System.out.println(selectCustomer);
 
+    }
 }
 

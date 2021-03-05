@@ -6,6 +6,14 @@ public final class Customer {
 
 
     private Integer customerId;
+
+
+
+    private int  customerDivisionId;
+
+
+
+    private String customerCountry;
     private String customerName;
     private String customerAddress;
     private String customerPhone;
@@ -13,17 +21,19 @@ public final class Customer {
 
 
 
-    private int customerDivision;
+    private String customerDivision;
 
 
 
-    public Customer(Integer customerId, String customerName, String customerAddress, String customerPhone, String customerZipCode, int customerDivision) {
+    public Customer(Integer customerId, String customerName, String customerCountry, String customerAddress, String customerPhone, String customerZipCode, int customerDivisionId, String customerDivision) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPhone = customerPhone;
         this.customerZipCode = customerZipCode;
+        this.customerDivisionId = customerDivisionId;
         this.customerDivision = customerDivision;
+        this.customerCountry = customerCountry;
     }
 
 
@@ -35,11 +45,17 @@ public final class Customer {
         this.customerId = customerId;
     }
 
-    public int getCustomerDivision() { return customerDivision;
-    }
 
-    public void setCustomerDivision(int customerDivision) { this.customerDivision = customerDivision;
+    public String getCustomerDivision() { return customerDivision;
     }
+    public void setCustomerDivision(String customerDivision) { this.customerDivision = customerDivision; }
+
+
+    public String getCustomerCountry() { return customerCountry; }
+    public void setCustomerCountry(String customerCountry) { this.customerCountry = customerCountry; }
+
+    public int getCustomerDivisionId(){return customerDivisionId;}
+    public void setCustomerDivisionId(int customerDivisionId) { this.customerDivisionId = customerDivisionId; }
 
     public String getCustomerName() {
         return customerName;

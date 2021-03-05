@@ -127,31 +127,30 @@ public class AddAppointmentController implements Initializable {
     void addAppointment(ActionEvent event) throws ParseException, SQLException {
 
 
+        errorChecks();
 
-              errorChecks();
 
+        selectContact = contactTable.getSelectionModel().getSelectedItem();
+        selectCustomer = customerTable.getSelectionModel().getSelectedItem();
+        String customerName = selectCustomer.getCustomerName();
+        int customerId = selectCustomer.getCustomerId();
+        int contactId = selectContact.getContactId();
+        String contactName = selectContact.getContactName();
 
-             selectContact = contactTable.getSelectionModel().getSelectedItem();
-             selectCustomer = customerTable.getSelectionModel().getSelectedItem();
-             String customerName = selectCustomer.getCustomerName();
-            int customerId = selectCustomer.getCustomerId();
-            int contactId = selectContact.getContactId();
-             String contactName = selectContact.getContactName();
+        String type = appointmentType.getValue();
 
-            String type = appointmentType.getValue();
+        String description = appointmentDescription.getText();
+        String location = locationAdd.getValue();
+        String title = appointmentTitleAdd.getText();
 
-            String description = appointmentDescription.getText();
-            String location = locationAdd.getValue();
-            String title = appointmentTitleAdd.getText();
+        String zero = ":00";
+        String startTimes = startTime.getValue();
+        String endTimes = endTime.getValue();
+        LocalDate date = datePicker.getValue();
+        Timestamp start = Time.generateStartTimestamp(datePicker, startTime, startMinutes, locationAdd);
+        Timestamp end = Time.generateEndTimestamp(datePicker, endTime, endMinutes, locationAdd);
 
-            String zero = ":00";
-            String startTimes = startTime.getValue();
-            String endTimes = endTime.getValue();
-            LocalDate date =  datePicker.getValue();
-            Timestamp start = Time.generateStartTimestamp( datePicker, startTime, startMinutes, locationAdd);
-            Timestamp end = Time.generateEndTimestamp(datePicker, endTime, endMinutes, locationAdd);
-
-        if (start.after(end)){
+        if (start.after(end)) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Check appointment times");
             errorAlert.setContentText("Ensure the end time is after the start time.");
@@ -160,8 +159,8 @@ public class AddAppointmentController implements Initializable {
         }
 
 
-        AppointmentDatabase.addAppointment(customerId, customerName, title,  location,  description, type, contactId,
-        start,  end );
+        AppointmentDatabase.addAppointment(customerId, customerName, title, location, description, type, contactId,
+                start, end);
         try {
             ((Node) (event.getSource())).getScene().getWindow().hide();
             Stage stage = new Stage();
@@ -174,85 +173,13 @@ public class AddAppointmentController implements Initializable {
         }
 
 
-//        String j = endTime.getValue().substring(0,(endTime.getValue().length()  - 5));
-//        String i = startTime.getValue().substring(0,(startTime.getValue().length()  - 5));
-//        String b = ":00";
-//        Timestamp startDateTime = Timestamp.valueOf(date + " " + i + b);
-//        Timestamp endTime = Timestamp.valueOf(date + " " + j + b);
+        appointmentInfo.setText(" Contact Name: " + contactId + "\nCustomer ID: " + customerId +
+                customerName + "\nLocation: " + location + "\n Description: " + description + "\nTitle:  " + title + "\nS: "
+                + start + "\n End: " + end + "\n End Time: " +
+                "\nDate: " + date + "\nUser: " + currentUser.getUserId());
 
 
-
-//        String inputDateInString=  startDateTime;
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyy hh:mm:ss");
-
-//        Date parsedDate = dateFormat.parse("inputDateInString");
-//
-//        Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-////
-////                  timestamp.getTime();
-
-//        String time = startDateTime;
-//        LocalTime localTimeObj = LocalTime.parse(time);
-
-//        Timestamp timestamp = Timestamp.valueOf(String.valueOf(startDateTime));
-
-            appointmentInfo.setText(" Contact Name: "+ contactId + "\nCustomer ID: " + customerId +
-                 customerName + "\nLocation: " + location + "\n Description: "+ description +"\nTitle:  "+ title + "\nS: "
-                    + start+ "\n End: " + end +"\n End Time: "+
-                     "\nDate: " + date +  "\nUser: " + currentUser.getUserId());
-
-
-
-//        String exceptions = "";
-//
-//
-//
-//        exceptions += Validations.validateAppointment(appointmentAdd.getValue(), contactAdd, locationAdd, datePicker, startTime,  endTime);
-//        if(exceptions.length()!=0){
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error.");
-//            alert.setContentText(exceptions);
-//            alert.initModality(Modality.APPLICATION_MODAL);
-//            alert.showAndWait();
-//            return;
-//        }
-
-
-//        Timestamp start = Time.Timestamp(datePicker, startTime,  locationAdd);
-//        Timestamp end = Time.Timestamp(datePicker, endTime, locationAdd);
-//        if (start.after(end)){
-//            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-//            errorAlert.setHeaderText("Check appointment times");
-//            errorAlert.setContentText("Ensure the end time is after the start time.");
-//            errorAlert.showAndWait();
-//            return;
-//        }
-
-//
-//        String overlap = AppointmentDatabase.isAppointmentOverlapping(start, end, customerId,  appointmentId);
-//        if (!overlap.isEmpty()){
-//            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-//            errorAlert.setHeaderText("Appointment is overlapping");
-//            errorAlert.setContentText(overlap);
-//            errorAlert.showAndWait();
-//            return;
-//        }
-
-//        AppointmentDatabase.addAppointment(appointmentId, customerId, title, location, contact,  start, end);
-//        try {
-//            ((Node) (event.getSource())).getScene().getWindow().hide();
-//            Stage stage = new Stage();
-//            Parent root = FXMLLoader.load(getClass().getResource("/View/MainAppointment.fxml"));
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.show();
-//        } catch (IOException ex) {
-//            System.out.println("IO Exception: " + ex.getMessage());
-//        }
-
-        }
-
-
+    }
 
 
     @FXML

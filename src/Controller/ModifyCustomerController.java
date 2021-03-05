@@ -26,7 +26,7 @@ public class ModifyCustomerController implements Initializable {
 
     private final ObservableList<Appointment>  selectedAppointment = FXCollections.observableArrayList();
 
-//    selectedAppointment =
+
 
     @FXML
     void modifyAppointment(ActionEvent event) {

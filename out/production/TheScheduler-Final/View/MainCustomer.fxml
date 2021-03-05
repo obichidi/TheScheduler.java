@@ -4,28 +4,30 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:controller="Controller.MainCustomerController" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainCustomerController">
    <children>
-      <TableView fx:id="customerTable" layoutX="15.0" layoutY="69.0" prefHeight="400.0" prefWidth="484.0">
+      <TableView fx:id="customerTable" layoutX="15.0" layoutY="69.0" prefHeight="400.0" prefWidth="687.0">
         <columns>
-          <TableColumn fx:id="customerIdTable" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="nameTable" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="customerIdTable" prefWidth="59.0" text="Id" />
+          <TableColumn fx:id="nameTable" prefWidth="91.0" text="Name" />
             <TableColumn fx:id="addressTable" prefWidth="90.0" text="adress" />
             <TableColumn fx:id="postalCodeTable" prefWidth="86.0" text="postal code" />
             <TableColumn fx:id="phoneTable" prefWidth="83.0" text="phone" />
-            <TableColumn fx:id="divisionTable" prefWidth="67.0" text="Division Id" />
+            <TableColumn fx:id="divisionIdTable" prefWidth="86.0" text="Division Id" />
+            <TableColumn fx:id="customerCountry" prefWidth="91.0" text="Country" />
+            <TableColumn fx:id="customerDivisionTable" prefWidth="50.0" text="Division" />
         </columns>
       </TableView>
-      <Button fx:id="customerAddButton" layoutX="528.0" layoutY="36.0" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer" />
-      <Button fx:id="editcustomer" layoutX="529.0" layoutY="95.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit Customer" />
-      <Button fx:id="deleteCustomer" layoutX="523.0" layoutY="147.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete customer" />
-      <Button fx:id="backButton" layoutX="554.0" layoutY="397.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button fx:id="customerAddButton" layoutX="724.0" layoutY="104.0" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer" />
+      <Button fx:id="editcustomer" layoutX="720.0" layoutY="154.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit Customer" />
+      <Button fx:id="deleteCustomer" layoutX="714.0" layoutY="192.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete customer" />
+      <Button fx:id="backButton" layoutX="753.0" layoutY="396.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <Label layoutX="73.0" layoutY="14.0" text="Customer Table">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Button fx:id="testButton" layoutX="557.0" layoutY="456.0" mnemonicParsing="false" onAction="#test" text="test" />
-      <Label fx:id="testData" layoutX="554.0" layoutY="242.0" text="Label" />
+      <Button fx:id="testButton" layoutX="756.0" layoutY="456.0" mnemonicParsing="false" onAction="#test" text="test" />
+      <Label fx:id="testData" layoutX="738.0" layoutY="269.0" text="Label" />
    </children>
 </AnchorPane>

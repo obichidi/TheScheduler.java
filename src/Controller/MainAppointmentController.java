@@ -44,6 +44,7 @@ public class MainAppointmentController implements Initializable {
     @FXML private ComboBox<String> pickMonth;
     @FXML private TableColumn<Appointment, Integer> appointmentId;
     @FXML private TableColumn<Appointment, String> appointmentType;
+
     @FXML private TableColumn<Appointment, String> appointmentTitle;
     @FXML private TableColumn<Appointment, String> appointmentLocation;
     @FXML private TableColumn<Appointment, String> appointmentDescription;
@@ -223,6 +224,7 @@ public class MainAppointmentController implements Initializable {
         appointmentStartTime.setCellValueFactory(new PropertyValueFactory<>("appointmentStartTime"));
         appointmentEndTime.setCellValueFactory(new PropertyValueFactory<>("appointmentEndTime"));
         appointmentStartDate.setCellValueFactory(new PropertyValueFactory<>("appointmentStartDate"));
+
         try {
             System.out.println(AppointmentDatabase.getAppointmentsFor15Mins());
         } catch (ParseException e) {

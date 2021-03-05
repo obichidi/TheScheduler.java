@@ -20,19 +20,28 @@ public class CustomerDatabase {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         try {
             try (Statement statement = ConnectorDb.connectDb().createStatement()) {
-                String query = "SELECT  *  FROM customers";
+                String query = "SELECT  c.Customer_ID, co.Country, f.Division, c.Customer_Name, c.Address, c.Phone, c.Postal_Code, c.Division_ID" +
+                        " FROM customers as c " +
+                        " INNER JOIN first_level_divisions as f " +
+                        " ON f.Division_ID = c.Division_ID  " +
+                        "INNER JOIN countries as co " +
+                        "ON f.COUNTRY_ID = co.COUNTRY_ID";
                 ResultSet rs = statement.executeQuery(query);
                 while(rs.next()) {
-                    int customerId = rs.getInt("Customer_ID");
-                     String customerName = rs.getString("Customer_Name");
-                     String customerAddress = rs.getString("Address");
-                     String customerPhone = rs.getString("Phone");
-                     String customerZipCode = rs.getString("Postal_Code");
-                     int  customerDivision = rs.getInt("Division_ID");
-                    Customer customer = new Customer(customerId,customerName,customerPhone, customerAddress, customerZipCode, customerDivision);
+                    int customerId = rs.getInt("c.Customer_ID");
+                    String customerDivision = rs.getString("f.Division");
+                    String customerCountry = rs.getString("co.Country");
+                     String customerName = rs.getString("c.Customer_Name");
+                     String customerAddress = rs.getString("c.Address");
+                     String customerPhone = rs.getString("c.Phone");
+                     String customerZipCode = rs.getString("c.Postal_Code");
+                     int  customerDivisionId = rs.getInt("c.Division_ID");
+                    Customer customer = new Customer(customerId,customerName,customerPhone, customerAddress, customerZipCode,customerCountry, customerDivisionId, customerDivision);
                     allCustomers.add(customer);
                 }
             }
+
+
 
         } catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());
@@ -82,6 +91,35 @@ public class CustomerDatabase {
         }
         return customers;
     }
+
+
+    public static void addCustomer( String address, String postalCode, String phone,  String customerName ,String customerCountry){
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
+                    "INSERT INTO customers ( Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By)"
+                            + " VALUES ('" + customerName + "' ,'" + address + "',   '" + postalCode
+                            + "', '" + phone + "', CURRENT_TIMESTAMP, '" + User.currentUser.getUsername()
+                            + "', CURRENT_TIMESTAMP, '" + User.currentUser.getUsername() + "')");
+            statement.executeUpdate();
+            System.out.println("Address successfully added!");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        try {
+            PreparedStatement statement2 = ConnectorDb.connectDb().prepareStatement(
+                    "INSERT INTO countries (Country, Create_Date, Created_By,Last_Update, Last_Updated_By )" +
+                            "VALUES('" + customerCountry+ "',CURRENT_TIMESTAMP, '" + User.currentUser.getUsername() + "', CURRENT_TIMESTAMP, '" + User.currentUser.getUsername() + "' )" );
+
+
+            statement2.executeUpdate();
+            System.out.println("Customer succesfully added!");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+
+
 
     public static void deleteCustomer( int  customerId){
 
