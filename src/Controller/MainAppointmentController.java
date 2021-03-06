@@ -112,6 +112,8 @@ public class MainAppointmentController implements Initializable {
         stage.show();
 
     }
+
+
     @FXML
     void showAllAppointments(ActionEvent event) throws IOException {
         try {
@@ -124,6 +126,8 @@ public class MainAppointmentController implements Initializable {
         }
 
     }
+
+
 
     @FXML
     void deleteAppointmentButton(ActionEvent event) throws ParseException, SQLException {

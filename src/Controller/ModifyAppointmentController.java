@@ -97,15 +97,15 @@ public class ModifyAppointmentController implements Initializable {
         String endTimes = endTimeModify.getValue();
         LocalDate date =  datePickerModify.getValue();
         Timestamp start = Time.generateStartTimestampModify( datePickerModify, startTimeModify, startMinuteModify, locationModify);
-       Timestamp end = Time.generateEndTimestampModify(datePickerModify, endTimeModify, endMinuteModify, locationModify);
+        Timestamp end = Time.generateEndTimestampModify(datePickerModify, endTimeModify, endMinuteModify, locationModify);
         String overlap = AppointmentDatabase.OverlappedAppointment(start, end, customerId, contact, appointmentId);
 
 
         if (start.after(end)){
           Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-           errorAlert.setHeaderText("Check appointment times");
-            errorAlert.setContentText("Ensure the end Must be after the start time.");
-            errorAlert.showAndWait();
+          errorAlert.setHeaderText("Check appointment times");
+          errorAlert.setContentText("Ensure the end Must be after the start time.");
+          errorAlert.showAndWait();
            return;
       }
 
@@ -144,10 +144,9 @@ public class ModifyAppointmentController implements Initializable {
         @Override
         public void initialize (URL url, ResourceBundle rb){
             appointmentToUpdate = MainAppointmentController.getSelectedAppointment();
+
+
             typeModify.setPromptText(appointmentToUpdate.getAppointmentType());
-
-
-
 
 
             startTimeModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString());

@@ -29,16 +29,23 @@ public class CustomerDatabase {
                 ResultSet rs = statement.executeQuery(query);
                 while(rs.next()) {
                     int  customerDivisionId = rs.getInt("c.Division_ID");
+//                    System.out.println("DivisionId: " +customerDivisionId);
                     int customerId = rs.getInt("c.Customer_ID");
+//                    System.out.println("Customer ID : " +customerId);
                     String customerDivision = rs.getString("f.Division");
+//                    System.out.println("Customer Division: " + customerDivision);
                     String customerPhone = rs.getString("c.Phone");
+//                    System.out.println("Customer Phone: " + customerPhone);
                     String customerCountry = rs.getString("co.Country");
-                     String customerName = rs.getString("c.Customer_Name");
-                     String customerAddress = rs.getString("c.Address");
+//                    System.out.println("Customer Country: " +customerCountry);
+                    String customerName = rs.getString("c.Customer_Name");
+//                    System.out.println("Customer Name :" + customerName);
+                    String customerAddress = rs.getString("c.Address");
+//                    System.out.println("Customer address: "+customerAddress);
+                    String customerZipCode = rs.getString("c.Postal_Code");
+//                    System.out.println("customer Zip: " +customerZipCode);
 
-                     String customerZipCode = rs.getString("c.Postal_Code");
-
-                    Customer customer = new Customer(customerId,customerDivision,customerName,customerPhone, customerAddress, customerZipCode,customerCountry, customerDivisionId);
+                    Customer customer = new Customer( customerId, customerDivision, customerName,  customerCountry,  customerAddress, customerPhone,  customerZipCode,  customerDivisionId);
                     allCustomers.add(customer);
                 }
             }
@@ -53,28 +60,34 @@ public class CustomerDatabase {
     }
 
 
-    public static void modifyCustomer( int CustomerId, String customerName,String customerPhone,String customerAddress, String customerZipCode, String customerCountry, int customerDivisionId, String customerDivision){
+    public static void modifyCustomer(int customerId, String customerName, String customerPhone, String customerAddress, String customerZipCode,  int customerDivisionId) {
         try {
             PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
-                    "UPDATE customers SET Address = '" + customerAddress+ "', Customer_Name = '" + customerName + "', Division = '" + customerDivision + "', Division_ID =  '" + customerDivisionId + "', Phone = '" + customerPhone + "', Postal_Code = '" + customerZipCode + "',  Last_Update = CURRENT_TIMESTAMP, lastUpdateBy = '" + User.currentUser.getUsername()
-                            + "' WHERE Customer_Id = '" + CustomerId + "';");
+                    "UPDATE customers SET Address = '" + customerAddress + "', Customer_Name = '" + customerName + "', Division_ID =  '" + customerDivisionId + "', Phone = '" + customerPhone + "', Postal_Code = '" + customerZipCode + "',  Last_Update = CURRENT_TIMESTAMP, last_Updated_By = '" + User.currentUser.getUsername()
+                            + "' WHERE Customer_ID = '" + customerId + "';");
             statement.executeUpdate();
             System.out.println("Address updated successfully!");
         } catch (SQLException ex) {
             System.out.println(ex);
         }
 
-        try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
-                    "UPDATE countries SET  = Division ='" + customerDivision+ "',  Country = '" + customerCountry + ", Phone = '" + customerPhone + "', Postal_Code = '" + customerZipCode + "',  Last_Update = CURRENT_TIMESTAMP, lastUpdateBy = '" + User.currentUser.getUsername()
-                            + "' WHERE Division_Id = '" + customerDivisionId + "';");
-            statement.executeUpdate();
-            System.out.println("Address updated successfully!");
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+//        try {
+//            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
+//                    "UPDATE countries SET   Country = '" + customerCountry + ", Phone = '" + customerPhone + "', Postal_Code = '" + customerZipCode + "',  Last_Update = CURRENT_TIMESTAMP, lastUpdateBy = '" + User.currentUser.getUsername()
+//                            + "' WHERE Division_Id = '" + customerDivisionId + "';");
+//            statement.executeUpdate();
+//            System.out.println("Address updated successfully!");
+//        } catch (SQLException ex) {
+//            System.out.println(ex);
+//        }
+//
+//    }
+
 
     }
+
+
+
     public static ObservableList<String> DivisionList() {
         ObservableList<String> divisions = FXCollections.observableArrayList();
         try {
@@ -95,7 +108,7 @@ public class CustomerDatabase {
     public static ObservableList<String> CountryList() {
         ObservableList<String> countries = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Country  FROM countries  ORDER BY Country ASC;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Country  FROM countries  ;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 if(!countries.contains(rs.getString("Country"))){
@@ -182,4 +195,6 @@ public class CustomerDatabase {
     }
 
 }
+
+
 }

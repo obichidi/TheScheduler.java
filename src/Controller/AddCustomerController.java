@@ -39,7 +39,7 @@ public class AddCustomerController  implements Initializable {
 
 
         String customerName = firstNameAdd.getText() + " " + lastNameAdd.getText() ;
-        String customerAddress = customerAddressNum.getText() + customerAddressStreet.getText();
+        String customerAddress = customerAddressNum.getText() + " " +customerAddressStreet.getText();
         String customerDivision = customerDivisionBox.getValue();
         String customerZipCode = customerZipText.getText();
         String customerPhone = phoneAdd1.getText() + "-" +  phoneAdd2.getText() + "-" +  phoneAdd3.getText();
@@ -89,7 +89,7 @@ public class AddCustomerController  implements Initializable {
     @Override
     public void initialize (URL url, ResourceBundle rb){
 
-        customerCountryBox.setItems(CustomerDatabase.CustomerList());
+        customerCountryBox.setItems(CustomerDatabase.CountryList());
         customerDivisionBox.setItems(CustomerDatabase.DivisionList());
 
     }

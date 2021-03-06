@@ -71,7 +71,7 @@ public class AddAppointmentController implements Initializable {
     ObservableList<String> startsMinutes = FXCollections.observableArrayList();
     ObservableList<String> endsMinutes = FXCollections.observableArrayList();
     ObservableList<String> Locations = FXCollections.observableArrayList();
-    ObservableList<String> zero = FXCollections.observableArrayList();
+
 
 
     @Override
@@ -83,8 +83,7 @@ public class AddAppointmentController implements Initializable {
          userInfo.setText("Welcome " + User.currentUser.getUsername());
 
         appointmentType.setItems(AppointmentDatabase.TypeList());
-//            appointmentAdd.getEditor().textProperty().addListener((obs, oldText, newText) -> {
-//            appointmentAdd.setValue(newText);
+
         locationAdd.setItems(AppointmentDatabase.LocationList());
 
 
@@ -105,7 +104,7 @@ public class AddAppointmentController implements Initializable {
         }
 
 
-//        contactAdd.setItems(AppointmentDatabase.ContactList());
+
 
         startTimes.addAll("9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.");
         endTimes.addAll("9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.");
@@ -143,7 +142,7 @@ public class AddAppointmentController implements Initializable {
         String location = locationAdd.getValue();
         String title = appointmentTitleAdd.getText();
 
-        String zero = ":00";
+
         String startTimes = startTime.getValue();
         String endTimes = endTime.getValue();
         LocalDate date = datePicker.getValue();

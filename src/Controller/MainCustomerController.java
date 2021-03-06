@@ -107,6 +107,7 @@ public class MainCustomerController  implements Initializable {
     }
     @FXML
     void editCustomer(ActionEvent event) {
+        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
         Parent root = null;
@@ -125,6 +126,7 @@ public class MainCustomerController  implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+
         customerIdTable.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         nameTable.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         addressTable.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
@@ -133,6 +135,7 @@ public class MainCustomerController  implements Initializable {
         divisionIdTable.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
         customerDivisionTable.setCellValueFactory(new  PropertyValueFactory<>("customerDivision"));
         customerCountry.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
+
         try {
             customerTable.setItems(CustomerDatabase.getAllCustomers());
 
@@ -140,8 +143,10 @@ public class MainCustomerController  implements Initializable {
             Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("ParseException: " + e);
         }
+        }
 
-    }
+
+
     @FXML
     void test(ActionEvent event) throws ParseException, SQLException {
         selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
