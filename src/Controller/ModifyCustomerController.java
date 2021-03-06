@@ -24,13 +24,15 @@ public class ModifyCustomerController implements Initializable {
     @FXML private DatePicker dateModify;
     @FXML private ComboBox<Appointment> customerModify;
 
-    private final ObservableList<Appointment>  selectedAppointment = FXCollections.observableArrayList();
+    private final ObservableList<Appointment>  selectedCustomer = FXCollections.observableArrayList();
 
 
 
     @FXML
-    void modifyAppointment(ActionEvent event) {
+    void modifyCustomer(ActionEvent event) {
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

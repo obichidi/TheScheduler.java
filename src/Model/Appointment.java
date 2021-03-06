@@ -7,23 +7,13 @@ import java.time.LocalTime;
 public final class Appointment {
 
     private Integer appointmentId;
-
-
     private Integer customerId;
-
-
-
-
-
-   private String customerName;
+    private String customerName;
     private String appointmentTitle;
     private String appointmentType;
     private String appointmentLocation;
     private String appointmentDescription;
     private String appointmentContact;
-
-
-
 
     private LocalDate appointmentStartDate;
     private LocalTime appointmentStartTime;

@@ -10,9 +10,7 @@ public final class Customer {
 
 
     private int  customerDivisionId;
-
-
-
+    private String customerDivision;
     private String customerCountry;
     private String customerName;
     private String customerAddress;
@@ -21,11 +19,11 @@ public final class Customer {
 
 
 
-    private String customerDivision;
 
 
 
-    public Customer(Integer customerId, String customerName, String customerCountry, String customerAddress, String customerPhone, String customerZipCode, int customerDivisionId, String customerDivision) {
+
+    public Customer(int customerId, String customerDivision, String customerName, String customerCountry, String customerAddress, String customerPhone, String customerZipCode, int customerDivisionId) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
@@ -37,17 +35,16 @@ public final class Customer {
     }
 
 
-    public Integer getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Integer customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
 
-    public String getCustomerDivision() { return customerDivision;
-    }
+    public String getCustomerDivision() { return customerDivision; }
     public void setCustomerDivision(String customerDivision) { this.customerDivision = customerDivision; }
 
 
@@ -60,7 +57,6 @@ public final class Customer {
     public String getCustomerName() {
         return customerName;
     }
-
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
@@ -68,7 +64,6 @@ public final class Customer {
     public String getCustomerAddress() {
         return customerAddress;
     }
-
     public void setCustomerAddress(String customerAddress) {
         this.customerAddress = customerAddress;
     }

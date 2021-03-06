@@ -27,9 +27,9 @@ public class AppointmentDatabase {
 
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
-                int contactId = rs.getInt("contacts.Contact_ID");
-                String contactName = rs.getString("contacts.Contact_Name");
-                String contactEmail = rs.getString("contacts.Email");
+                int contactId = rs.getInt("Contact_ID");
+                String contactName = rs.getString("Contact_Name");
+                String contactEmail = rs.getString("Email");
 
                 Contact contact = new Contact(contactId,contactName,contactEmail);
                 allContacts.add(contact);

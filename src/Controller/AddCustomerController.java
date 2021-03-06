@@ -20,22 +20,39 @@ public class AddCustomerController  implements Initializable {
     @FXML private TextField customerNameText;
     @FXML private TextField customerPhoneText;
     @FXML private TextField customerAddressText;
+    @FXML private TextField firstNameAdd;
+    @FXML private TextField lastNameAdd;
+    @FXML private TextField phoneAdd1;
+    @FXML private TextField phoneAdd2;
+    @FXML private TextField phoneAdd3;
+    @FXML private TextField customerAddressNum;
+    @FXML private TextField customerAddressStreet;
     @FXML private TextField customerZipText;
-    @FXML private TextField divisionIdText;
+
     @FXML private Label testData;
     @FXML private ComboBox<String> customerCountryBox;
+    @FXML private ComboBox<String> customerDivisionBox;
 
 
     @FXML
     void addCustomer(ActionEvent event) {
-        String customerName = customerNameText.getText();
-        String customerAddress = customerAddressText.getText();
 
+
+        String customerName = firstNameAdd.getText() + " " + lastNameAdd.getText() ;
+        String customerAddress = customerAddressNum.getText() + customerAddressStreet.getText();
+        String customerDivision = customerDivisionBox.getValue();
         String customerZipCode = customerZipText.getText();
-        String customerPhone = customerPhoneText.getText();
-         String customerCountry = customerCountryBox.getValue();
+        String customerPhone = phoneAdd1.getText() + "-" +  phoneAdd2.getText() + "-" +  phoneAdd3.getText();
+        String customerCountry = customerCountryBox.getValue();
+        int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision);
 
-         CustomerDatabase.addCustomer(customerAddress, customerZipCode, customerPhone , customerName, customerCountry);
+
+
+        testData.setText("customerName :" + customerName + "\n Customer Address: " + customerAddress + "\n Customer Division: " + customerDivision
+        + "\n Customer Zip:" + customerZipCode + "\n Customer Phone: " + customerPhone + "\n Customer Country: " + customerCountry +"\n Customer Division :" + customerDivisionId);
+
+
+         CustomerDatabase.addCustomer(customerAddress, customerZipCode, customerPhone , customerName, customerDivisionId );
 
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
@@ -54,6 +71,17 @@ public class AddCustomerController  implements Initializable {
 
     @FXML
     void back(ActionEvent event) {
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+        Stage stage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/View/MainCustomer.fxml"));
+        } catch (IOException ex) {
+            System.out.println("IO Exception: " + ex);
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -62,6 +90,11 @@ public class AddCustomerController  implements Initializable {
     public void initialize (URL url, ResourceBundle rb){
 
         customerCountryBox.setItems(CustomerDatabase.CustomerList());
+        customerDivisionBox.setItems(CustomerDatabase.DivisionList());
+
+    }
+
+    public void errorCheck(){
 
     }
 

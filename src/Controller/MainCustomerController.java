@@ -53,7 +53,7 @@ public class MainCustomerController  implements Initializable {
         Stage stage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/View/CustomerAdd.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
         } catch (IOException ex) {
             System.out.println("IO Exception: " + ex);
         }
@@ -108,7 +108,7 @@ public class MainCustomerController  implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-
+        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
         customerIdTable.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         nameTable.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         addressTable.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
