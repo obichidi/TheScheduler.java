@@ -45,16 +45,16 @@ public class ModifyCustomerController implements Initializable {
 
 
        CustomerDatabase.modifyCustomer(   customerId,  customerName,  customerPhone,  customerAddress,  customerZipCode,  customerDivisionId);
-//        try {
-//            ((Node) (event.getSource())).getScene().getWindow().hide();
-//            Stage stage = new Stage();
-//            Parent root = FXMLLoader.load(getClass().getResource("/view/MainCustomer.fxml"));
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.show();
-//        } catch (IOException ex) {
-//            System.out.println("IO Exception: " + ex.getMessage());
-//        }
+        try {
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MainCustomer.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println("IO Exception: " + ex.getMessage());
+        }
 
         testerTest.setText("Customer Id: " + customerId +"\nCustomer Name: " + customerName +  "\nCustomer Phone: "+ customerPhone + "\ncustomer Address: "+ customerAddress + "\nCustomer Zip Code: "+ customerZipCode + "\nCustomer Country: " + customerCountry +
        "\nCustomer Division: " + customerDivision);

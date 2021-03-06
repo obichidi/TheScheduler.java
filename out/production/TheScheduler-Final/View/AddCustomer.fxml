@@ -24,8 +24,8 @@
       <Label fx:id="testData" layoutX="419.0" layoutY="179.0" text="Label" />
       <Button layoutX="467.0" layoutY="353.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <ComboBox fx:id="customerCountryBox" layoutX="186.0" layoutY="319.0" prefWidth="150.0" />
-      <ComboBox fx:id="customerDivisionBox" layoutX="187.0" layoutY="274.0" prefWidth="150.0" />
-      <Label layoutX="123.0" layoutY="279.0" text="Division" />
+      <ComboBox fx:id="customerDivisionBox" layoutX="186.0" layoutY="279.0" prefWidth="150.0" />
+      <Label layoutX="102.0" layoutY="284.0" text="Division" />
       <TextField fx:id="phoneAdd2" layoutX="227.0" layoutY="152.0" prefHeight="27.0" prefWidth="46.0" promptText="123" />
       <TextField fx:id="phoneAdd3" layoutX="272.0" layoutY="152.0" prefHeight="27.0" prefWidth="65.0" promptText="1234" />
       <TextField fx:id="customerAddressStreet" layoutX="235.0" layoutY="198.0" prefHeight="27.0" prefWidth="113.0" promptText="street name" />
