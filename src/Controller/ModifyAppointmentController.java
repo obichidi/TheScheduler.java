@@ -140,62 +140,7 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-//        String exceptions = "";
-//        exceptions += Validations.validateAppointmentCustomer(customerName);
-//        exceptions += Validations.validateAppointment(titleComboBox.getValue(), employeeContactBox, locationBox, calendarBox, startTimeHourBox, startTimeMinuteBox, endTimeHourBox, endTimeMinuteBox);
-//        if(exceptions.length()!=0){
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error.");
-//            alert.setContentText(exceptions);
-//            alert.initModality(Modality.APPLICATION_MODAL);
-//            alert.showAndWait();
-//            return;
-//        }
-//        int appointmentId = appointmentToUpdate.getAppointmentId();
-//        ObservableList<Appointment> customerName = AppointmentDatabase.getAllAppointments();
-//       int customerId = appointmentToUpdate.getCustomerId();
-//
-//
-//
-//
-//        Timestamp end = Time.generateEndTimestamp(dateModify, endHourModify, endMinuteModify, locationModify);
-//  //      String overlap = AppointmentDatabase.isAppointmentOverlapping(start, end,  contact, appointmentId);
-//
-//
-////        if (start.after(end)){
-////            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-////            errorAlert.setHeaderText("Check appointment times");
-////            errorAlert.setContentText("Ensure the end time is after the start time.");
-////            errorAlert.showAndWait();
-////            return;
-////        }
-////        if (!overlap.isEmpty()){
-////            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-////            errorAlert.setHeaderText("Appointment is overlapping");
-////            errorAlert.setContentText(overlap);
-////            errorAlert.showAndWait();
-////            return;
-////        }
-////
-//
-//
-//
-////        try {
-////            ((Node) (event.getSource())).getScene().getWindow().hide();
-////            Stage stage = new Stage();
-////            Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentMain.fxml"));
-////            Scene scene = new Scene(root);
-////            stage.setScene(scene);
-////            stage.show();
-////        } catch (IOException ex) {
-////            System.out.println("IO Exception: " + ex.getMessage());
-////        }
-////
-////      System.out.println(appointmentToUpdate);
-//    }
-//
-//
-//
+
         @Override
         public void initialize (URL url, ResourceBundle rb){
             appointmentToUpdate = MainAppointmentController.getSelectedAppointment();

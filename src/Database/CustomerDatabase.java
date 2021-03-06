@@ -78,7 +78,7 @@ public class CustomerDatabase {
     public static ObservableList<String> DivisionList() {
         ObservableList<String> divisions = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Division, Division_ID FROM first_level_divisions ORDER BY Division ASC;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Division, Division_ID FROM first_level_divisions ;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 if(!divisions.contains(rs.getString("Division"))){
@@ -89,6 +89,23 @@ public class CustomerDatabase {
             System.out.println("SQL Exception: " + ex.getMessage());
         }
         return divisions;
+    }
+
+
+    public static ObservableList<String> CountryList() {
+        ObservableList<String> countries = FXCollections.observableArrayList();
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Country  FROM countries  ORDER BY Country ASC;");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                if(!countries.contains(rs.getString("Country"))){
+                    countries.add(rs.getString("Country"));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+        }
+        return countries;
     }
 
 

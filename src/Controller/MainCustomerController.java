@@ -1,5 +1,5 @@
 package Controller;
-import Database.AppointmentDatabase;
+
 import Database.CustomerDatabase;
 import Model.Appointment;
 import Model.Customer;
@@ -44,7 +44,15 @@ public class MainCustomerController  implements Initializable {
     @FXML private Button testButton;
 
     static Customer selectCustomer;
+
     private final ObservableList<Customer> refreshCustomers = FXCollections.observableArrayList();
+
+
+    public static Customer getSelectCustomer() {
+        return selectCustomer;
+    }
+
+
 
     @FXML
     void addCustomer(ActionEvent event) throws IOException {
@@ -60,11 +68,8 @@ public class MainCustomerController  implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
-
-
-
     }
+
 
     @FXML
     void back(ActionEvent event) {
@@ -102,6 +107,17 @@ public class MainCustomerController  implements Initializable {
     }
     @FXML
     void editCustomer(ActionEvent event) {
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+        Stage stage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/View/ModifyCustomer.fxml"));
+        } catch (IOException ex) {
+            System.out.println("IO Exception: " + ex);
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
