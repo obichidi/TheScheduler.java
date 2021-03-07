@@ -1,9 +1,11 @@
 package Controller;
 
 
+import Database.AppointmentDatabase;
 import Database.UserDatabase;
 
 
+import Lambda.UpcomingAppointment;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,8 +25,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
+import java.text.ParseException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static Util.Login.recordLogin;
 
 public class LoginController implements Initializable {
 
@@ -35,7 +40,7 @@ public class LoginController implements Initializable {
     @FXML private Button loginButton;
    @FXML private Label location;
     String change;
-    String upcoming = "";
+    String appointmentAlert = "";
     private String errorLabel;
     private String errorMessage;
 
@@ -62,12 +67,12 @@ public class LoginController implements Initializable {
 
 
     @FXML
-    private void Login(ActionEvent event) throws IOException {
+    private void Login(ActionEvent event) throws IOException, ParseException {
         String username = usernameText.getText();
         String password = passwordText.getText();
         boolean loginAccepted = UserDatabase.validateLogin(username, password);
         if (loginAccepted) {
-            System.out.println("login Accepted!!!!!!");
+
             ((Node) (event.getSource())).getScene().getWindow().hide();
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
@@ -77,25 +82,25 @@ public class LoginController implements Initializable {
 
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("There are appointments in the next 15 minutes.");
-            alert.setContentText("wrong username");
+            alert.setTitle("There are appointments within 15 minutes.");
+            alert.setContentText("Please Input the Correct UserName");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
 
         }
-//            upcoming = UpcomingAppointment.returnUpcomingAppointments();
+            appointmentAlert = AppointmentDatabase.getAppointmentsIn15Mins();
         try {
-            if (upcoming.length() > 0) {
+            if (appointmentAlert.length() > 0) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("There are appointments in the next 15 minutes.");
-                alert.setContentText(upcoming);
+                alert.setTitle("There are appointments within 15 minutes.");
+                alert.setContentText(appointmentAlert);
                 alert.initModality(Modality.APPLICATION_MODAL);
                 alert.showAndWait();
             }
         } catch (Exception e) {
             System.out.println("Exception: " + e);
         }
-//            LoginRecorder.recordLogin();
+        recordLogin();
 
         //    } else {
         Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -27,6 +27,7 @@ public class AddCustomerController  implements Initializable {
     @FXML private TextField phoneAdd3;
     @FXML private TextField customerAddressNum;
     @FXML private TextField customerAddressStreet;
+    @FXML private TextField cityAdd;
     @FXML private TextField customerZipText;
 
     @FXML private Label testData;
@@ -39,7 +40,7 @@ public class AddCustomerController  implements Initializable {
 
 
         String customerName = firstNameAdd.getText() + " " + lastNameAdd.getText() ;
-        String customerAddress = customerAddressNum.getText() + " " +customerAddressStreet.getText();
+        String customerAddress = customerAddressNum.getText() + " " +customerAddressStreet.getText() + "," +cityAdd.getText();
         String customerDivision = customerDivisionBox.getValue();
         String customerZipCode = customerZipText.getText();
         String customerPhone = phoneAdd1.getText() + "-" +  phoneAdd2.getText() + "-" +  phoneAdd3.getText();

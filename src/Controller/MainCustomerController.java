@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,9 +90,11 @@ public class MainCustomerController  implements Initializable {
 
     @FXML
     void deleteCustomer(ActionEvent event) throws ParseException, SQLException {
-        if(customerTable.getSelectionModel().getSelectedItem() != null) {
-            selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-        } else {
+
+        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        if (customerTable.getSelectionModel().getSelectedItem() == null) {
+
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("You MUST select a Customer.");
@@ -99,11 +102,20 @@ public class MainCustomerController  implements Initializable {
             alert.showAndWait();
             return;
         }
-        CustomerDatabase.deleteCustomer(selectCustomer.getCustomerId());
-        refreshCustomers.clear();
-        refreshCustomers.addAll(CustomerDatabase.getAllCustomers());
-        customerTable.setItems(refreshCustomers);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("CONFIRM");
+        alert.setContentText("Please confirm the you want to cancel :");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.showAndWait();
+        Optional<ButtonType> decision = alert.showAndWait();
+        if (decision.get() == ButtonType.OK) {
 
+
+            CustomerDatabase.deleteCustomer(selectCustomer.getCustomerId());
+            refreshCustomers.clear();
+            refreshCustomers.addAll(CustomerDatabase.getAllCustomers());
+            customerTable.setItems(refreshCustomers);
+        }
     }
     @FXML
     void editCustomer(ActionEvent event) {

@@ -44,7 +44,7 @@ public class ModifyCustomerController implements Initializable {
         int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision) ;
 
 
-       CustomerDatabase.modifyCustomer(   customerId,  customerName,  customerPhone,  customerAddress,  customerZipCode,  customerDivisionId);
+       CustomerDatabase.modifyCustomer( customerId,  customerName,  customerPhone,  customerAddress,  customerZipCode,  customerDivisionId);
         try {
             ((Node) (event.getSource())).getScene().getWindow().hide();
             Stage stage = new Stage();

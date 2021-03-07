@@ -20,14 +20,17 @@
             <TableColumn fx:id="customerNameC" prefWidth="114.0" text="Customer Name" />
         </columns>
       </TableView>
-      <Button fx:id="addAppointmentButton" layoutX="1061.0" layoutY="113.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />
-      <Button fx:id="modifyAppointmentButton" layoutX="1058.0" layoutY="164.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
-      <Button fx:id="deleteAppointment" layoutX="1060.0" layoutY="230.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" text="Delete Appointment" />
+      <Button fx:id="addAppointmentButton" layoutX="1060.0" layoutY="112.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />
+      <Button fx:id="modifyAppointmentButton" layoutX="1053.0" layoutY="163.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
+      <Button fx:id="deleteAppointment" layoutX="1053.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" text="Cancel Appointment" />
       <Button layoutX="1096.0" layoutY="362.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <Button layoutX="1104.0" layoutY="409.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-      <RadioButton fx:id="showMonthly" layoutX="381.0" layoutY="28.0" mnemonicParsing="false" onAction="#showMonthlyAppointments" text="Monthly" />
-      <RadioButton fx:id="showWeekly" layoutX="554.0" layoutY="28.0" mnemonicParsing="false" onAction="#showWeeklyAppointments" text="Weekly" />
-      <RadioButton fx:id="allAppointments" layoutX="658.0" layoutY="28.0" mnemonicParsing="false" onAction="#showAllAppointments" text="All Appointments" />
+      <RadioButton fx:id="showMonthly" layoutX="381.0" layoutY="28.0" mnemonicParsing="false" onAction="#showMonthlyAppointments" text="Monthly">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggleAppointment" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="showWeekly" layoutX="554.0" layoutY="28.0" mnemonicParsing="false" onAction="#showWeeklyAppointments" text="Weekly" toggleGroup="$toggleAppointment" />
+      <RadioButton fx:id="allAppointments" layoutX="658.0" layoutY="28.0" mnemonicParsing="false" onAction="#showAllAppointments" text="Refresh" toggleGroup="$toggleAppointment" />
       <ComboBox fx:id="pickMonth" layoutX="269.0" layoutY="23.0" prefHeight="27.0" prefWidth="88.0" promptText="Month" />
       <Button layoutX="98.0" layoutY="15.0" mnemonicParsing="false" onAction="#test" text="test" />
    </children>

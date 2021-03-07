@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,7 +61,7 @@ public class MainAppointmentController implements Initializable {
     @FXML private RadioButton showMonthly;
     @FXML private RadioButton showWeekly;
     @FXML private RadioButton allAppointments;
-
+    @FXML private ToggleGroup toggleAppointment;
     static Appointment selectAppointment;
 
     ObservableList<String> months = FXCollections.observableArrayList();
@@ -131,21 +132,40 @@ public class MainAppointmentController implements Initializable {
 
     @FXML
     void deleteAppointmentButton(ActionEvent event) throws ParseException, SQLException {
-        if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
-            selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error.");
-            alert.setContentText("Please select an appointment.");
-            alert.initModality(Modality.APPLICATION_MODAL);
-            alert.showAndWait();
+        selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
+        if (appointmentTable.getSelectionModel().getSelectedItem() == null) {
+            Alert appointmentAlert = new Alert(Alert.AlertType.ERROR);
+            appointmentAlert.setTitle("Error.");
+            appointmentAlert.setContentText("Please select an appointment.");
+            appointmentAlert.initModality(Modality.APPLICATION_MODAL);
+            appointmentAlert.showAndWait();
             return;
+
         }
-        AppointmentDatabase.deleteAppointment(selectAppointment);
-        refreshAppointments.clear();
-        refreshAppointments.addAll(AppointmentDatabase.getAllAppointments());
-        appointmentTable.setItems(refreshAppointments);
-    }
+
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("CONFIRM");
+            alert.setContentText("Are you sure you want to cancel" + "\n" + selectAppointment.getCustomerId() + "\n"
+                    + selectAppointment.getAppointmentTitle() + "\n" + selectAppointment.getCustomerName());
+//            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            Optional<ButtonType> decision = alert.showAndWait();
+            if (decision.get() == ButtonType.OK) {
+
+
+//                alert.showAndWait();
+                AppointmentDatabase.deleteAppointment(selectAppointment);
+                refreshAppointments.clear();
+                refreshAppointments.addAll(AppointmentDatabase.getAllAppointments());
+                appointmentTable.setItems(refreshAppointments);
+
+            } else {
+                    return;
+            }
+
+
+        }
 
     @FXML
     void modifyAppointment(ActionEvent event) throws IOException {
@@ -230,7 +250,7 @@ public class MainAppointmentController implements Initializable {
         appointmentStartDate.setCellValueFactory(new PropertyValueFactory<>("appointmentStartDate"));
 
         try {
-            System.out.println(AppointmentDatabase.getAppointmentsFor15Mins());
+            System.out.println(AppointmentDatabase.getAppointmentsIn15Mins());
         } catch (ParseException e) {
             e.printStackTrace();
         }

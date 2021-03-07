@@ -29,23 +29,16 @@ public class CustomerDatabase {
                 ResultSet rs = statement.executeQuery(query);
                 while(rs.next()) {
                     int  customerDivisionId = rs.getInt("c.Division_ID");
-//                    System.out.println("DivisionId: " +customerDivisionId);
                     int customerId = rs.getInt("c.Customer_ID");
-//                    System.out.println("Customer ID : " +customerId);
                     String customerDivision = rs.getString("f.Division");
-//                    System.out.println("Customer Division: " + customerDivision);
                     String customerPhone = rs.getString("c.Phone");
-//                    System.out.println("Customer Phone: " + customerPhone);
                     String customerCountry = rs.getString("co.Country");
-//                    System.out.println("Customer Country: " +customerCountry);
                     String customerName = rs.getString("c.Customer_Name");
-//                    System.out.println("Customer Name :" + customerName);
                     String customerAddress = rs.getString("c.Address");
-//                    System.out.println("Customer address: "+customerAddress);
                     String customerZipCode = rs.getString("c.Postal_Code");
-//                    System.out.println("customer Zip: " +customerZipCode);
 
                     Customer customer = new Customer( customerId, customerDivision, customerName,  customerCountry,  customerAddress, customerPhone,  customerZipCode,  customerDivisionId);
+
                     allCustomers.add(customer);
                 }
             }
@@ -108,12 +101,12 @@ public class CustomerDatabase {
     public static ObservableList<String> CountryList() {
         ObservableList<String> countries = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Country  FROM countries  ;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Country  FROM countries;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                if(!countries.contains(rs.getString("Country"))){
+
                     countries.add(rs.getString("Country"));
-                }
+
             }
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex.getMessage());
@@ -128,9 +121,9 @@ public class CustomerDatabase {
             PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Customer_Name FROM customers ORDER BY Customer_Name ASC;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                if(!customers.contains(rs.getString("Customer_Name"))){
+
                     customers.add(rs.getString("Customer_Name"));
-                }
+
             }
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex.getMessage());
@@ -155,6 +148,30 @@ public class CustomerDatabase {
 
 
     }
+
+
+
+    public static int findCountryId(String Country){
+        int selectCountryId = 0;
+        try {
+
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Country_ID, Country FROM first_level_divisions;");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                if (Country.equals(rs.getString("Country"))){
+                    selectCountryId = rs.getInt("Country_ID");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+        }
+        return selectCountryId;
+    }
+
+
+
+
+
 
     public static int findDivisionId(String Division){
         int selectDivisionId = 0;

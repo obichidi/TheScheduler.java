@@ -39,6 +39,22 @@ public class AppointmentDatabase {
     }
 
 
+    public static int findContactId(String  Contact){
+        int selectContactId = 0;
+        try {
+
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT c.Contact_Name, c.Contact_ID  FROM contacts as c;");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                if (Contact.equals(rs.getString("Contact_Name"))){
+                    selectContactId = rs.getInt("Contact_ID");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+        }
+        return selectContactId;
+    }
 
 
 
@@ -158,7 +174,7 @@ public class AppointmentDatabase {
     }
 
 
-    public static String getAppointmentsFor15Mins() throws ParseException{
+    public static String getAppointmentsIn15Mins() throws ParseException{
         String upcomingAppointments = "";
         LocalDateTime now = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault();

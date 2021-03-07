@@ -32,7 +32,7 @@ public class MainMenuController implements  Initializable{
 @Override
 
 public void initialize(URL url, ResourceBundle rb) {
-//   loginInfo.setText("The User  " + User.currentUser.getUsername() + " successfully logged in on " + Calendar.getInstance().getTime() + " From " + Locale.getDefault());
+  loginInfo.setText("The User  " + User.currentUser.getUsername() + " successfully logged in on " + Calendar.getInstance().getTime() + " From " + Locale.getDefault());
 
 
 }

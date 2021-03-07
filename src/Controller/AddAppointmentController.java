@@ -2,7 +2,8 @@ package Controller;
 
 import Database.AppointmentDatabase;
 import Database.CustomerDatabase;
-import Model.Contact;
+
+import Model.Appointment;
 import Model.Customer;
 import Model.User;
 import Util.Time;
@@ -43,12 +44,14 @@ public class AddAppointmentController implements Initializable {
     @FXML private DatePicker datePicker;
     @FXML private TextArea appointmentDescription;
 
-    @FXML private TableView<Contact> contactTable;
+
     @FXML private TableView<Customer> customerTable;
-    @FXML private TableColumn<Contact, Integer> contactId;
-    @FXML private TableColumn<Contact, String> contactName;
+
+
     @FXML private TableColumn<Customer, Integer> IdCustomer;
     @FXML private TableColumn<Customer, String> nameCustomer;
+
+    @FXML private ComboBox<String> contact;
 
     @FXML private ComboBox<String> appointmentType;
     @FXML private Label userInfo;
@@ -62,9 +65,9 @@ public class AddAppointmentController implements Initializable {
     @FXML private ComboBox<String> endMinutes;
 
 
-
+        public static Appointment selectAppointment;
     public static  Customer selectCustomer;
-    public static  Contact selectContact;
+//    public static  Contact selectContact;
 
     ObservableList<String> startTimes = FXCollections.observableArrayList();
     ObservableList<String> endTimes = FXCollections.observableArrayList();
@@ -78,15 +81,10 @@ public class AddAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         IdCustomer.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         nameCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        contactId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-        contactName.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-         userInfo.setText("Welcome " + User.currentUser.getUsername());
-
+        contact.setItems(AppointmentDatabase.ContactList());
+        userInfo.setText("Welcome " + User.currentUser.getUsername());
         appointmentType.setItems(AppointmentDatabase.TypeList());
-
         locationAdd.setItems(AppointmentDatabase.LocationList());
-
-
         try {
             customerTable.setItems(CustomerDatabase.getAllCustomers());
         } catch (ParseException e) {
@@ -95,15 +93,7 @@ public class AddAppointmentController implements Initializable {
             throwables.printStackTrace();
         }
 
-        try {
-            contactTable.setItems(AppointmentDatabase.getAllContacts());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
+        contact.setItems(AppointmentDatabase.ContactList());
 
 
         startTimes.addAll("9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.");
@@ -126,15 +116,14 @@ public class AddAppointmentController implements Initializable {
     void addAppointment(ActionEvent event) throws ParseException, SQLException {
 
 
-        errorChecks();
 
 
-        selectContact = contactTable.getSelectionModel().getSelectedItem();
-        selectCustomer = customerTable.getSelectionModel().getSelectedItem();
+
         String customerName = selectCustomer.getCustomerName();
         int customerId = selectCustomer.getCustomerId();
-        int contactId = selectContact.getContactId();
-        String contactName = selectContact.getContactName();
+
+      String contactName = contact.getValue();
+        int contactId = AppointmentDatabase.findContactId(contactName);
 
         String type = appointmentType.getValue();
 
@@ -227,7 +216,7 @@ public class AddAppointmentController implements Initializable {
         if(customerTable.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
-            alert.setContentText("You have not selected a customer for appointment scheduling.");
+            alert.setContentText("You Must select a Customer In order to Add an appointment.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
             return;
@@ -244,7 +233,7 @@ public class AddAppointmentController implements Initializable {
 
         }
 
-        if(contactTable.getSelectionModel().isEmpty()){
+        if(contact.getSelectionModel().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select a contact.");
