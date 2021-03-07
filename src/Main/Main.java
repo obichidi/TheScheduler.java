@@ -1,30 +1,27 @@
 package Main;
 
-import Controller.AddAppointmentController;
-import Database.AppointmentDatabase;
-import Util.ConnectorDb;
-import Util.DbQuery;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.sql.*;
-import java.time.*;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
+
 
 public class Main extends Application {
 
 
     @Override
     public void start(Stage stage) throws Exception {
-//      Locale frenchLocale = new Locale("fr", "FR");
-//      Locale.setDefault(frenchLocale);
-//        ZoneId.getAvailableZoneIds().stream().forEach(System.out::println);
+      Locale frenchLocale = new Locale("fr", "FR");
+     Locale.setDefault(frenchLocale);
+
+
+
         ResourceBundle rb;
         ResourceBundle bundle = ResourceBundle.getBundle("Language/NAT");
         Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));

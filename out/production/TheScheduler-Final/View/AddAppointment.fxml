@@ -7,8 +7,8 @@
 <Pane fx:id="scheduleAppointment" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddAppointmentController">
    <children>
       <ComboBox fx:id="appointmentType" editable="true" layoutX="86.0" layoutY="108.0" prefWidth="150.0" promptText="Appointment type" />
-      <ComboBox fx:id="locationAdd" layoutX="73.0" layoutY="196.0" onAction="#addLocation" prefWidth="150.0" promptText="Location" />
-      <DatePicker fx:id="datePicker" editable="false" layoutX="398.0" layoutY="68.0" onAction="#addDate" promptText="Pick a date" />
+      <ComboBox fx:id="locationAdd" layoutX="73.0" layoutY="196.0" prefWidth="150.0" promptText="Location" />
+      <DatePicker fx:id="datePicker" editable="false" layoutX="398.0" layoutY="68.0" promptText="Pick a date" />
       <Label layoutX="5.0" layoutY="113.0" text="Appointments" />
       <Label layoutX="12.0" layoutY="201.0" prefHeight="17.0" prefWidth="61.0" text="Locations" />
       <TableView fx:id="customerTable" layoutX="274.0" layoutY="209.0" onMouseClicked="#selectCustomer" prefHeight="347.0" prefWidth="257.0">

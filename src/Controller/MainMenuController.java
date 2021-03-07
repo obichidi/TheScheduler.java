@@ -37,20 +37,7 @@ public void initialize(URL url, ResourceBundle rb) {
 
 }
 
-    @FXML
-    void addAppointment(ActionEvent event) {
-        try {
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            System.out.println(" Error: " + e.getMessage());
-        }
 
-    }
 
 
 
@@ -104,10 +91,10 @@ public void initialize(URL url, ResourceBundle rb) {
     }
 
    @FXML
-    void showReports(ActionEvent event) {
+    void Report(ActionEvent event) {
        try {
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("View/Report.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
            Scene scene = new Scene(root);
            stage.setScene(scene);
             stage.show();

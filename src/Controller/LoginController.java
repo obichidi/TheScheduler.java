@@ -22,13 +22,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 
 import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static Model.User.currentUser;
 import static Util.Login.recordLogin;
 
 public class LoginController implements Initializable {
@@ -72,7 +75,7 @@ public class LoginController implements Initializable {
         String password = passwordText.getText();
         boolean loginAccepted = UserDatabase.validateLogin(username, password);
         if (loginAccepted) {
-
+            recordLogin();
             ((Node) (event.getSource())).getScene().getWindow().hide();
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
@@ -80,36 +83,37 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.show();
 
-        }else{
+        } else {
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("There are appointments within 15 minutes.");
             alert.setContentText("Please Input the Correct UserName");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
+            loginError();
 
-        }
             appointmentAlert = AppointmentDatabase.getAppointmentsIn15Mins();
-        try {
-            if (appointmentAlert.length() > 0) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("There are appointments within 15 minutes.");
-                alert.setContentText(appointmentAlert);
-                alert.initModality(Modality.APPLICATION_MODAL);
-                alert.showAndWait();
+            try {
+                if (appointmentAlert.length() > 0) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("There are appointments within 15 minutes.");
+                    alert.setContentText(appointmentAlert);
+                    alert.initModality(Modality.APPLICATION_MODAL);
+                    alert.showAndWait();
+                }
+            } catch (Exception e) {
+                System.out.println("Exception: " + e);
             }
-        } catch (Exception e) {
-            System.out.println("Exception: " + e);
-        }
-        recordLogin();
 
-        //    } else {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            //    } else {
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
 //            alert.setTitle(errorLabel);
 //            alert.setContentText(errorMessage);
 //            alert.initModality(Modality.APPLICATION_MODAL);
 //            alert.showAndWait();
 //        }
-        //}
+            //}
 
 //    @FXML
 //    public void  Login(ActionEvent event) throws IOException {
@@ -122,11 +126,40 @@ public class LoginController implements Initializable {
 //        System.out.println();
 //        Locale frenchLocale = new Locale("fr", "FR");
 //        Locale.setDefault(frenchLocale);
-   }
+        }
+    }
 
         @FXML
         public void exit (ActionEvent event) throws IOException {
             Platform.exit();
+        }
+
+
+
+
+
+        public void loginError(){
+            Date loginTime = Calendar.getInstance().getTime();
+            File loginFile = new File(" login_activity.txt");
+            if (!loginFile.exists()) {
+                try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(" login_activity.txt"), "utf-8"))) {
+                    writer.write( " Unsuccessfully  attempt to log in  on " +
+                            loginTime + "\r\n");
+                } catch (IOException ex) {
+                    System.out.println("IOEception: " + ex);
+                }
+            } else {
+                try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(" login_activity.txt", true), "utf-8"))) {
+                    writer.write("Unsuccessfully  attempt to log in  on " +
+                            loginTime + "\r\n");
+                } catch (IOException ex) {
+                    System.out.println("IOEception: " + ex);
+                }
+
+            }
+
         }
     }
 

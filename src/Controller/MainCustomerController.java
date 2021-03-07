@@ -162,8 +162,10 @@ public class MainCustomerController  implements Initializable {
     @FXML
     void test(ActionEvent event) throws ParseException, SQLException {
         selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-        System.out.println(selectCustomer);
+
 
     }
+
+
 }
 

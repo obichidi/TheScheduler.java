@@ -62,7 +62,7 @@ public class ModifyAppointmentController implements Initializable {
 
 
     @FXML
-    void cancel(ActionEvent event) throws ParseException, SQLException, IOException {
+    void cancel(ActionEvent event) throws  IOException {
         ((Node) (event.getSource())).getScene().getWindow().hide();
            Stage stage = new Stage();
            Parent root = FXMLLoader.load(getClass().getResource("/view/MainAppointment.fxml"));
@@ -117,7 +117,7 @@ public class ModifyAppointmentController implements Initializable {
             return;
         }
 
-        AppointmentDatabase.modifyAppointment( appointmentId,  customerId,  type,  customerName,  title, location,
+        AppointmentDatabase.modifyAppointment( appointmentId, customerId, type, customerName, title, location,
                  description, contact,  start, end);
         try {
             ((Node) (event.getSource())).getScene().getWindow().hide();

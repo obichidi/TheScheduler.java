@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,20 +21,32 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ModifyCustomerController implements Initializable {
-    @FXML private ComboBox<String> customerCountryModify;
-    @FXML private ComboBox<String> customerDivisionModify;
-    @FXML private TextField customerNameModify;
-    @FXML private TextField customerPhoneModify;
-    @FXML private TextField customerAddressModify;
-    @FXML private TextField customerZipCodeModify;
-    @FXML private Button test;
-    @FXML private Button back;
-    @FXML private Button modifyCustomer;
-    @FXML private Label testerTest;
+    @FXML
+    private ComboBox<String> customerCountryModify;
+    @FXML
+    private ComboBox<String> customerDivisionModify;
+    @FXML
+    private TextField customerNameModify;
+    @FXML
+    private TextField customerPhoneModify;
+    @FXML
+    private TextField customerAddressModify;
+    @FXML
+    private TextField customerZipCodeModify;
+    @FXML
+    private Button test;
+    @FXML
+    private Button back;
+    @FXML
+    private Button modifyCustomer;
+    @FXML
+    private Label testerTest;
     private static Customer customerToUpdate;
 
     @FXML
-    void modifyCustomer(ActionEvent event) {
+         void modifyCustomer(ActionEvent event) {
+
+                errorChecks();
         int customerId = customerToUpdate.getCustomerId();
         String customerName = customerNameModify.getText();
         String customerPhone = customerPhoneModify.getText();
@@ -41,10 +54,10 @@ public class ModifyCustomerController implements Initializable {
         String customerZipCode = customerZipCodeModify.getText();
         String customerCountry = customerCountryModify.getValue();
         String customerDivision = customerDivisionModify.getValue();
-        int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision) ;
+        int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision);
 
 
-       CustomerDatabase.modifyCustomer( customerId,  customerName,  customerPhone,  customerAddress,  customerZipCode,  customerDivisionId);
+        CustomerDatabase.modifyCustomer(customerId, customerName, customerPhone, customerAddress, customerZipCode, customerDivisionId);
         try {
             ((Node) (event.getSource())).getScene().getWindow().hide();
             Stage stage = new Stage();
@@ -56,13 +69,13 @@ public class ModifyCustomerController implements Initializable {
             System.out.println("IO Exception: " + ex.getMessage());
         }
 
-        testerTest.setText("Customer Id: " + customerId +"\nCustomer Name: " + customerName +  "\nCustomer Phone: "+ customerPhone + "\ncustomer Address: "+ customerAddress + "\nCustomer Zip Code: "+ customerZipCode + "\nCustomer Country: " + customerCountry +
-       "\nCustomer Division: " + customerDivision);
+        testerTest.setText("Customer Id: " + customerId + "\nCustomer Name: " + customerName + "\nCustomer Phone: " + customerPhone + "\ncustomer Address: " + customerAddress + "\nCustomer Zip Code: " + customerZipCode + "\nCustomer Country: " + customerCountry +
+                "\nCustomer Division: " + customerDivision);
     }
 
     @FXML
     void test(ActionEvent event) {
-        System.out.println(customerToUpdate.getCustomerName());
+
 
     }
 
@@ -78,8 +91,6 @@ public class ModifyCustomerController implements Initializable {
     }
 
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -93,10 +104,79 @@ public class ModifyCustomerController implements Initializable {
         customerDivisionModify.setPromptText(customerToUpdate.getCustomerDivision());
 
 
-       customerNameModify.setText(customerToUpdate.getCustomerName());
-       customerPhoneModify.setText(customerToUpdate.getCustomerPhone());
-       customerAddressModify.setText(customerToUpdate.getCustomerAddress());
-       customerZipCodeModify.setText(MainCustomerController.getSelectCustomer().getCustomerZipCode());
+        customerNameModify.setText(customerToUpdate.getCustomerName());
+        customerPhoneModify.setText(customerToUpdate.getCustomerPhone());
+        customerAddressModify.setText(customerToUpdate.getCustomerAddress());
+        customerZipCodeModify.setText(MainCustomerController.getSelectCustomer().getCustomerZipCode());
     }
 
+
+
+    public void errorChecks() {
+
+
+//        if (getSelectionModel().isEmpty()) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error.");
+//            alert.setContentText("Please select a COUNTRY.");
+//            alert.initModality(Modality.APPLICATION_MODAL);
+//            alert.showAndWait();
+//            return;
+//        }
+
+
+        if (customerCountryModify.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a COUNTRY.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+
+        }
+
+
+
+         if(customerDivisionModify.getSelectionModel().isEmpty()){
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setTitle("Error.");
+             alert.setContentText("Please select a DIVISION.");
+             alert.initModality(Modality.APPLICATION_MODAL);
+             alert.showAndWait();
+             return;
+         }
+
+        if (customerNameModify.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please Enter CUSTOMER NAME.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+
+        }
+
+
+        if (customerPhoneModify.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please Enter PHONE.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+
+        }
+
+
+        if (customerAddressModify.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please Enter the ADDRESS.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+
+        }
+
+        }
 }

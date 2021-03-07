@@ -65,7 +65,7 @@ public class AddAppointmentController implements Initializable {
     @FXML private ComboBox<String> endMinutes;
 
 
-        public static Appointment selectAppointment;
+
     public static  Customer selectCustomer;
 //    public static  Contact selectContact;
 
@@ -79,6 +79,7 @@ public class AddAppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
         IdCustomer.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         nameCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         contact.setItems(AppointmentDatabase.ContactList());
@@ -109,20 +110,20 @@ public class AddAppointmentController implements Initializable {
 
 
 
-        }
+    }
 
 
     @FXML
-    void addAppointment(ActionEvent event) throws ParseException, SQLException {
+    void addAppointment(ActionEvent event) throws ParseException, SQLException , IOException{
 
+        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
 
-
-
+    errorChecks();
 
         String customerName = selectCustomer.getCustomerName();
         int customerId = selectCustomer.getCustomerId();
 
-      String contactName = contact.getValue();
+        String contactName = contact.getValue();
         int contactId = AppointmentDatabase.findContactId(contactName);
 
         String type = appointmentType.getValue();
@@ -177,25 +178,7 @@ public class AddAppointmentController implements Initializable {
 
 
     }
-    @FXML
-    void addAppointmentType(ActionEvent event){
 
-    }
-
-    @FXML
-    void addContact(ActionEvent event){
-
-    }
-
-    @FXML
-    void addDate(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addLocation(ActionEvent event) {
-
-    }
 
     @FXML
     void back(ActionEvent event) {

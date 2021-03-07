@@ -70,7 +70,8 @@ public class AppointmentDatabase {
 
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
-
+                ZoneId zoneId = ZoneId.systemDefault();
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
                 int appointmentId = rs.getInt("a.Appointment_ID");
 
                 String customerName = rs.getString("cu.Customer_Name");
@@ -84,7 +85,9 @@ public class AppointmentDatabase {
                 String appointmentContact= rs.getString("c.Contact_Name");
 
                 LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
+
                 LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
+
                 LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
 
                 Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
