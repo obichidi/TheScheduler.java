@@ -38,8 +38,7 @@ public class AddCustomerController  implements Initializable {
 
     @FXML
     void addCustomer(ActionEvent event) {
-
-
+                errorChecks();
         String customerName = firstNameAdd.getText() + " " + lastNameAdd.getText() ;
         String customerAddress = customerAddressNum.getText() + " " +customerAddressStreet.getText() + "," +cityAdd.getText();
         String customerDivision = customerDivisionBox.getValue();
@@ -73,11 +72,12 @@ public class AddCustomerController  implements Initializable {
 
     @FXML
     void back(ActionEvent event) {
+        String fxml =  "/View/MainCustomer.fxml";
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/View/MainCustomer.fxml"));
+            root = FXMLLoader.load(getClass().getResource(fxml));
         } catch (IOException ex) {
             System.out.println("IO Exception: " + ex);
         }

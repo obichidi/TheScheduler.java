@@ -119,18 +119,35 @@ public class MainCustomerController  implements Initializable {
     }
     @FXML
     void editCustomer(ActionEvent event) {
+
         selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-        ((Node) (event.getSource())).getScene().getWindow().hide();
-        Stage stage = new Stage();
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/View/ModifyCustomer.fxml"));
-        } catch (IOException ex) {
-            System.out.println("IO Exception: " + ex);
+
+        if(selectCustomer == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("You MUST select a Customer.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
         }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+         else{
+
+
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            Stage stage = new Stage();
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/ModifyCustomer.fxml"));
+            } catch (IOException ex) {
+                System.out.println("IO Exception: " + ex);
+            }
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        }
+
 
     }
 

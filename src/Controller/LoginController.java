@@ -124,8 +124,8 @@ public class LoginController implements Initializable {
 //
 //        System.out.println("Default locale:" + Locale.getDefault().toString());
 //        System.out.println();
-//        Locale frenchLocale = new Locale("fr", "FR");
-//        Locale.setDefault(frenchLocale);
+        Locale frenchLocale = new Locale("fr", "FR");
+        Locale.setDefault(frenchLocale);
         }
     }
 
@@ -147,15 +147,15 @@ public class LoginController implements Initializable {
                     writer.write( " Unsuccessfully  attempt to log in  on " +
                             loginTime + "\r\n");
                 } catch (IOException ex) {
-                    System.out.println("IOEception: " + ex);
+                    System.out.println("IOException: " + ex);
                 }
             } else {
                 try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                         new FileOutputStream(" login_activity.txt", true), "utf-8"))) {
-                    writer.write("Unsuccessfully  attempt to log in  on " +
+                    writer.write("Unsuccessfully attempt to log in  on " +
                             loginTime + "\r\n");
                 } catch (IOException ex) {
-                    System.out.println("IOEception: " + ex);
+                    System.out.println("IOException: " + ex);
                 }
 
             }

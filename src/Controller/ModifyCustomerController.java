@@ -1,6 +1,6 @@
 package Controller;
 
-import Database.AppointmentDatabase;
+
 import Database.CustomerDatabase;
 
 import Model.Customer;
@@ -21,30 +21,22 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ModifyCustomerController implements Initializable {
-    @FXML
-    private ComboBox<String> customerCountryModify;
-    @FXML
-    private ComboBox<String> customerDivisionModify;
-    @FXML
-    private TextField customerNameModify;
-    @FXML
-    private TextField customerPhoneModify;
-    @FXML
-    private TextField customerAddressModify;
-    @FXML
-    private TextField customerZipCodeModify;
-    @FXML
-    private Button test;
-    @FXML
-    private Button back;
-    @FXML
-    private Button modifyCustomer;
-    @FXML
-    private Label testerTest;
+    @FXML private ComboBox<String> customerCountryModify;
+    @FXML private ComboBox<String> customerDivisionModify;
+    @FXML private TextField customerNameModify;
+    @FXML private TextField customerPhoneModify;
+    @FXML private TextField customerAddressModify;
+    @FXML private TextField customerZipCodeModify;
+
+
+
+
+    @FXML private Label testerTest;
     private static Customer customerToUpdate;
 
     @FXML
          void modifyCustomer(ActionEvent event) {
+        customerToUpdate = MainCustomerController.getSelectCustomer();
 
                 errorChecks();
         int customerId = customerToUpdate.getCustomerId();
@@ -99,10 +91,14 @@ public class ModifyCustomerController implements Initializable {
 
         customerCountryModify.setItems(CustomerDatabase.CountryList());
         customerCountryModify.setPromptText(customerToUpdate.getCustomerCountry());
+        customerCountryModify.setValue(customerCountryModify.getPromptText());
+
+
+
 
         customerDivisionModify.setItems(CustomerDatabase.DivisionList());
         customerDivisionModify.setPromptText(customerToUpdate.getCustomerDivision());
-
+        customerDivisionModify.setValue(customerDivisionModify.getPromptText());
 
         customerNameModify.setText(customerToUpdate.getCustomerName());
         customerPhoneModify.setText(customerToUpdate.getCustomerPhone());
@@ -115,23 +111,25 @@ public class ModifyCustomerController implements Initializable {
     public void errorChecks() {
 
 
-//        if (getSelectionModel().isEmpty()) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error.");
-//            alert.setContentText("Please select a COUNTRY.");
-//            alert.initModality(Modality.APPLICATION_MODAL);
-//            alert.showAndWait();
-//            return;
-//        }
+        if ( customerToUpdate == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a CUSTOMER.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
+        }
 
 
         if (customerCountryModify.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
-            alert.setContentText("Please select a COUNTRY.");
+            alert.setContentText("Please select a COUNTRY");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
             return;
+
+
 
         }
 
@@ -144,7 +142,11 @@ public class ModifyCustomerController implements Initializable {
              alert.initModality(Modality.APPLICATION_MODAL);
              alert.showAndWait();
              return;
-         }
+
+
+             }
+
+
 
         if (customerNameModify.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -174,7 +176,7 @@ public class ModifyCustomerController implements Initializable {
             alert.setContentText("Please Enter the ADDRESS.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+
 
         }
 

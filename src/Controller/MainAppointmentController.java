@@ -208,9 +208,12 @@ public class MainAppointmentController implements Initializable {
       }
    }
 
+
+
     public static Appointment getSelectedAppointment() {
         return selectAppointment;
     }
+
 
 
     @FXML

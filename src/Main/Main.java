@@ -17,8 +17,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-      Locale frenchLocale = new Locale("fr", "FR");
-     Locale.setDefault(frenchLocale);
+//      Locale frenchLocale = new Locale("fr", "FR");
+//     Locale.setDefault(frenchLocale);
 
 
 

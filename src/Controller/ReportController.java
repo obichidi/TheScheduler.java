@@ -54,12 +54,31 @@ public class ReportController  implements Initializable {
     }
 
     @FXML
-    void showContactSchedules(ActionEvent event) {
+    void back(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
+        } catch (IOException ex) {
+            System.out.println("IO Exception: " + ex);
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+
+
+
+    @FXML
+    void showContactSchedules(ActionEvent event) {
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+        Stage stage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/View/ContactSchedules.fxml"));
         } catch (IOException ex) {
             System.out.println("IO Exception: " + ex);
         }
