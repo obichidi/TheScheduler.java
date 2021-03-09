@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <Pane fx:id="monthPicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1204.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainAppointmentController">
    <children>
@@ -31,7 +32,12 @@
          </toggleGroup></RadioButton>
       <RadioButton fx:id="showWeekly" layoutX="554.0" layoutY="28.0" mnemonicParsing="false" onAction="#showWeeklyAppointments" text="Weekly" toggleGroup="$toggleAppointment" />
       <RadioButton fx:id="allAppointments" layoutX="658.0" layoutY="28.0" mnemonicParsing="false" onAction="#showAllAppointments" text="Refresh" toggleGroup="$toggleAppointment" />
-      <ComboBox fx:id="pickMonth" layoutX="269.0" layoutY="23.0" prefHeight="27.0" prefWidth="88.0" promptText="Month" />
+      <ComboBox fx:id="pickMonth" layoutX="269.0" layoutY="23.0" onAction="#showMonthlyAppointments" prefHeight="27.0" prefWidth="88.0" promptText="Month" />
       <Button layoutX="98.0" layoutY="15.0" mnemonicParsing="false" onAction="#test" text="test" />
+      <Label layoutX="819.0" layoutY="18.0" text="Appointments">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

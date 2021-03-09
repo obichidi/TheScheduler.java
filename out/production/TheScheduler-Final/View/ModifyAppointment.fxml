@@ -19,7 +19,7 @@
         <Label layoutX="29.0" layoutY="258.0" text="Contact" />
         <Button fx:id="modifyButton" layoutX="510.0" layoutY="418.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
         <Button fx:id="cancel" layoutX="548.0" layoutY="451.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-        <DatePicker fx:id="datePicker" layoutX="387.0" layoutY="199.0" />
+        <DatePicker fx:id="datePickerModify" layoutX="387.0" layoutY="199.0" />
         <Label layoutX="347.0" layoutY="204.0" text="Date" />
         <ComboBox fx:id="customerModify" layoutX="84.0" layoutY="204.0" prefWidth="150.0" />
         <Label layoutX="24.0" layoutY="209.0" text="Customer" />

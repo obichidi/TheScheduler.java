@@ -151,7 +151,7 @@ public class AppointmentDatabase {
                     " ON c.Contact_ID = a.Contact_ID " +
                     " INNER JOIN customers as cu ON cu.Customer_ID "
                     + " = a.Customer_ID " +
-                    " WHERE  MONTH(Start) = '" + monthPlusOne+ "';";
+                    " WHERE  MONTH(Start) = '" + monthPlusOne+ "' ;";
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
                 int appointmentId = rs.getInt("a.Appointment_ID");
@@ -175,6 +175,11 @@ public class AppointmentDatabase {
         }
         return allAppointments;
     }
+
+
+
+
+
 
 
     public static String getAppointmentsIn15Mins() throws ParseException{
@@ -443,7 +448,7 @@ public class AppointmentDatabase {
     }
 
 
-    public static ObservableList<Appointment> getAllContactAppointmentsByType(String selectType ) throws ParseException, SQLException {
+    public static ObservableList<Appointment> getAllContactAppointmentsByType(String selectType,String selectContact ) throws ParseException, SQLException {
         ObservableList<Appointment> allContactAppointmentsByType=FXCollections.observableArrayList();
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
             String query = "SELECT a.Appointment_ID, a.Customer_ID, cu.Customer_Name, a.Title , a.Type , a.Location , a.Description, c.Contact_Name, a.Start,a.End " +
@@ -452,7 +457,7 @@ public class AppointmentDatabase {
                     " on cu.Customer_ID = a.Customer_ID " +
                     " INNER JOIN contacts as c " +
                     " On c.Contact_ID = a.Contact_ID   " +
-                    " WHERE a.Type = '" +selectType+ "';";
+                    " WHERE a.Type = '" +selectType+ "' AND c.Contact_Name = '" +selectContact+ "' ;";
 
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {

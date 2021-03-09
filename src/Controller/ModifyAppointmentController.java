@@ -83,7 +83,7 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     void modifyAppointment(ActionEvent event) throws ParseException, SQLException {
 
-        errorChecks();
+       errorChecks();
 
         String description = descriptionModify.getText();
         String customerName = customerModify.getValue();
@@ -104,7 +104,7 @@ public class ModifyAppointmentController implements Initializable {
         if (start.after(end)){
           Alert errorAlert = new Alert(Alert.AlertType.ERROR);
           errorAlert.setHeaderText("Check appointment times");
-          errorAlert.setContentText("Ensure the end Must be after the start time.");
+          errorAlert.setContentText("The End Time  Must be after the start time.");
           errorAlert.showAndWait();
            return;
       }
@@ -147,10 +147,12 @@ public class ModifyAppointmentController implements Initializable {
 
 
             typeModify.setPromptText(appointmentToUpdate.getAppointmentType());
+            typeModify.setValue(typeModify.getPromptText());
 
 
             startTimeModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString());
             startMinuteModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString().substring(3,5));
+//            startTimeModify.setValue(startMinuteModify.getPromptText());
 
             endTimeModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString());
             endMinuteModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString().substring(3,5));
@@ -200,17 +202,29 @@ public class ModifyAppointmentController implements Initializable {
 
 
         if(titleModify.getText().isEmpty()){
-//            titleModify.setValue(titleModify.getPromptText());
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a TITLE.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             return;
         }
 
         if(contactModify.getSelectionModel().isEmpty()){
-            contactModify.setValue(contactModify.getPromptText());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a CONTACT.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             return;
         }
 
         if(locationModify.getSelectionModel().isEmpty()){
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a LOCATION.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             return;
         }
 
@@ -260,17 +274,29 @@ public class ModifyAppointmentController implements Initializable {
             return;
         }
         if(typeModify.getSelectionModel().isEmpty()){
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a TYPE.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             return;
         }
 
         if(customerModify.getSelectionModel().isEmpty()){
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a CUSTOMER.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             return;
         }
 
         if(descriptionModify.getText().isEmpty()){
-//            descriptionModify.setValue(locationModify.getPromptText());
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please select a DESCRIPTION.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
             return;
         }
 

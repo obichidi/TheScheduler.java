@@ -7,10 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.ParseException;
 
 public class CustomerDatabase {
@@ -25,7 +22,7 @@ public class CustomerDatabase {
                         " INNER JOIN first_level_divisions as f " +
                         " ON c.Division_ID = f.Division_ID  " +
                         "INNER JOIN countries as co " +
-                        " ON co.COUNTRY_ID = f.COUNTRY_ID";
+                        " ON co.COUNTRY_ID = f.COUNTRY_ID  ORDER BY c.Customer_ID ASC";
                 ResultSet rs = statement.executeQuery(query);
                 while(rs.next()) {
                     int  customerDivisionId = rs.getInt("c.Division_ID");
@@ -104,9 +101,9 @@ public class CustomerDatabase {
             PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Country  FROM countries;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-
+                if(!countries.contains(rs.getString("Country"))) {
                     countries.add(rs.getString("Country"));
-
+                }
             }
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex.getMessage());
@@ -121,9 +118,9 @@ public class CustomerDatabase {
             PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Customer_Name FROM customers ORDER BY Customer_Name ASC;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-
+                if(!customers.contains(rs.getString("Customer_Name"))) {
                     customers.add(rs.getString("Customer_Name"));
-
+                }
             }
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex.getMessage());
@@ -169,6 +166,26 @@ public class CustomerDatabase {
     }
 
 
+    public static int getAllAppointmentCountForCustomer(String customerName) throws ParseException{
+   int numberOfRows = 0;
+
+        try (Statement statement = ConnectorDb.connectDb().createStatement()) {
+            String query = "Select COUNT(Appointment_ID)  from  appointments as a "+
+            " Inner JOIN customers as c "+
+           " on c.Customer_ID = a.Customer_ID "+
+            " Where c.Customer_Name = '" + customerName + "';";
+            ResultSet rs = statement.executeQuery(query);
+
+                if (rs.next()) {
+                     numberOfRows = rs.getInt(1);
+                    System.out.println("numberOfRows= " + numberOfRows);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex);
+        }
+        return numberOfRows;
+    }
 
 
 

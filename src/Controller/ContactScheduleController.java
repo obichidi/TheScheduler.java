@@ -49,7 +49,7 @@ public class ContactScheduleController implements Initializable {
 
     @FXML private Button printAppointmentByMonth;
     @FXML private Button printAppointmentByType;
-    ObservableList<String> month = FXCollections.observableArrayList();
+ //   ObservableList<String> month = FXCollections.observableArrayList();
     static String selectedContact;
     static Integer selectedMonth;
     static String selectedType;
@@ -101,7 +101,7 @@ public class ContactScheduleController implements Initializable {
 
         try {
             contactTable.getItems().clear();
-            contactTable.setItems(AppointmentDatabase.getAllContactAppointmentsByType(selectedType));
+            contactTable.setItems(AppointmentDatabase.getAllContactAppointmentsByType(selectedType,selectedContact));
 
 
         } catch (ParseException | SQLException ex) {
@@ -115,6 +115,7 @@ public class ContactScheduleController implements Initializable {
 
     @FXML
     void getAllAppointmentContactsByMonth(ActionEvent event) {
+        selectedContact = contactNameBox.getValue();
         try {
             contactTable.getItems().clear();
             contactTable.setItems(AppointmentDatabase.getContactsMonthlyAppointments(appointmentMonth.getSelectionModel().getSelectedIndex(), selectedContact));

@@ -116,10 +116,10 @@ public class AddAppointmentController implements Initializable {
     @FXML
     void addAppointment(ActionEvent event) throws ParseException, SQLException , IOException{
 
-        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+
 
     errorChecks();
-
+        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
         String customerName = selectCustomer.getCustomerName();
         int customerId = selectCustomer.getCustomerId();
 
