@@ -3,7 +3,7 @@ package Controller;
 import Database.AppointmentDatabase;
 
 import Model.Appointment;
-import Model.Contact;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,14 +17,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static Model.User.currentUser;
 
 public class ContactScheduleController implements Initializable {
 
@@ -43,6 +46,9 @@ public class ContactScheduleController implements Initializable {
 
     @FXML private RadioButton refresh;
     @FXML private Button back;
+
+    @FXML private Button printAppointmentByMonth;
+    @FXML private Button printAppointmentByType;
     ObservableList<String> month = FXCollections.observableArrayList();
     static String selectedContact;
     static Integer selectedMonth;
@@ -116,7 +122,7 @@ public class ContactScheduleController implements Initializable {
             Logger.getLogger(ContactScheduleController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//        selectMonth =  appointmentMonth.getValue().(now.get(Calendar.MONTH);
+
 
 
 
@@ -144,4 +150,62 @@ public class ContactScheduleController implements Initializable {
         appointmentMonth.getSelectionModel().select(now.get(Calendar.MONTH));
 
     }
-}
+
+
+
+    @FXML
+    void printAppointmentByMonth(ActionEvent event) {
+        Date reportTime = Calendar.getInstance().getTime();
+
+        File reportsByMonthFile = new File(" ReportsByMonth.txt");
+        if(!reportsByMonthFile.exists()){
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(" ReportsByMonth.txt"), "utf-8"))) {
+                writer.write(currentUser.getUsername() + " Generated This report on :" +
+                        reportTime +  "\r\n");
+            } catch (IOException ex) {
+                System.out.println("IOEception: " + ex);
+            }
+        }
+        else {
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(" ReportsByMonth.txt", true), "utf-8"))) {
+                writer.write(currentUser.getUsername() + " Generated This report on :" +
+                        reportTime + "\r\n");
+            } catch (IOException ex) {
+                System.out.println("IOEception: " + ex);
+            }
+        }
+    }
+
+
+
+
+    @FXML
+    void printAppointmentByType(ActionEvent event) {
+
+        Date reportTime = Calendar.getInstance().getTime();
+
+        File reportsByMonthFile = new File(" ReportsByType.txt");
+        if(!reportsByMonthFile.exists()){
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(" ReportsByType.txt"), "utf-8"))) {
+                writer.write(currentUser.getUsername() + " Generated This report on :" +
+                        reportTime +  "\r\n");
+            } catch (IOException ex) {
+                System.out.println("IOEception: " + ex);
+            }
+        }
+        else {
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(" ReportsByMonth.txt", true), "utf-8"))) {
+                writer.write(currentUser.getUsername() + " Generated This report on :" +
+                        reportTime + "\r\n");
+            } catch (IOException ex) {
+                System.out.println("IOEception: " + ex);
+            }
+        }
+
+    }
+    }
+

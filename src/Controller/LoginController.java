@@ -5,7 +5,7 @@ import Database.AppointmentDatabase;
 import Database.UserDatabase;
 
 
-import Lambda.UpcomingAppointment;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static Model.User.currentUser;
+
 import static Util.Login.recordLogin;
 
 public class LoginController implements Initializable {
@@ -124,8 +124,8 @@ public class LoginController implements Initializable {
 //
 //        System.out.println("Default locale:" + Locale.getDefault().toString());
 //        System.out.println();
-        Locale frenchLocale = new Locale("fr", "FR");
-        Locale.setDefault(frenchLocale);
+//        Locale frenchLocale = new Locale("fr", "FR");
+//        Locale.setDefault(frenchLocale);
         }
     }
 

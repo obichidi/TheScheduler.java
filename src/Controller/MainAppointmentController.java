@@ -154,7 +154,7 @@ public class MainAppointmentController implements Initializable {
             if (decision.get() == ButtonType.OK) {
 
 
-//                alert.showAndWait();
+
                 AppointmentDatabase.deleteAppointment(selectAppointment);
                 refreshAppointments.clear();
                 refreshAppointments.addAll(AppointmentDatabase.getAllAppointments());
