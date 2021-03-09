@@ -442,6 +442,52 @@ public class AppointmentDatabase {
         return allContactAppointments;
     }
 
+
+    public static ObservableList<Appointment> getAllContactAppointmentsByType(String selectType ) throws ParseException, SQLException {
+        ObservableList<Appointment> allContactAppointmentsByType=FXCollections.observableArrayList();
+        try (Statement statement = ConnectorDb.connectDb().createStatement()) {
+            String query = "SELECT a.Appointment_ID, a.Customer_ID, cu.Customer_Name, a.Title , a.Type , a.Location , a.Description, c.Contact_Name, a.Start,a.End " +
+                    " From appointments as a   " +
+                    " INNER JOIN customers as cu " +
+                    " on cu.Customer_ID = a.Customer_ID " +
+                    " INNER JOIN contacts as c " +
+                    " On c.Contact_ID = a.Contact_ID   " +
+                    " WHERE a.Type = '" +selectType+ "';";
+
+            ResultSet rs = statement.executeQuery(query);
+            while(rs.next()) {
+                ZoneId zoneId = ZoneId.systemDefault();
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+                int appointmentId = rs.getInt("a.Appointment_ID");
+
+                String customerName = rs.getString("cu.Customer_Name");
+                String appointmentTitle = rs.getString("a.Title");
+
+                int  customerId = rs.getInt("a.Customer_ID");
+
+                String appointmentDescription = rs.getString("a.Description");
+                String appointmentLocation = rs.getString("a.Location");
+                String appointmentType = rs.getString("a.Type");
+                String appointmentContact= rs.getString("c.Contact_Name");
+
+                LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
+
+                LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
+
+                LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
+
+                Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
+                allContactAppointmentsByType.add(appointment);
+
+            }
+        }
+        return allContactAppointmentsByType;
+    }
+
+
+
+
+
     public static ObservableList<Appointment> getContactsMonthlyAppointments(int selectedIndex ,String selectedContact) throws ParseException{
         ObservableList<Appointment> allMonthlyContactAppointments=FXCollections.observableArrayList();
        String selectedMonth = Integer.toString(selectedIndex +1);

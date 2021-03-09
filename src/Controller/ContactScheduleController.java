@@ -45,7 +45,8 @@ public class ContactScheduleController implements Initializable {
     @FXML private Button back;
     ObservableList<String> month = FXCollections.observableArrayList();
     static String selectedContact;
-    static Integer selectMonth;
+    static Integer selectedMonth;
+    static String selectedType;
 
 
 
@@ -90,6 +91,19 @@ public class ContactScheduleController implements Initializable {
     @FXML
     void getContactAppointmentByType(ActionEvent event) {
         contactTable.getItems().clear();
+        selectedType = appointmentType.getValue();
+
+        try {
+            contactTable.getItems().clear();
+            contactTable.setItems(AppointmentDatabase.getAllContactAppointmentsByType(selectedType));
+
+
+        } catch (ParseException | SQLException ex) {
+            Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
     }
 
 
@@ -108,15 +122,6 @@ public class ContactScheduleController implements Initializable {
 
 
 
-
-
-
-
-
-
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -130,6 +135,7 @@ public class ContactScheduleController implements Initializable {
         contactNameBox.setItems(AppointmentDatabase.ContactList());
         endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentEndTime"));
         customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        appointmentType.setItems(AppointmentDatabase.TypeList());
 
         month.addAll("January", "February", "March", "April", "May" ,"June" ,"July" ,"August" ,"September" ,"October" ,"November" ,"December");
 
