@@ -112,6 +112,102 @@ public class CustomerDatabase {
     }
 
 
+    public static ObservableList<String> CustomerAppointmentList(String customerName ) {
+        ObservableList<String> customerAppointments = FXCollections.observableArrayList();
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT  a.Start FROM appointments a " +
+                    "INNER JOIN customers as c " +
+                    "ON c.Customer_ID = a.Customer_ID " +
+                    " WHERE Customer_Name = ? ;");
+                     statement.setString(1,customerName);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                if(!customerAppointments .contains(rs.getString("Start"))) {
+                    customerAppointments .add(rs.getString("Start"));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+        }
+        return customerAppointments;
+    }
+
+
+    public static ObservableList<String> appointmentContactList(String customerName , String appointmentStart) {
+        ObservableList<String> appointmentContacts = FXCollections.observableArrayList();
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
+                    "SELECT  Contact_Name FROM appointments as a " +
+                    " INNER JOIN customers as cu " +
+                    " ON cu.Customer_ID = a.Customer_ID " +
+                    " INNER JOIN contacts as c " +
+                    " ON c.Contact_ID = a.Contact_ID " +
+                    " WHERE Customer_Name = ?  AND a.Start = ? ;");
+            statement.setString(1,customerName);
+            statement.setString(2,appointmentStart);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                if(!appointmentContacts.contains(rs.getString("Contact_Name"))) {
+                    appointmentContacts.add(rs.getString("Contact_Name"));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+        }
+        return appointmentContacts;
+    }
+
+
+
+    public static ObservableList<String> ContactEmailList(String contactName ) {
+        ObservableList<String> contactEmails = FXCollections.observableArrayList();
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
+                    "SELECT  Email FROM contacts  " +
+                            " WHERE Contact_Name = ?  ;");
+            statement.setString(1,contactName);
+
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                if(!contactEmails.contains(rs.getString("Email"))) {
+                    contactEmails.add(rs.getString("Email"));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+        }
+        return contactEmails;
+    }
+
+//    public static String ContactEmail(String contactName ) {
+//                    String contactEmails = null ;
+//        try {
+//            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
+//                    "SELECT  Email FROM contacts " +
+//                            " Where Contact_Name = ? ;") ;
+//
+//            statement.setString(1,contactName);
+//
+//
+//            ResultSet rs = statement.executeQuery();
+//            while (rs.next()) {
+//
+//                    contactEmails =(rs.getString("Contact_Name"));
+//                }
+//
+//        } catch (SQLException ex) {
+//            System.out.println("SQL Exception: " + ex.getMessage());
+//        }
+//        return contactEmails;
+//    }
+
+
+
+
+
     public static ObservableList<String> CustomerList() {
         ObservableList<String> customers = FXCollections.observableArrayList();
         try {

@@ -27,7 +27,7 @@ public class ReportController  implements Initializable {
         Stage stage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/View/ContactEmail.fxml"));
         } catch (IOException ex) {
             System.out.println("IO Exception: " + ex);
         }
