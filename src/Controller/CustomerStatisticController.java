@@ -53,6 +53,35 @@ public class CustomerStatisticController implements Initializable {
 
     @FXML
     void printReportByMonth(ActionEvent event) {
+        Date reportTime = Calendar.getInstance().getTime();
+        String selectCustomerName = customerNameBox.getValue();
+        String selectedMonth = customerAppointmentMonth.getValue();
+
+
+
+        File reportsByMonthFile = new File(" AppointmentsByMonthFor_Customer.txt");
+        if(!reportsByMonthFile.exists()){
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(" AppointmentsByMonthFor_Customer.txt"), "utf-8"))) {
+                writer.write(currentUser.getUsername() + " Generated This report on :" +
+                        reportTime + "\n" +
+                        "Report:\n" +
+                        "Number of Appointments for :  " + selectCustomerName +" : By Month :  "+ selectedMonth + " : " +appointmentMonthText.getText() + "\n");
+            } catch (IOException ex) {
+                System.out.println("IOEception: " + ex);
+            }
+        }
+        else {
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(" AppointmentsByMonthFor_Customer.txt", true), "utf-8"))) {
+                writer.write(currentUser.getUsername() + " Generated This report on :" +
+                        reportTime + "\n" +
+                        "Report:\n" +
+                        "Number of Appointments for :  " + selectCustomerName +" : By Month :  "+ selectedMonth + " : " +appointmentMonthText.getText() + "\n");
+            } catch (IOException ex) {
+                System.out.println("IOEception: " + ex);
+            }
+        }
 
     }
 
