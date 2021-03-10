@@ -221,7 +221,7 @@ public class CustomerDatabase {
             String query = "Select COUNT(Appointment_ID)  from  appointments as a "+
                     " Inner JOIN customers as c "+
                     " on c.Customer_ID = a.Customer_ID "+
-                    " Where  MONTH(Start) = '" + monthPlusOne + "' ;";
+                    " Where  MONTH(Start) = '" + monthPlusOne + "' AND Customer_Name = '" + selectCustomerName + "' ;";
             ResultSet rs = statement.executeQuery(query);
 
             if (rs.next()) {

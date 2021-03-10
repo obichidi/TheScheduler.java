@@ -6,10 +6,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -40,14 +45,28 @@ public class CustomerStatisticController implements Initializable {
         customerNameBox.setItems(CustomerDatabase.CustomerList());
         customerAppointmentType.setItems(AppointmentDatabase.TypeList());
         customerAppointmentMonth.setItems(month);
+
         month.addAll("January", "February", "March", "April", "May" ,"June" ,"July" ,"August" ,"September" ,"October" ,"November" ,"December");
         Calendar now = Calendar.getInstance();
-        customerAppointmentMonth.getSelectionModel().select(now.get(Calendar.MONTH));
+       customerAppointmentMonth.getSelectionModel().select(now.get(Calendar.MONTH));
+
 
     }
 
     @FXML
     void back(ActionEvent event) {
+
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+        Stage stage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
+        } catch (IOException ex) {
+            System.out.println("IO Exception: " + ex);
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -118,29 +137,29 @@ public class CustomerStatisticController implements Initializable {
 
     @FXML
     void refresh(ActionEvent event) {
-
+        customerNameBox.getSelectionModel().clearSelection();
+        customerNameBox.setPromptText("Customer Name");
+         customerAppointmentType.getSelectionModel().clearSelection();
+        customerAppointmentType.setPromptText("Appointment Type");
+        customerAppointmentMonth.getSelectionModel().clearSelection();
+        customerAppointmentMonth.setPromptText("Appointment Month");
     }
 
     @FXML
     void showCustomerMonth(ActionEvent event) throws ParseException {
+        String selectCustomerName = customerNameBox.getValue();
+            int selectMonth = customerAppointmentMonth.getSelectionModel().getSelectedIndex();
+        if (selectCustomerName != null) {
+            try {
+                appointmentMonthText.setText(String.valueOf(CustomerDatabase.getAllAppointmentCountByMonthCustomer(selectCustomerName, selectMonth)));
 
-
-            try{
-
-                String selectCustomerName = customerNameBox.getValue();
-
-
-              appointmentMonthText.setText(String.valueOf(CustomerDatabase. getAllAppointmentCountByMonthCustomer(selectCustomerName, customerAppointmentMonth.getSelectionModel().getSelectedIndex())));
             } catch (ParseException ex) {
                 Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-//
-//
-//        appointmentMonthText.setText(CustomerDatabase.getAllAppointmentCountByMonthCustomer(customerAppointmentMonth.getSelectionModel().getSelectedIndex()));
-
-
+        }
     }
+
+
 
     @FXML
     void printAllAppointments(ActionEvent event) {
@@ -185,20 +204,6 @@ public class CustomerStatisticController implements Initializable {
         String selectCustomerName = customerNameBox.getValue();
         String selectType = customerAppointmentType.getValue();
         appointmentTypeText.setText(String.valueOf(CustomerDatabase. getAllAppointmentCountByTypeCustomer(selectCustomerName, selectType)));
-
-
-
     }
-
-    @FXML
-    void test(ActionEvent event) throws ParseException {
-
-
-
-
-    }
-
-
-
 
 }

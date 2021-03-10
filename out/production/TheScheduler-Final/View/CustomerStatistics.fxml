@@ -30,6 +30,5 @@
       <Label fx:id="appointmentTypeText" layoutX="323.0" layoutY="211.0" text="0" />
       <Label fx:id="appointmentMonthText" layoutX="466.0" layoutY="214.0" text="0" />
       <Button layoutX="594.0" layoutY="146.0" mnemonicParsing="false" onAction="#printAllAppointments" text="Print All Appointments" />
-      <Button fx:id="test" layoutX="664.0" layoutY="30.0" mnemonicParsing="false" onAction="#test" text="Button" />
    </children>
 </AnchorPane>
