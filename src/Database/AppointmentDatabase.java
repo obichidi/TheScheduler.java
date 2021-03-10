@@ -318,7 +318,7 @@ public class AppointmentDatabase {
     public static ObservableList<String> TypeList() {
         ObservableList<String> types = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Type FROM appointments ORDER BY Type ASC;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT DISTINCT Type FROM appointments ORDER BY Type ASC;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
 
@@ -336,7 +336,7 @@ public class AppointmentDatabase {
     public static ObservableList<String> ContactList() {
         ObservableList<String> contacts = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Contact_Name, Contact_ID FROM contacts ORDER BY Contact_Name ASC;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT DISTINCT Contact_Name, Contact_ID FROM contacts ORDER BY Contact_Name ASC;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
 //                if(!contacts.contains(rs.getString("contacts.Contact_Name"))){
@@ -352,7 +352,7 @@ public class AppointmentDatabase {
     public static ObservableList<String> LocationList() {
         ObservableList<String> locations = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Location FROM appointments ORDER BY Location ASC;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT  DISTINCT Location FROM appointments ORDER BY Location ASC;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
 //                if(!locations.contains(rs.getString("appointments.Location"))){

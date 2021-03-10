@@ -144,7 +144,7 @@ public class LoginController implements Initializable {
             if (!loginFile.exists()) {
                 try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                         new FileOutputStream(" login_activity.txt"), "utf-8"))) {
-                    writer.write( " Unsuccessfully  attempt to log in  on " +
+                    writer.write( " There was an Unsuccessful attempt to log in on " +
                             loginTime + "\r\n");
                 } catch (IOException ex) {
                     System.out.println("IOException: " + ex);
@@ -152,7 +152,7 @@ public class LoginController implements Initializable {
             } else {
                 try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                         new FileOutputStream(" login_activity.txt", true), "utf-8"))) {
-                    writer.write("Unsuccessfully attempt to log in  on " +
+                    writer.write("There was an Unsuccessful attempt to log in on" +
                             loginTime + "\r\n");
                 } catch (IOException ex) {
                     System.out.println("IOException: " + ex);

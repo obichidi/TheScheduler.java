@@ -115,7 +115,6 @@ public class ContactScheduleController implements Initializable {
 
     @FXML
     void getAllAppointmentContactsByMonth(ActionEvent event) {
-        selectedContact = contactNameBox.getValue();
         try {
             contactTable.getItems().clear();
             contactTable.setItems(AppointmentDatabase.getContactsMonthlyAppointments(appointmentMonth.getSelectionModel().getSelectedIndex(), selectedContact));

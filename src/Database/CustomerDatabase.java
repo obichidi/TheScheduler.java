@@ -81,7 +81,7 @@ public class CustomerDatabase {
     public static ObservableList<String> DivisionList() {
         ObservableList<String> divisions = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Division, Division_ID FROM first_level_divisions ;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT DISTINCT Division, Division_ID FROM first_level_divisions ;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 if(!divisions.contains(rs.getString("Division"))){
@@ -98,7 +98,7 @@ public class CustomerDatabase {
     public static ObservableList<String> CountryList() {
         ObservableList<String> countries = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Country  FROM countries;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT  DISTINCT Country  FROM countries;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 if(!countries.contains(rs.getString("Country"))) {
@@ -115,7 +115,7 @@ public class CustomerDatabase {
     public static ObservableList<String> CustomerList() {
         ObservableList<String> customers = FXCollections.observableArrayList();
         try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT Customer_Name FROM customers ORDER BY Customer_Name ASC;");
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT DISTINCT  Customer_Name FROM customers ORDER BY Customer_Name ASC;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 if(!customers.contains(rs.getString("Customer_Name"))) {
@@ -188,6 +188,53 @@ public class CustomerDatabase {
     }
 
 
+    public static int getAllAppointmentCountByTypeCustomer(String customerName, String appointmentType) throws ParseException{
+        int numberOfRows = 0;
+
+        try (Statement statement = ConnectorDb.connectDb().createStatement()) {
+            String query = "Select COUNT(Appointment_ID)  from  appointments as a "+
+                    " Inner JOIN customers as c "+
+                    " on c.Customer_ID = a.Customer_ID "+
+                    " Where c.Customer_Name = '" + customerName + "'  AND a.Type = '" + appointmentType + "' ;";
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next()) {
+                numberOfRows = rs.getInt(1);
+                System.out.println("numberOfRows= " + numberOfRows);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex);
+        }
+        return numberOfRows;
+    }
+
+
+
+
+
+
+    public static int getAllAppointmentCountByMonthCustomer(String selectCustomerName, Integer appointmentMonth) throws ParseException{
+        int numberOfRows = 0;
+        String monthPlusOne = Integer.toString(appointmentMonth+1);
+        try (Statement statement = ConnectorDb.connectDb().createStatement()) {
+            String query = "Select COUNT(Appointment_ID)  from  appointments as a "+
+                    " Inner JOIN customers as c "+
+                    " on c.Customer_ID = a.Customer_ID "+
+                    " Where  MONTH(Start) = '" + monthPlusOne + "' ;";
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next()) {
+                numberOfRows = rs.getInt(1);
+                System.out.println("numberOfRows= " + numberOfRows);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex);
+        }
+        return numberOfRows;
+    }
+
 
 
     public static int findDivisionId(String Division){
@@ -229,6 +276,7 @@ public class CustomerDatabase {
     }
 
 }
+
 
 
 }
