@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#getContactEmail" prefHeight="400.0" prefWidth="363.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ContactEmailController">
+   <children>
+      <ComboBox fx:id="customerNameBox" layoutX="22.0" layoutY="77.0" onAction="#getCustomerName" prefHeight="27.0" prefWidth="124.0" promptText="Customer" />
+      <Label fx:id="contactEmailText" layoutX="262.0" layoutY="183.0" text="\@.com" />
+      <Label layoutX="151.0" layoutY="183.0" text="Contact Email:" />
+      <Label layoutX="94.0" layoutY="14.0" text="Contact Email">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Button layoutX="22.0" layoutY="178.0" mnemonicParsing="false" onAction="#getContactEmail" text="Get Contact Email" />
+      <Separator layoutX="240.0" layoutY="131.0" orientation="VERTICAL" prefHeight="200.0" />
+      <ComboBox fx:id="appointmentBox" layoutX="175.0" layoutY="77.0" onAction="#getAppointment" prefHeight="27.0" prefWidth="130.0" promptText=" Appointment " />
+      <Button layoutX="265.0" layoutY="348.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button layoutX="53.0" layoutY="318.0" mnemonicParsing="false" onAction="#generateEmailReport" text="Generate Email Report" />
+      <Label fx:id="contactName" layoutX="151.0" layoutY="138.0" />
+      <ComboBox fx:id="contactNameBox" layoutX="106.0" layoutY="125.0" prefHeight="27.0" prefWidth="124.0" promptText="Contact" />
+   </children>
+</AnchorPane>
