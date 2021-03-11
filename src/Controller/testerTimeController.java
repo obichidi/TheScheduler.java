@@ -13,9 +13,12 @@ import javafx.scene.control.Label;
 import java.net.URL;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
 public class testerTimeController implements Initializable {
@@ -60,7 +63,7 @@ public class testerTimeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
      timeTesterBox.setItems(AppointmentDatabase.AllStartTimeList());
 //        timeTesterBox.setPromptText(String.valueOf(AppointmentDatabase.StartTimeList()));
-        hourBox.setItems(AppointmentDatabase.AllStartTimeList());
+
 
 //        hourBox.setPromptText(toStringBack());
         ObservableList<String> months = FXCollections.observableArrayList();
@@ -72,13 +75,15 @@ public class testerTimeController implements Initializable {
         amPm.setItems(AmPms);
 
         hours.addAll("9", "10", "11", "12", "1", "2", "3", "4", "5");
-        hourBox.setItems(minutes);
-
+        hourBox.setItems(hours);
+        minutes.addAll("00", "15", "30", "45");
+        minuteBox.setItems(minutes);
         months.addAll("January", "February", "March", "April", "May" ,"June" ,"July" ,"August" ,"September" ,"October" ,"November" ,"December");
     }
 
     @FXML
     void showHour(ActionEvent event) {
+
         String dateTimeStamp = hourBox.getValue();
         String year =   (dateTimeStamp.substring(0,4)) ;
         String month = (dateTimeStamp.substring(5,7)) ;
@@ -95,7 +100,7 @@ public class testerTimeController implements Initializable {
         int minuteTry = Integer.parseInt(minute);
         int secondTry = Integer.parseInt(second);
 
-        String Timestamp = year +"-"+ month +"-"+day +" "+ hour+ ":"+minute +":"+ second +".000";
+//        String Timestamp = ;
 
         timeTesterText.setText(second);
 
@@ -166,11 +171,15 @@ public class testerTimeController implements Initializable {
 
         String Timestamp = year +"-"+ month +"-"+day +" "+ hour+ ":"+minute +":"+ second +".000";
 
-//        LocalDateTime now = LocalDateTime.now();
-//        ZoneId zoneId = ZoneId.systemDefault();
-//        ZonedDateTime zoneNow = now.atZone(zoneId);
-//        DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+      LocalDate date = LocalDate.parse(Timestamp, DateTimeFormatter.BASIC_ISO_DATE);
+
+      System.out.println(date);
+
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zoneNow = now.atZone(zoneId);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 //        LocalDateTime dateTime = LocalDateTime.parse(Timestamp, formatter);
 //        LocalDateTime localDateTime = LocalDateTime.parse(dateTime.toString());
 //        ZonedDateTime startZonedTime = localDateTime.atZone(ZoneId.of("UTC"));
@@ -183,9 +192,9 @@ public class testerTimeController implements Initializable {
         int minuteTry = Integer.parseInt(minute);
         int secondTry = Integer.parseInt(second);
 
-                   setTime(hourTry,minuteTry,secondTry);
+        setTime(hourTry,minuteTry,secondTry);
 
-        System.out.println( "something:"+datePicker.getValue().atTime(hourTry ,minuteTry,secondTry ));
+//        System.out.println( "something:"+datePicker.getValue().atTime(hourTry ,minuteTry,secondTry ));
       timeConversionText.setText(toStringBack());
         hourBox.setPromptText(timeConversionText.getText());
 

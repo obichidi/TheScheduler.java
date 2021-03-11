@@ -46,21 +46,7 @@ public class UserDatabase {
             System.out.println("SQL Exception: " + ex);
         }
     }
-    public static int generateUserId() {
-        int userId = 0;
-        try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT "
-                    + "userId FROM users ORDER BY User_Id ASC;");
-            ResultSet rs = statement.executeQuery();
-            if (rs.last()){
-                userId = ((Number) rs.getObject(1)).intValue() + 1;
-            }
 
-        } catch (SQLException ex) {
-            System.out.println("SQL Exception: " + ex);
-        }
-        return userId;
-    }
 
     public static Boolean validateLogin(String username, String password) {
         try {

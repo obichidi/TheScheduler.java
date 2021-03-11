@@ -8,8 +8,8 @@
       <ComboBox fx:id="timeTesterBox" layoutX="226.0" layoutY="67.0" onAction="#timeString" prefHeight="27.0" prefWidth="118.0" promptText="TimeStamp" />
       <Label fx:id="timeTesterText" layoutX="270.0" layoutY="262.0" text="Label" />
       <Label fx:id="timeConversionText" layoutX="437.0" layoutY="262.0" text="Label" />
-      <ComboBox fx:id="hourBox" layoutX="22.0" layoutY="128.0" onAction="#showHour" prefWidth="150.0" promptText="Conversion" />
-      <ComboBox fx:id="minuteBox" layoutX="228.0" layoutY="128.0" onAction="#showMinute" prefHeight="27.0" prefWidth="86.0" promptText="hour" />
+      <ComboBox fx:id="hourBox" layoutX="22.0" layoutY="128.0" onAction="#showHour" prefWidth="150.0" promptText="hourBox" />
+      <ComboBox fx:id="minuteBox" layoutX="228.0" layoutY="128.0" onAction="#showMinute" prefHeight="27.0" prefWidth="86.0" promptText="Minute" />
       <ComboBox fx:id="amPm" layoutX="48.0" layoutY="187.0" onAction="#AmPmConvert" prefHeight="27.0" prefWidth="99.0" promptText="AM/PM" />
       <Label fx:id="dateTester" layoutX="90.0" layoutY="262.0" text="Label" />
       <DatePicker fx:id="datePicker" layoutX="358.0" layoutY="115.0" onAction="#convertDate" />

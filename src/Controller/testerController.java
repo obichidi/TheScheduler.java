@@ -17,18 +17,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class testerController implements Initializable {
-    @FXML
-    private ResourceBundle resources;
-    @FXML
-    private TableView<Tester> contactTable;
-    @FXML
-    private URL location;
-    @FXML
-    private TableColumn<Tester, Integer> contactId;
-    @FXML
-    private TableColumn<Tester, String> contactName;
-    @FXML
-    private TableColumn<Tester, String> contactEmail;
+    @FXML private ResourceBundle resources;
+    @FXML private TableView<Tester> contactTable;
+    @FXML private URL location;
+    @FXML private TableColumn<Tester, Integer> contactId;
+    @FXML private TableColumn<Tester, String> contactName;
+    @FXML private TableColumn<Tester, String> contactEmail;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

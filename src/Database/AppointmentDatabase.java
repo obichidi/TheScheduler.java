@@ -4,6 +4,7 @@ import Model.Appointment;
 import Model.Contact;
 import Model.User;
 import Util.ConnectorDb;
+import Util.TimestampToLocal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AppointmentDatabase {
-
 
 
 
@@ -60,6 +60,12 @@ public class AppointmentDatabase {
 
     public static ObservableList<Appointment> getAllAppointments() throws ParseException, SQLException {
         ObservableList<Appointment> allAppointments=FXCollections.observableArrayList();
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zoneNow = now.atZone(zoneId);
+        LocalDateTime localNow = zoneNow.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
             String query = "SELECT a.Appointment_ID, a.Customer_ID, cu.Customer_Name, a.Title , a.Type , a.Location , a.Description, c.Contact_Name, a.Start,a.End\n" +
                     " From appointments   as a   " +
@@ -70,15 +76,12 @@ public class AppointmentDatabase {
 
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
-                ZoneId zoneId = ZoneId.systemDefault();
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
-                int appointmentId = rs.getInt("a.Appointment_ID");
 
+
+                int appointmentId = rs.getInt("a.Appointment_ID");
                 String customerName = rs.getString("cu.Customer_Name");
                 String appointmentTitle = rs.getString("a.Title");
-
                 int  customerId = rs.getInt("a.Customer_ID");
-
                 String appointmentDescription = rs.getString("a.Description");
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
@@ -86,41 +89,35 @@ public class AppointmentDatabase {
 
 
 
-               String appointmentStartDate = rs.getString("a.Start");
-
-                String startDateTry = appointmentStartDate.toString();
-
-                String appointmentStartTime = rs.getString("a.Start");
-
-
-
-                String year =   (startDateTry.substring(0,4)) ;
-               String month = (startDateTry.substring(5,7)) ;
-               String day = (startDateTry.substring(8,10)) ;
-
-              String startTimeTry = appointmentStartTime.toString();
-               String hour = (startTimeTry.substring(0,2)) ;
-              String minute = (startTimeTry.substring(3,5));
-             String second = "00";
-
-//                String formattedDate = appointmentStartDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
-
-
-//                System.out.println("LONG format: " + formattedDate);
-//                //1 - default time pattern
-//                String time = "2019-03-27T10:15:30";
-//                LocalDateTime localTimeObj = LocalDateTime.parse(time);
-//
-////2 - specific date time pattern
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
-//                String time1 = "2019-03-27 10:15:30 AM";
-//                LocalDateTime localTimeObj1 = LocalDateTime.parse(time1, formatter);
-//
-//                System.out.println(day+"|"+month+"|" + year + "| "+hour+ " |"+ minute);
+                String appointmentStartDate_x = rs.getString("a.Start");
+                Timestamp startTimeStamp = Timestamp.valueOf(appointmentStartDate_x);
+                LocalDateTime startDate = startTimeStamp.toLocalDateTime();
+                LocalDateTime localDateTime = LocalDateTime.parse(startDate.toString());
+                ZonedDateTime startZonedTime = localDateTime.atZone(ZoneId.of("UTC"));
+                LocalDate localStart = startZonedTime.withZoneSameInstant(zoneId).toLocalDate();
+                String  appointmentStartDate = localStart.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
 
 
 
-                String appointmentEndTime = rs.getString("a.End");
+               String appointmentStartTime_x = rs.getString("a.Start");
+
+                Timestamp startimestamp = Timestamp.valueOf(appointmentStartTime_x);
+                LocalDateTime startTime = startimestamp .toLocalDateTime();
+                LocalDateTime localStartDateTime = LocalDateTime.parse(startTime.toString());
+                ZonedDateTime startTimeZonedTime = localStartDateTime.atZone(ZoneId.of("UTC"));
+                ZonedDateTime localStartTime = startTimeZonedTime.withZoneSameInstant(zoneId);
+                String appointmentStartTime = localStartTime.format(timeFormatter);
+
+
+
+                String appointmentEndTime_x = rs.getString("a.End");
+                Timestamp endTimestamp = Timestamp.valueOf(appointmentEndTime_x);
+                LocalDateTime endTime = endTimestamp.toLocalDateTime();
+                LocalDateTime localEndDateTime = LocalDateTime.parse(endTime.toString());
+                ZonedDateTime endTimeZonedTime = localEndDateTime.atZone(ZoneId.of("UTC"));
+                ZonedDateTime localEndTime = endTimeZonedTime.withZoneSameInstant(zoneId);
+                String appointmentEndTime = localEndTime.format(timeFormatter);
+                System.out.println(appointmentEndTime);
 
                 Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 allAppointments.add(appointment);
@@ -131,9 +128,16 @@ public class AppointmentDatabase {
     }
 
 
+
+
     public static ObservableList<Appointment> getWeeklyAppointments() throws ParseException ,SQLException {
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zoneNow = now.atZone(zoneId);
+        LocalDateTime localNow = zoneNow.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
         ObservableList<Appointment> weeklyAppointments=FXCollections.observableArrayList();
-        LocalDate now = LocalDate.now();
+
         LocalDate week = LocalDate.now().plusWeeks(1);
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
             String query = "SELECT a.Appointment_ID,  a.Title, a.Type, a.Customer_ID, cu.Customer_Name, "
@@ -156,10 +160,36 @@ public class AppointmentDatabase {
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
-                String appointmentStartDate = rs.getString("a.Start");
-                String appointmentStartTime = rs.getString("a.Start");
-                String appointmentEndTime = rs.getString("a.End");
 
+
+                String appointmentStartDate_x = rs.getString("a.Start");
+                Timestamp startTimeStamp = Timestamp.valueOf(appointmentStartDate_x);
+                LocalDateTime startDate = startTimeStamp.toLocalDateTime();
+                LocalDateTime localDateTime = LocalDateTime.parse(startDate.toString());
+                ZonedDateTime startZonedTime = localDateTime.atZone(ZoneId.of("UTC"));
+                LocalDate localStart = startZonedTime.withZoneSameInstant(zoneId).toLocalDate();
+                String  appointmentStartDate = localStart.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+
+                String appointmentStartTime_x = rs.getString("a.Start");
+
+                Timestamp starTimestamp = Timestamp.valueOf(appointmentStartTime_x);
+                LocalDateTime startTime = starTimestamp .toLocalDateTime();
+                LocalDateTime localStartDateTime = LocalDateTime.parse(startTime.toString());
+                ZonedDateTime startTimeZonedTime = localStartDateTime.atZone(ZoneId.of("UTC"));
+                ZonedDateTime localStartTime = startTimeZonedTime.withZoneSameInstant(zoneId);
+                String appointmentStartTime = localStartTime.format(timeFormatter);
+
+
+
+
+                String appointmentEndTime_x = rs.getString("a.End");
+                Timestamp endTimestamp = Timestamp.valueOf(appointmentEndTime_x);
+                LocalDateTime endTime = endTimestamp.toLocalDateTime();
+                LocalDateTime localEndDateTime = LocalDateTime.parse(endTime.toString());
+                ZonedDateTime endTimeZonedTime = localEndDateTime.atZone(ZoneId.of("UTC"));
+                ZonedDateTime localEndTime = endTimeZonedTime.withZoneSameInstant(zoneId);
+                String appointmentEndTime = localEndTime.format(timeFormatter);
+                System.out.println(appointmentEndTime);
 
                 Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 weeklyAppointments.add(appointment);
@@ -172,6 +202,13 @@ public class AppointmentDatabase {
 
 
     public static ObservableList<Appointment> getMonthlyAppointments(Integer month) throws ParseException{
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zoneNow = now.atZone(zoneId);
+        LocalDateTime localNow = zoneNow.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+        ObservableList<Appointment> weeklyAppointments=FXCollections.observableArrayList();
+
         ObservableList<Appointment> allAppointments=FXCollections.observableArrayList();
         String monthPlusOne = Integer.toString(month+1);
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
@@ -194,9 +231,39 @@ public class AppointmentDatabase {
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
-                String appointmentStartDate = rs.getString("a.Start");
-                String appointmentStartTime = rs.getString("a.Start");
-                String appointmentEndTime = rs.getString("a.End");
+
+
+                String appointmentStartDate_x = rs.getString("a.Start");
+                Timestamp startTimeStamp = Timestamp.valueOf(appointmentStartDate_x);
+                LocalDateTime startDate = startTimeStamp.toLocalDateTime();
+                LocalDateTime localDateTime = LocalDateTime.parse(startDate.toString());
+                ZonedDateTime startZonedTime = localDateTime.atZone(ZoneId.of("UTC"));
+                LocalDate localStart = startZonedTime.withZoneSameInstant(zoneId).toLocalDate();
+                String  appointmentStartDate = localStart.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+
+                String appointmentStartTime_x = rs.getString("a.Start");
+
+                Timestamp starTimestamp = Timestamp.valueOf(appointmentStartTime_x);
+                LocalDateTime startTime = starTimestamp .toLocalDateTime();
+                LocalDateTime localStartDateTime = LocalDateTime.parse(startTime.toString());
+                ZonedDateTime startTimeZonedTime = localStartDateTime.atZone(ZoneId.of("UTC"));
+                ZonedDateTime localStartTime = startTimeZonedTime.withZoneSameInstant(zoneId);
+                String appointmentStartTime = localStartTime.format(timeFormatter);
+
+
+
+
+                String appointmentEndTime_x = rs.getString("a.End");
+                Timestamp endTimestamp = Timestamp.valueOf(appointmentEndTime_x);
+                LocalDateTime endTime = endTimestamp.toLocalDateTime();
+                LocalDateTime localEndDateTime = LocalDateTime.parse(endTime.toString());
+                ZonedDateTime endTimeZonedTime = localEndDateTime.atZone(ZoneId.of("UTC"));
+                ZonedDateTime localEndTime = endTimeZonedTime.withZoneSameInstant(zoneId);
+                String appointmentEndTime = localEndTime.format(timeFormatter);
+
+
+
+
 
 
                 Appointment appointment = new Appointment( appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
@@ -257,7 +324,7 @@ public class AppointmentDatabase {
 
     public static void addAppointment(int customerId, String customerName, String title, String location, String description, String type, int contactId,
                                       Timestamp start, Timestamp end){
-//        appointmentId = AppointmentDatabase.generateAppointmentId();
+
 
         PreparedStatement statement;
         try {
@@ -467,7 +534,7 @@ public class AppointmentDatabase {
 
                 String appointmentStartDate = rs.getString("a.Start");
 
-                String appointmentStartTime = rs.getString("a.Start");
+               String appointmentStartTime = rs.getString("a.Start");
 
                 String appointmentEndTime = rs.getString("a.End");
 
@@ -524,17 +591,26 @@ public class AppointmentDatabase {
 
     public static ObservableList<String> AllStartTimeList() {
         ObservableList<String> allStartTimes = FXCollections.observableArrayList();
+
+
         try {
             PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT  Start  FROM appointments ;");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 if(!allStartTimes.contains(rs.getString("Start"))){
                     allStartTimes.add(rs.getString("Start"));
+
+
+//
+//                    LocalDateTime localDateTime = LocalDateTime.parse(startTime.toString());
+//                    ZonedDateTime startZonedTime = localDateTime.atZone(ZoneId.of("UTC"));
+//                    ZonedDateTime localStart = startZonedTime.withZoneSameInstant(zoneId);
                 }
             }
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex.getMessage());
         }
+
         return allStartTimes;
     }
 
@@ -562,7 +638,7 @@ public class AppointmentDatabase {
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
                 String appointmentStartDate = rs.getString("a.Start");
-               String  appointmentStartTime = rs.getString("a.Start");
+               String appointmentStartTime = rs.getString("a.Start");
                 String appointmentEndTime = rs.getString("a.End");
 
 
