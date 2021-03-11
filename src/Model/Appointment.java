@@ -15,9 +15,9 @@ public final class Appointment {
     private String appointmentDescription;
     private String appointmentContact;
 
-    private LocalDate appointmentStartDate;
-    private LocalTime appointmentStartTime;
-    private LocalTime appointmentEndTime;
+    private String appointmentStartDate;
+    private String appointmentStartTime;
+    private String appointmentEndTime;
 
 
 
@@ -64,20 +64,20 @@ public final class Appointment {
 
     public void setAppointmentContact(String appointmentContact) { this.appointmentContact = appointmentContact; }
 
-    public LocalDate getAppointmentStartDate() { return appointmentStartDate; }
+    public String getAppointmentStartDate() { return appointmentStartDate; }
 
-    public void setAppointmentStartDate(LocalDate appointmentStartDate) { this.appointmentStartDate = appointmentStartDate; }
+    public void setAppointmentStartDate(String appointmentStartDate) { this.appointmentStartDate = appointmentStartDate; }
 
 
-    public LocalTime getAppointmentStartTime() { return appointmentStartTime; }
+    public String getAppointmentStartTime() { return appointmentStartTime; }
 
-    public void setAppointmentStartTime(LocalTime appointmentStartTime) { this.appointmentStartTime = appointmentStartTime; }
+    public void setAppointmentStartTime(String appointmentStartTime) { this.appointmentStartTime = appointmentStartTime; }
 
-    public LocalTime getAppointmentEndTime() { return appointmentEndTime; }
+    public String getAppointmentEndTime() { return appointmentEndTime; }
 
-    public void setAppointmentEndTime(LocalTime appointmentEndTime) { this.appointmentEndTime = appointmentEndTime; }
+    public void setAppointmentEndTime(String appointmentEndTime) { this.appointmentEndTime = appointmentEndTime; }
 
-    public Appointment(int appointmentId,String appointmentTitle, int customerId, String customerName, String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, LocalDate appointmentStartDate, LocalTime appointmentStartTime, LocalTime appointmentEndTime) {
+    public Appointment(int appointmentId,String appointmentTitle, int customerId, String customerName, String appointmentType, String appointmentLocation, String appointmentDescription, String appointmentContact, String appointmentStartDate, String appointmentStartTime, String appointmentEndTime) {
 
 
 
@@ -91,7 +91,7 @@ public final class Appointment {
         this.appointmentStartDate = appointmentStartDate;
         this.appointmentStartTime = appointmentStartTime;
         this.appointmentEndTime = appointmentEndTime;
-         this.customerName = customerName;
+        this.customerName = customerName;
 
         this.customerId = customerId;
     }
@@ -102,6 +102,8 @@ public final class Appointment {
 
 
 }
+
+
 
 
 

@@ -36,6 +36,8 @@ public class ModifyAppointmentController implements Initializable {
 
     @FXML private TextArea descriptionModify;
     @FXML private ComboBox<String> startTimeModify;
+    @FXML private ComboBox<String> startAmPm;
+    @FXML private ComboBox<String> endAamPm1;
     @FXML private ComboBox<String> typeModify;
     @FXML private ComboBox<String> startMinuteModify;
     @FXML private ComboBox<String> endTimeModify;
@@ -45,7 +47,7 @@ public class ModifyAppointmentController implements Initializable {
     @FXML private Button modifyButton;
     @FXML private Button testerButton;
 
-    @FXML private DatePicker datePickerModify;
+    @FXML private DatePicker datePicker;
     @FXML private ComboBox<String> customerModify;
 
 
@@ -81,64 +83,64 @@ public class ModifyAppointmentController implements Initializable {
 
 
     @FXML
-    void modifyAppointment(ActionEvent event) throws ParseException, SQLException {
+   void modifyAppointment(ActionEvent event) throws ParseException, SQLException {
 
-       errorChecks();
+     errorChecks();
 
         String description = descriptionModify.getText();
         String customerName = customerModify.getValue();
         String type = typeModify.getValue();
         int customerId = appointmentToUpdate.getCustomerId();
-        int appointmentId = appointmentToUpdate.getAppointmentId();
+       int appointmentId = appointmentToUpdate.getAppointmentId();
         String title = titleModify.getText();
         String location = locationModify.getValue();
-        String contact = contactModify.getValue();
-        String startTimes = startTimeModify.getValue();
+      String contact = contactModify.getValue();
+       String startTimes = startTimeModify.getValue();
         String endTimes = endTimeModify.getValue();
-        LocalDate date =  datePickerModify.getValue();
-        Timestamp start = Time.generateStartTimestampModify( datePickerModify, startTimeModify, startMinuteModify, locationModify);
-        Timestamp end = Time.generateEndTimestampModify(datePickerModify, endTimeModify, endMinuteModify, locationModify);
-        String overlap = AppointmentDatabase.OverlappedAppointment(start, end, customerId, contact, appointmentId);
+        LocalDate date =  datePicker.getValue();
+        Timestamp start = Time.generateStartTimestampModify( datePicker, startTimeModify, startMinuteModify, locationModify);
+        Timestamp end = Time.generateEndTimestampModify(datePicker, endTimeModify, endMinuteModify, locationModify);
+       String overlap = AppointmentDatabase.OverlappedAppointment(start, end, customerId, contact, appointmentId);
 
 
         if (start.after(end)){
-          Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
           errorAlert.setHeaderText("Check appointment times");
-          errorAlert.setContentText("The End Time  Must be after the start time.");
-          errorAlert.showAndWait();
-           return;
-      }
+         errorAlert.setContentText("The End Time  Must be after the start time.");
+         errorAlert.showAndWait();
+          return;
+     }
 
-        if (!overlap.isEmpty()){
+       if (!overlap.isEmpty()){
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Appointment is overlapping");
             errorAlert.setContentText(overlap);
             errorAlert.showAndWait();
-            return;
+           return;
         }
 
-        AppointmentDatabase.modifyAppointment( appointmentId, customerId, type, customerName, title, location,
-                 description, contact,  start, end);
-        try {
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MainAppointment.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            System.out.println("IO Exception: " + ex.getMessage());
-        }
-
-        tester.setText("Description: "+ description+ "\n CustomerId " + customerId+ "\n Start: " + start
-                        + "\n End: " + end + "\n Date: " + date +"\n Type: " + type
-                        + "\n Appointment Id: " + appointmentId + "\n title: " + title + "\n Customer Name: " + customerName
-                +"\nContact: " + contact+ "\nLocation: "+ location
-                      );
+//        AppointmentDatabase.modifyAppointment( appointmentId, customerId, type, customerName, title, location,
+//                 description, contact,  start, end);
+//        try {
+//            ((Node) (event.getSource())).getScene().getWindow().hide();
+//            Stage stage = new Stage();
+//            Parent root = FXMLLoader.load(getClass().getResource("/view/MainAppointment.fxml"));
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.show();
+//        } catch (IOException ex) {
+//            System.out.println("IO Exception: " + ex.getMessage());
+//        }
+//
+//        tester.setText("Description: "+ description+ "\n CustomerId " + customerId+ "\n Start: " + start
+//                        + "\n End: " + end + "\n Date: " + date +"\n Type: " + type
+//                        + "\n Appointment Id: " + appointmentId + "\n title: " + title + "\n Customer Name: " + customerName
+//                +"\nContact: " + contact+ "\nLocation: "+ location
+//                      );
     }
-
-
-
+//
+//
+//
 
 
         @Override
@@ -146,55 +148,55 @@ public class ModifyAppointmentController implements Initializable {
             appointmentToUpdate = MainAppointmentController.getSelectedAppointment();
 
 
-            typeModify.setPromptText(appointmentToUpdate.getAppointmentType());
+           typeModify.setPromptText(appointmentToUpdate.getAppointmentType());
             typeModify.setValue(typeModify.getPromptText());
 
-
-            startTimeModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString());
-            startMinuteModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString().substring(3,5));
-//            startTimeModify.setValue(startMinuteModify.getPromptText());
-
-            endTimeModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString());
-            endMinuteModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString().substring(3,5));
-
-
-
-           datePickerModify.setPromptText(appointmentToUpdate.getAppointmentStartDate().toString());
-           datePickerModify.setValue(LocalDate.parse(appointmentToUpdate.getAppointmentStartDate().toString()));
-//            startHourModify.setItems(AppointmentDatabase.);
-            typeModify.setItems(AppointmentDatabase.TypeList());
-            typeModify.setValue(typeModify.getPromptText());
-
-            descriptionModify.setText(appointmentToUpdate.getAppointmentDescription());
-
-//    starHourModify.setItems();
-            customerModify.setItems(CustomerDatabase.CustomerList());
-            customerModify.setPromptText(appointmentToUpdate.getCustomerName());
-            customerModify.setValue(customerModify.getPromptText());
+//
+//            startTimeModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString());
+//            startMinuteModify.setPromptText(appointmentToUpdate.getAppointmentStartTime().toString().substring(3,5));
+////            startTimeModify.setValue(startMinuteModify.getPromptText());
+//
+//            endTimeModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString());
+//            endMinuteModify.setPromptText(appointmentToUpdate.getAppointmentEndTime().toString().substring(3,5));
+//
+//
+//
+//           datePicker.setPromptText(appointmentToUpdate.getAppointmentStartDate().toString());
+//           datePicker.setValue(LocalDate.parse(appointmentToUpdate.getAppointmentStartDate().toString()));
+////            startHourModify.setItems(AppointmentDatabase.);
+           typeModify.setItems(AppointmentDatabase.TypeList());
+//            typeModify.setValue(typeModify.getPromptText());
+//
+//            descriptionModify.setText(appointmentToUpdate.getAppointmentDescription());
+//
+////    starHourModify.setItems();
+           customerModify.setItems(CustomerDatabase.CustomerList());
+           customerModify.setPromptText(appointmentToUpdate.getCustomerName());
+           customerModify.setValue(customerModify.getPromptText());
 
             contactModify.setItems(AppointmentDatabase.ContactList());
-            contactModify.setPromptText(appointmentToUpdate.getAppointmentContact());
+           contactModify.setPromptText(appointmentToUpdate.getAppointmentContact());
 
-            locationModify.setItems(AppointmentDatabase.LocationList());
+           locationModify.setItems(AppointmentDatabase.LocationList());
             locationModify.setPromptText(appointmentToUpdate.getAppointmentLocation());
             locationModify.setValue(locationModify.getPromptText());
 
             titleModify.setText(appointmentToUpdate.getAppointmentTitle());
 
-            startTimes.addAll("9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.");
-            endTimes.addAll("9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.");
+            startTimes.addAll("9 ", "10", "11", "12", "1", "2", "3", "4", "5");
+            endTimes.addAll("9", "10", "11", "12", "1", "2", "3", "4", "5");
 
             startsMinutes.addAll("00", "15", "30", "45");
             endsMinutes.addAll("00", "15", "30", "45");
 
         startTimeModify.setItems(startTimes);
-        endTimeModify.setItems(endTimes);
-        startMinuteModify.setItems(startsMinutes);
+       endTimeModify.setItems(endTimes);
+      startMinuteModify.setItems(startsMinutes);
         endMinuteModify.setItems(endsMinutes);
-        Locations.addAll("New York, New York", "London, England", "Paris, France");
-        locationModify.setItems(Locations);
-
-
+       Locations.addAll("New York, New York", "London, England", "Paris, France");
+       locationModify.setItems(Locations);
+//
+//
 
         }
 
@@ -228,7 +230,7 @@ public class ModifyAppointmentController implements Initializable {
             return;
         }
 
-        if(datePickerModify.getValue() == null){
+        if(datePicker.getValue() == null){
 
              Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");

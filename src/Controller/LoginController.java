@@ -5,7 +5,7 @@ import Database.AppointmentDatabase;
 import Database.UserDatabase;
 
 
-
+import Util.TimestampToLocal;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,11 +66,17 @@ public class LoginController implements Initializable {
        usernameText.setText("test");
        passwordText.setText("test");
        location.setText(Locale.getDefault().getCountry());
+        try {
+            System.out.println(AppointmentDatabase.getAppointmentsIn15Mins());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @FXML
     private void Login(ActionEvent event) throws IOException, ParseException {
+
         String username = usernameText.getText();
         String password = passwordText.getText();
         boolean loginAccepted = UserDatabase.validateLogin(username, password);

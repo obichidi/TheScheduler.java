@@ -144,28 +144,28 @@ public class MainAppointmentController implements Initializable {
         }
 
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("CONFIRM");
-            alert.setContentText("Are you sure you want to cancel" + "\n" + selectAppointment.getCustomerId() + "\n"
-                    + selectAppointment.getAppointmentTitle() + "\n" + selectAppointment.getCustomerName());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("CONFIRM");
+        alert.setContentText("Are you sure you want to cancel" + "\n" + selectAppointment.getCustomerId() + "\n"
+                + selectAppointment.getAppointmentTitle() + "\n" + selectAppointment.getCustomerName());
 //            alert.initModality(Modality.APPLICATION_MODAL);
-            alert.showAndWait();
-            Optional<ButtonType> decision = alert.showAndWait();
-            if (decision.get() == ButtonType.OK) {
+        alert.showAndWait();
+        Optional<ButtonType> decision = alert.showAndWait();
+        if (decision.get() == ButtonType.OK) {
 
 
 
-                AppointmentDatabase.deleteAppointment(selectAppointment);
-                refreshAppointments.clear();
-                refreshAppointments.addAll(AppointmentDatabase.getAllAppointments());
-                appointmentTable.setItems(refreshAppointments);
+            AppointmentDatabase.deleteAppointment(selectAppointment);
+            refreshAppointments.clear();
+            refreshAppointments.addAll(AppointmentDatabase.getAllAppointments());
+            appointmentTable.setItems(refreshAppointments);
 
-            } else {
-                    return;
-            }
-
-
+        } else {
+            return;
         }
+
+
+    }
 
     @FXML
     void modifyAppointment(ActionEvent event) throws IOException {
@@ -198,15 +198,15 @@ public class MainAppointmentController implements Initializable {
 
     @FXML
     private void showWeeklyAppointments(ActionEvent event) {
-      try {
+        try {
             appointmentTable.getItems().clear();
-           appointmentTable.setItems(AppointmentDatabase.getWeeklyAppointments());
+            appointmentTable.setItems(AppointmentDatabase.getWeeklyAppointments());
 
 
-       } catch (ParseException | SQLException ex) {
-           Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
-      }
-   }
+        } catch (ParseException | SQLException ex) {
+            Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 
 
@@ -243,7 +243,7 @@ public class MainAppointmentController implements Initializable {
         appointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
         appointmentLocation.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-         customerNameC.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerNameC.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
         customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         appointmentType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
@@ -265,12 +265,12 @@ public class MainAppointmentController implements Initializable {
         pickMonth.getSelectionModel().select(now.get(Calendar.MONTH));
 
         try {
-           appointmentTable.setItems(AppointmentDatabase.getAllAppointments());
+            appointmentTable.setItems(AppointmentDatabase.getAllAppointments());
 
         } catch (ParseException | SQLException e) {
-           Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("ParseException: " + e);
-       }
+        }
 
-   }
+    }
 }

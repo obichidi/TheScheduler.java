@@ -19,6 +19,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 
@@ -26,7 +28,7 @@ import javafx.stage.Stage;
 
 public class MainMenuController implements  Initializable{
    @FXML private Label loginInfo;
-
+    @FXML private Button tester;
 
 
 @Override
@@ -37,8 +39,19 @@ public void initialize(URL url, ResourceBundle rb) {
 
 }
 
-
-
+    @FXML
+    void openTester(ActionEvent event) throws IOException {
+        try {
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/View/teserTime.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(" Error: " + e.getMessage());
+        }
+    }
 
 
 

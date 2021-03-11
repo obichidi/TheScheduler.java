@@ -84,11 +84,43 @@ public class AppointmentDatabase {
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
 
-                LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
 
-                LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
 
-                LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
+               String appointmentStartDate = rs.getString("a.Start");
+
+                String startDateTry = appointmentStartDate.toString();
+
+                String appointmentStartTime = rs.getString("a.Start");
+
+
+
+                String year =   (startDateTry.substring(0,4)) ;
+               String month = (startDateTry.substring(5,7)) ;
+               String day = (startDateTry.substring(8,10)) ;
+
+              String startTimeTry = appointmentStartTime.toString();
+               String hour = (startTimeTry.substring(0,2)) ;
+              String minute = (startTimeTry.substring(3,5));
+             String second = "00";
+
+//                String formattedDate = appointmentStartDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
+
+
+//                System.out.println("LONG format: " + formattedDate);
+//                //1 - default time pattern
+//                String time = "2019-03-27T10:15:30";
+//                LocalDateTime localTimeObj = LocalDateTime.parse(time);
+//
+////2 - specific date time pattern
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
+//                String time1 = "2019-03-27 10:15:30 AM";
+//                LocalDateTime localTimeObj1 = LocalDateTime.parse(time1, formatter);
+//
+//                System.out.println(day+"|"+month+"|" + year + "| "+hour+ " |"+ minute);
+
+
+
+                String appointmentEndTime = rs.getString("a.End");
 
                 Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 allAppointments.add(appointment);
@@ -124,9 +156,9 @@ public class AppointmentDatabase {
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
-                LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
-                LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
-                LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
+                String appointmentStartDate = rs.getString("a.Start");
+                String appointmentStartTime = rs.getString("a.Start");
+                String appointmentEndTime = rs.getString("a.End");
 
 
                 Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
@@ -162,9 +194,9 @@ public class AppointmentDatabase {
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
-                LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
-                LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
-                LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
+                String appointmentStartDate = rs.getString("a.Start");
+                String appointmentStartTime = rs.getString("a.Start");
+                String appointmentEndTime = rs.getString("a.End");
 
 
                 Appointment appointment = new Appointment( appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
@@ -255,7 +287,7 @@ public class AppointmentDatabase {
                             " SET  Title = '" + title + "', Location = '" + location + "'," +
                             " Type = '" + type + "', cu.Customer_Name = '" + customerName + "'," +
                             " Description ='" + description + "', c.Contact_Name = '" + contact + "', Start  = '" + start + "'," +
-                            " End = '" + end + "', a.Last_Update = CURRENT_TIMESTAMP, a.Last_Updated_By = '" + User.currentUser + "' " +
+                            " End = '" + end + "', a.Last_Update = CURRENT_TIMESTAMP, a.Last_Updated_By = '" + User.currentUser.getUsername() + "' " +
                             " WHERE a.Appointment_ID = '" + appointmentId + "';");
 
 
@@ -433,11 +465,11 @@ public class AppointmentDatabase {
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
 
-                LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
+                String appointmentStartDate = rs.getString("a.Start");
 
-                LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
+                String appointmentStartTime = rs.getString("a.Start");
 
-                LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
+                String appointmentEndTime = rs.getString("a.End");
 
                 Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 allContactAppointments.add(appointment);
@@ -475,11 +507,11 @@ public class AppointmentDatabase {
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
 
-                LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
+                String appointmentStartDate = rs.getString("a.Start");
 
-                LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
+                String appointmentStartTime = rs.getString("a.Start");
 
-                LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
+                String appointmentEndTime = rs.getString("a.End");
 
                 Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 allContactAppointmentsByType.add(appointment);
@@ -490,12 +522,27 @@ public class AppointmentDatabase {
     }
 
 
+    public static ObservableList<String> AllStartTimeList() {
+        ObservableList<String> allStartTimes = FXCollections.observableArrayList();
+        try {
+            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement("SELECT  Start  FROM appointments ;");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                if(!allStartTimes.contains(rs.getString("Start"))){
+                    allStartTimes.add(rs.getString("Start"));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+        }
+        return allStartTimes;
+    }
 
 
 
     public static ObservableList<Appointment> getContactsMonthlyAppointments(int selectedIndex ,String selectedContact) throws ParseException{
         ObservableList<Appointment> allMonthlyContactAppointments=FXCollections.observableArrayList();
-       String selectedMonth = Integer.toString(selectedIndex +1);
+        String selectedMonth = Integer.toString(selectedIndex +1);
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
             String query = "SELECT a.Appointment_ID, a.Customer_ID, cu.Customer_Name, a.Title , a.Type , a.Location , a.Description, c.Contact_Name, a.Start,a.End " +
                     " From appointments as a   " +
@@ -514,9 +561,9 @@ public class AppointmentDatabase {
                 String appointmentLocation = rs.getString("a.Location");
                 String appointmentType = rs.getString("a.Type");
                 String appointmentContact= rs.getString("c.Contact_Name");
-                LocalDate appointmentStartDate = rs.getDate("a.Start").toLocalDate();
-                LocalTime appointmentStartTime = rs.getTime("a.Start").toLocalTime();
-                LocalTime appointmentEndTime = rs.getTime("a.End").toLocalTime();
+                String appointmentStartDate = rs.getString("a.Start");
+               String  appointmentStartTime = rs.getString("a.Start");
+                String appointmentEndTime = rs.getString("a.End");
 
 
                 Appointment appointment = new Appointment( appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
@@ -538,4 +585,3 @@ public class AppointmentDatabase {
 //
 
 }
-

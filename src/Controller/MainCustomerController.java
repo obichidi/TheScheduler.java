@@ -165,6 +165,8 @@ public class MainCustomerController  implements Initializable {
         customerDivisionTable.setCellValueFactory(new  PropertyValueFactory<>("customerDivision"));
         customerCountry.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
 
+
+
         try {
             customerTable.setItems(CustomerDatabase.getAllCustomers());
 

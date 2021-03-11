@@ -2,6 +2,7 @@ package Util;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -18,33 +19,37 @@ import java.util.Calendar;
      */
     public class Time {
 
+         private int hour;
+         private int minute;
+         private int second;
 
-//        public static Calendar CalenderString(String startDate) throws ParseException {
-//            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy hh:mm:ss");
-//            java.util.Date date = sdf.parse(startDate);
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(date);
-//            return calendar;
-//        }
+    public void setTime(int h, int m, int s){
+
+        hour = ((h>0 && h<24) ? h : 0);
+        minute = ((m>=0 && m<60) ? m : 0);
+        second  = ((s>=0 && s<60) ? s : 0);
+
+    }
+
+    public  String toMilitary(){
 
 
-//        public static String StringDate(Calendar cal) {
-//            DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-//            return sdf.format(cal.getTime());
-//        }
+        return String.format("%02d:%02d:%02d,hour,minute,second ");
+    }
 
+    public String toString(){
 
-//        public static String timeString(Calendar cal) {
-//            DateFormat sdf = new SimpleDateFormat("hh:mm a");
-//            return sdf.format(cal.getTime());
-//        }
+        return String.format("%d:%02d:%02d %s", ((hour==0||hour==12)?12:hour%12), minute, second, (hour<12? "AM": "PM"));
 
+    }
 
 
 
         public static Timestamp generateStartTimestamp(DatePicker datePicker, ComboBox<String> startTime, ComboBox<String> startMinute, ComboBox<String> locationAdd) {
             LocalDate day = datePicker.getValue();
-            Integer startHours = Integer.parseInt((startTime.getValue()).substring(0, (startTime.getValue().length() - 5)));
+
+            Integer startHours = Integer.parseInt((startTime.getValue()));
+//            Integer startHours = Integer.parseInt((startTime.getValue()).substring(0, (startTime.getValue().length() - 5)));
 
             if (startHours < 8) startHours += 12;
 
@@ -78,7 +83,9 @@ import java.util.Calendar;
         public static Timestamp generateEndTimestamp(DatePicker datePicker, ComboBox<String> endTime, ComboBox<String> endMinute, ComboBox<String> locationAdd) {
             LocalDate day = datePicker.getValue();
 
-            Integer endHours = Integer.parseInt((endTime.getValue()).substring(0, (endTime.getValue().length() - 5)));
+            Integer endHours = Integer.parseInt((endTime.getValue()));
+
+
 
             if (endHours < 8) endHours += 12;
             Integer endMinutes = Integer.parseInt(endMinute.getValue());
@@ -112,7 +119,7 @@ import java.util.Calendar;
 
     public static Timestamp generateStartTimestampModify(DatePicker datePickerModify, ComboBox<String> startTimeModify, ComboBox<String> startMinuteModify, ComboBox<String> locationModify) {
         LocalDate day = datePickerModify.getValue();
-        Integer startHours = Integer.parseInt((startTimeModify.getValue()).substring(0, (startTimeModify.getValue().length() - 5)));
+        Integer startHours = Integer.parseInt((startTimeModify.getValue()));
 
         if (startHours < 8) startHours += 12;
 
@@ -145,7 +152,7 @@ import java.util.Calendar;
     public static Timestamp generateEndTimestampModify(DatePicker datePickerModify, ComboBox<String> endTimeModify, ComboBox<String> endMinuteModify, ComboBox<String> locationModify) {
         LocalDate day = datePickerModify.getValue();
 
-        Integer endHours = Integer.parseInt((endTimeModify.getValue()).substring(0, (endTimeModify.getValue().length() - 5)));
+        Integer endHours = Integer.parseInt((endTimeModify.getValue()));
 
         if (endHours < 8) endHours += 12;
         Integer endMinutes = Integer.parseInt(endMinuteModify.getValue());
@@ -176,87 +183,11 @@ import java.util.Calendar;
 
 
 
-//        public static Calendar convertToLocalTimezone (Calendar cal, String location){
-//            int offsetFromUtc;
-//            switch (location) {
-//                case "London, England":
-//                    offsetFromUtc = 1;
-//                    break;
-//                case "New York, New York":
-//                    offsetFromUtc = -4;
-//                    break;
-//                default:
-//                    offsetFromUtc = -7;
-//                    break;
-//            }
-//
-//            cal.add(Calendar.HOUR, offsetFromUtc);
-//
-//            return cal;
-//        }
-//
-//
-//        public static LocalDate localDatFromCalender(Calendar cal) {
-//            String date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
-//            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//            LocalDate local = LocalDate.parse(date, dateFormat);
-//            return local;
-//        }
 
-
-        //
-//        public static String minutesCalenderString(Calendar cal) {
-//            String min;
-//            min = Integer.toString(cal.get(Calendar.MINUTE));
-//            if (min.equals("0")) min = "00";
-//            return min;
-//        }
-
-//
         public static String hourCalenderString(Calendar cal) {
             String hour = Integer.toString(cal.get(Calendar.HOUR_OF_DAY));
             return hour;
         }
-//
-//
-//        public static String calToComboBoxHour(Calendar cal, String location){
-//
-//            String hour = hourCalenderString(cal);
-//            String hourWithMeridium;
-//            switch (hour) {
-//                case "9":
-//                    hourWithMeridium = "9 a.m.";
-//                    break;
-//                case "10":
-//                    hourWithMeridium = "10 a.m.";
-//                    break;
-//                case "11":
-//                    hourWithMeridium = "11 a.m.";
-//                    break;
-//                case "12":
-//                    hourWithMeridium = "12 p.m.";
-//                    break;
-//                case "1":
-//                case "13":
-//                    hourWithMeridium = "1 p.m.";
-//                    break;
-//                case "2":
-//                case "14":
-//                    hourWithMeridium = "2 p.m.";
-//                    break;
-//                case "3":
-//                case "15":
-//                    hourWithMeridium = "3 p.m.";
-//                    break;
-//                case "4":
-//                case "16":
-//                    hourWithMeridium = "4 p.m.";
-//                    break;
-//                default:
-//                    hourWithMeridium = "5 p.m.";
-//                    break;
-//            }
-//            return (hourWithMeridium);
-//        }
+
     }
 

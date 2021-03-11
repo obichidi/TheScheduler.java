@@ -8,10 +8,10 @@
     <children>
         <TextField fx:id="titleModify" layoutX="84.0" layoutY="151.0" prefHeight="27.0" prefWidth="150.0" />
         <Label fx:id="tester" layoutX="517.0" layoutY="231.0" prefHeight="187.0" prefWidth="175.0" />
-        <ComboBox fx:id="startTimeModify" layoutX="363.0" layoutY="82.0" prefHeight="27.0" prefWidth="130.0" />
-        <ComboBox fx:id="startMinuteModify" layoutX="587.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" />
-        <ComboBox fx:id="endTimeModify" layoutX="363.0" layoutY="124.0" prefHeight="27.0" prefWidth="130.0" />
-        <ComboBox fx:id="endMinuteModify" layoutX="587.0" layoutY="124.0" prefHeight="27.0" prefWidth="101.0" />
+        <ComboBox fx:id="startTimeModify" layoutX="346.0" layoutY="82.0" prefHeight="27.0" prefWidth="67.0" />
+        <ComboBox fx:id="startMinuteModify" layoutX="430.0" layoutY="82.0" prefHeight="27.0" prefWidth="67.0" />
+        <ComboBox fx:id="endTimeModify" layoutX="343.0" layoutY="143.0" prefHeight="27.0" prefWidth="73.0" />
+        <ComboBox fx:id="endMinuteModify" layoutX="427.0" layoutY="143.0" prefHeight="27.0" prefWidth="73.0" />
         <ComboBox fx:id="locationModify" layoutX="84.0" layoutY="325.0" prefWidth="150.0" />
         <TextArea fx:id="descriptionModify" layoutX="304.0" layoutY="303.0" prefHeight="89.0" prefWidth="200.0" />
         <Label layoutX="363.0" layoutY="267.0" text="Description" />
@@ -24,18 +24,20 @@
         <ComboBox fx:id="customerModify" layoutX="84.0" layoutY="204.0" prefWidth="150.0" />
         <Label layoutX="24.0" layoutY="209.0" text="Customer" />
         <Label layoutX="27.0" layoutY="330.0" text="Location" />
-        <Label layoutX="304.0" layoutY="87.0" text="Start Hour" />
-        <Label layoutX="307.0" layoutY="129.0" text="End Hour" />
+        <Label layoutX="352.0" layoutY="57.0" text="Start Hour" />
+        <Label layoutX="354.0" layoutY="121.0" text="End Hour" />
         <Label layoutX="36.0" layoutY="38.0" text="Modify Appointment">
             <font>
                 <Font size="29.0" />
             </font>
         </Label>
-        <Label layoutX="510.0" layoutY="87.0" text="Start Minute" />
-        <Label layoutX="513.0" layoutY="129.0" text="End Minute" />
+        <Label layoutX="430.0" layoutY="57.0" text="Start Minute" />
+        <Label layoutX="430.0" layoutY="121.0" text="End Minute" />
         <Label layoutX="37.0" layoutY="293.0" text="Type" />
         <Button fx:id="testerButton" layoutX="65.0" layoutY="451.0" mnemonicParsing="false" onAction="#test" text="Test" />
         <Label layoutX="36.0" layoutY="156.0" text="Title" />
       <ComboBox fx:id="typeModify" layoutX="84.0" layoutY="290.0" prefWidth="150.0" />
+      <ComboBox fx:id="startAmpPm" layoutX="517.0" layoutY="82.0" prefHeight="27.0" prefWidth="92.0" promptText="AM/PM" />
+      <ComboBox fx:id="endAmPm" layoutX="517.0" layoutY="138.0" prefHeight="27.0" prefWidth="92.0" promptText="AM/PM" />
     </children>
 </AnchorPane>

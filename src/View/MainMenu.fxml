@@ -28,5 +28,6 @@
          </font>
       </Label>
       <Label fx:id="loginInfo" layoutX="46.0" layoutY="82.0" prefHeight="17.0" prefWidth="530.0" />
+      <Button fx:id="tester" layoutX="388.0" layoutY="294.0" mnemonicParsing="false" onAction="#openTester" text="Tester" />
    </children>
 </Pane>

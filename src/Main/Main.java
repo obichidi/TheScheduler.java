@@ -1,6 +1,10 @@
 package Main;
 
 
+import Controller.MainAppointmentController;
+import Controller.ModifyAppointmentController;
+import Database.AppointmentDatabase;
+import Util.TimestampToLocal;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 
@@ -19,8 +22,14 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 //      Locale frenchLocale = new Locale("fr", "FR");
 //     Locale.setDefault(frenchLocale);
+//       System.out.println(AppointmentDatabase.StartTimeList());
+
+//   TimestampToLocal timestampToLocal = new TimestampToLocal();
+//        timestampToLocal.setTime(13,27,6);
+//        System.out.println(timestampToLocal.toString());
 
 
+//        System.out.println(timestampToLocal.toMilitary());
 
         ResourceBundle rb;
         ResourceBundle bundle = ResourceBundle.getBundle("Language/NAT");

@@ -3,7 +3,7 @@ package Controller;
 import Database.AppointmentDatabase;
 import Database.CustomerDatabase;
 
-import Model.Appointment;
+
 import Model.Customer;
 import Model.User;
 import Util.Time;
@@ -35,38 +35,55 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable {
-    @FXML private Pane scheduleAppointment;
-    @FXML private  TextField appointmentTitleAdd;
+    @FXML
+    private Pane scheduleAppointment;
+    @FXML
+    private TextField appointmentTitleAdd;
 
 
-
-    @FXML private ComboBox<String> locationAdd;
-    @FXML private DatePicker datePicker;
-    @FXML private TextArea appointmentDescription;
-
-
-    @FXML private TableView<Customer> customerTable;
-
-
-    @FXML private TableColumn<Customer, Integer> IdCustomer;
-    @FXML private TableColumn<Customer, String> nameCustomer;
-
-    @FXML private ComboBox<String> contact;
-
-    @FXML private ComboBox<String> appointmentType;
-    @FXML private Label userInfo;
-    @FXML private Label appointmentInfo;
-    @FXML private Button test;
-    @FXML private Button addAppointment;
-    @FXML private Button back;
-    @FXML private ComboBox<String> startTime;
-    @FXML private ComboBox<String> endTime;
-    @FXML private ComboBox<String> startMinutes;
-    @FXML private ComboBox<String> endMinutes;
+    @FXML
+    private ComboBox<String> locationAdd;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private TextArea appointmentDescription;
 
 
+    @FXML
+    private TableView<Customer> customerTable;
 
-    public static  Customer selectCustomer;
+
+    @FXML
+    private TableColumn<Customer, Integer> IdCustomer;
+    @FXML
+    private TableColumn<Customer, String> nameCustomer;
+
+    @FXML
+    private ComboBox<String> contact;
+
+    @FXML
+    private ComboBox<String> appointmentType;
+    @FXML
+    private Label userInfo;
+    @FXML
+    private Label appointmentInfo;
+    @FXML
+    private Button test;
+    @FXML
+    private Button addAppointment;
+    @FXML
+    private Button back;
+    @FXML
+    private ComboBox<String> startTime;
+    @FXML
+    private ComboBox<String> endTime;
+    @FXML
+    private ComboBox<String> startMinutes;
+    @FXML
+    private ComboBox<String> endMinutes;
+
+
+    public static Customer selectCustomer;
 //    public static  Contact selectContact;
 
     ObservableList<String> startTimes = FXCollections.observableArrayList();
@@ -74,7 +91,6 @@ public class AddAppointmentController implements Initializable {
     ObservableList<String> startsMinutes = FXCollections.observableArrayList();
     ObservableList<String> endsMinutes = FXCollections.observableArrayList();
     ObservableList<String> Locations = FXCollections.observableArrayList();
-
 
 
     @Override
@@ -97,8 +113,8 @@ public class AddAppointmentController implements Initializable {
         contact.setItems(AppointmentDatabase.ContactList());
 
 
-        startTimes.addAll("9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.");
-        endTimes.addAll("9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.");
+        startTimes.addAll("9", "10", "11", "12", "1", "2", "3", "4", "5");
+        endTimes.addAll("9", "10", "11", "12", "1", "2", "3", "4", "5");
         startsMinutes.addAll("00", "15", "30", "45");
         endsMinutes.addAll("00", "15", "30", "45");
         startTime.setItems(startTimes);
@@ -109,16 +125,14 @@ public class AddAppointmentController implements Initializable {
         locationAdd.setItems(Locations);
 
 
-
     }
 
 
     @FXML
-    void addAppointment(ActionEvent event) throws ParseException, SQLException , IOException{
+    void addAppointment(ActionEvent event) throws ParseException, SQLException, IOException {
 
 
-
-    errorChecks();
+        errorChecks();
         selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
         String customerName = selectCustomer.getCustomerName();
         int customerId = selectCustomer.getCustomerId();
@@ -136,45 +150,46 @@ public class AddAppointmentController implements Initializable {
         String startTimes = startTime.getValue();
         String endTimes = endTime.getValue();
         LocalDate date = datePicker.getValue();
+
         Timestamp start = Time.generateStartTimestamp(datePicker, startTime, startMinutes, locationAdd);
         Timestamp end = Time.generateEndTimestamp(datePicker, endTime, endMinutes, locationAdd);
 
-        if (start.after(end)) {
+
+        System.out.println(start);
+       if (start.after(end)) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Check appointment times");
+           errorAlert.setHeaderText("Check appointment times");
             errorAlert.setContentText("Ensure the end time is after the start time.");
             errorAlert.showAndWait();
             return;
         }
 
 
-        AppointmentDatabase.addAppointment(customerId, customerName, title, location, description, type, contactId,
-                start, end);
+       AppointmentDatabase.addAppointment(customerId, customerName, title, location, description, type, contactId,
+               start, end);
         try {
-            ((Node) (event.getSource())).getScene().getWindow().hide();
+           ((Node) (event.getSource())).getScene().getWindow().hide();
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/View/MainAppointment.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
-            System.out.println("IO Exception: " + ex.getMessage());
+           System.out.println("IO Exception: " + ex.getMessage());
         }
 
 
-        appointmentInfo.setText(" Contact Name: " + contactId + "\nCustomer ID: " + customerId +
-                customerName + "\nLocation: " + location + "\n Description: " + description + "\nTitle:  " + title + "\nS: "
-                + start + "\n End: " + end + "\n End Time: " +
-                "\nDate: " + date + "\nUser: " + currentUser.getUserId());
+//         appointmentInfo.setText(" Contact Name: " + contactId + "\nCustomer ID: " + customerId +
+//                customerName + "\nLocation: " + location + "\n Description: " + description + "\nTitle:  " + title + "\nS: "
+//                + start + "\n End: " + end + "\n End Time: " +
+//                "\nDate: " + date + "\nUser: " + currentUser.getUserId());
 
 
     }
 
 
     @FXML
-    void test(ActionEvent event){
-
-
+    void test(ActionEvent event) {
 
 
     }
@@ -195,8 +210,8 @@ public class AddAppointmentController implements Initializable {
 
     }
 
-    public void errorChecks(){
-        if(customerTable.getSelectionModel().getSelectedItem() == null) {
+    public void errorChecks() {
+        if (customerTable.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("You Must select a Customer In order to Add an appointment.");
@@ -206,7 +221,7 @@ public class AddAppointmentController implements Initializable {
 
         }
 
-        if(appointmentTitleAdd.getText().isEmpty()){
+        if (appointmentTitleAdd.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select a title or write one in.");
@@ -216,7 +231,7 @@ public class AddAppointmentController implements Initializable {
 
         }
 
-        if(contact.getSelectionModel().isEmpty()){
+        if (contact.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select a contact.");
@@ -225,7 +240,7 @@ public class AddAppointmentController implements Initializable {
             return;
         }
 
-        if(locationAdd.getSelectionModel().isEmpty()){
+        if (locationAdd.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select a Location.");
@@ -234,7 +249,7 @@ public class AddAppointmentController implements Initializable {
             return;
         }
 
-        if(datePicker.getValue() == null){
+        if (datePicker.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select a date.");
@@ -242,7 +257,7 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return;
         }
-        if(startTime.getSelectionModel().isEmpty()){
+        if (startTime.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select a Start Hour.");
@@ -251,7 +266,7 @@ public class AddAppointmentController implements Initializable {
             return;
         }
 
-        if(startMinutes.getSelectionModel().isEmpty()){
+        if (startMinutes.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select a start minute.");
@@ -259,7 +274,7 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return;
         }
-        if(endTime.getSelectionModel().isEmpty()){
+        if (endTime.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select an End Hour.");
@@ -267,7 +282,7 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return;
         }
-        if(endMinutes.getSelectionModel().isEmpty()){
+        if (endMinutes.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select an End Minute.");
@@ -275,7 +290,7 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return;
         }
-        if(appointmentType.getSelectionModel().isEmpty()){
+        if (appointmentType.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please select an Appointment Type.");
@@ -284,7 +299,7 @@ public class AddAppointmentController implements Initializable {
             return;
         }
 
-        if(appointmentDescription.getText().isEmpty()){
+        if (appointmentDescription.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error.");
             alert.setContentText("Please Add a description.");
