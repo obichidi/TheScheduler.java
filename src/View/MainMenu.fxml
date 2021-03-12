@@ -4,30 +4,30 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="addAppointment" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenuController">
+<Pane fx:id="addAppointment" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="646.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenuController">
    <children>
-      <Button layoutX="161.0" layoutY="181.0" mnemonicParsing="false" onAction="#showCustomers" text="Manage Customers">
+      <Button layoutX="212.0" layoutY="213.0" mnemonicParsing="false" onAction="#showCustomers" text="Manage Customers">
          <font>
             <Font size="19.0" />
          </font>
       </Button>
-      <Button fx:id="appointmentsButton" layoutX="148.0" layoutY="111.0" mnemonicParsing="false" onAction="#showAppointments" text="Manage Appointments">
+      <Button fx:id="appointmentsButton" layoutX="199.0" layoutY="153.0" mnemonicParsing="false" onAction="#showAppointments" text="Manage Appointments">
          <font>
             <Font size="19.0" />
          </font>
       </Button>
-      <Button layoutX="178.0" layoutY="248.0" mnemonicParsing="false" onAction="#Report" text="Generate Reports">
+      <Button layoutX="229.0" layoutY="275.0" mnemonicParsing="false" onAction="#Report" text="Generate Reports">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
-      <Button layoutX="234.0" layoutY="321.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-      <Label layoutX="146.0" layoutY="28.0" text="The Scheduler ">
+      <Button layoutX="292.0" layoutY="336.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+      <Label layoutX="205.0" layoutY="28.0" text="The Scheduler ">
          <font>
             <Font name="Arial Rounded MT Bold" size="29.0" />
          </font>
       </Label>
       <Label fx:id="loginInfo" layoutX="46.0" layoutY="82.0" prefHeight="17.0" prefWidth="530.0" />
-      <Button fx:id="tester" layoutX="388.0" layoutY="294.0" mnemonicParsing="false" onAction="#openTester" text="Tester" />
+      <Button fx:id="tester" layoutX="433.0" layoutY="309.0" mnemonicParsing="false" onAction="#openTester" text="Tester" />
    </children>
 </Pane>

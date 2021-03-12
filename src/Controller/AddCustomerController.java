@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller class that controls the mechanics of the AddCustomer scene
+ */
+
 public class AddCustomerController  implements Initializable {
 
     @FXML private Button addCustomerButton;
@@ -31,44 +35,56 @@ public class AddCustomerController  implements Initializable {
     @FXML private TextField cityAdd;
     @FXML private TextField customerZipText;
 
-    @FXML private Label testData;
+
     @FXML private ComboBox<String> customerCountryBox;
     @FXML private ComboBox<String> customerDivisionBox;
 
 
+
+
+    /**
+     *  This function adds the  customer data into the database
+     */
+
     @FXML
     void addCustomer(ActionEvent event) {
-                errorChecks();
-        String customerName = firstNameAdd.getText() + " " + lastNameAdd.getText() ;
-        String customerAddress = customerAddressNum.getText() + " " +customerAddressStreet.getText() + "," +cityAdd.getText();
-        String customerDivision = customerDivisionBox.getValue();
-        String customerZipCode = customerZipText.getText();
-        String customerPhone = phoneAdd1.getText() + "-" +  phoneAdd2.getText() + "-" +  phoneAdd3.getText();
-        String customerCountry = customerCountryBox.getValue();
-        int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision);
+
+        if(errorChecks() == false){
+            String customerName = firstNameAdd.getText() + " " + lastNameAdd.getText() ;
+            String customerAddress = customerAddressNum.getText() + " " +customerAddressStreet.getText() + "," +cityAdd.getText();
+            String customerDivision = customerDivisionBox.getValue();
+            String customerZipCode = customerZipText.getText();
+            String customerPhone = phoneAdd1.getText() + "-" +  phoneAdd2.getText() + "-" +  phoneAdd3.getText();
+            String customerCountry = customerCountryBox.getValue();
+            int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision);
 
 
 
-        testData.setText("customerName :" + customerName + "\n Customer Address: " + customerAddress + "\n Customer Division: " + customerDivision
-        + "\n Customer Zip:" + customerZipCode + "\n Customer Phone: " + customerPhone + "\n Customer Country: " + customerCountry +"\n Customer Division :" + customerDivisionId);
 
+            CustomerDatabase.addCustomer(customerAddress, customerZipCode, customerPhone , customerName, customerDivisionId );
 
-         CustomerDatabase.addCustomer(customerAddress, customerZipCode, customerPhone , customerName, customerDivisionId );
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            Stage stage = new Stage();
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/MainCustomer.fxml"));
+            } catch (IOException ex) {
+                System.out.println("IO Exception: " + ex);
+            }
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 
-        ((Node) (event.getSource())).getScene().getWindow().hide();
-        Stage stage = new Stage();
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/View/MainCustomer.fxml"));
-        } catch (IOException ex) {
-            System.out.println("IO Exception: " + ex);
         }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+        }
 
 
-    }
+
+
+    /**
+     * This function changes the scene to the maincustomer.fxml
+     */
 
     @FXML
     void back(ActionEvent event) {
@@ -87,6 +103,9 @@ public class AddCustomerController  implements Initializable {
 
     }
 
+    /**
+     * This function initializing the initial values when the scene is loaded.
+     */
 
     @Override
     public void initialize (URL url, ResourceBundle rb){
@@ -96,7 +115,13 @@ public class AddCustomerController  implements Initializable {
 
     }
 
-    public void errorChecks() {
+
+    /**
+     * This Boolean function checks to make sure the input information is correct. retuning true if there is an error and false if there is not.
+     * @return  returns true or false depending on if there is an error or not.
+     */
+
+    public Boolean errorChecks() {
 
 
         if (customerCountryBox.getSelectionModel().isEmpty()) {
@@ -105,7 +130,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please select a COUNTRY.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
         }
 
 
@@ -115,7 +140,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please select a DIVISION.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
         }
 
@@ -125,7 +150,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter FIRST NAME.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
         }
 
@@ -136,7 +161,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter LAST NAME.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
         }
 
@@ -147,7 +172,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter FIRST 3 Digits  of your PHONE NUMBER.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
         }
         if (phoneAdd2.getText().isEmpty()) {
@@ -156,7 +181,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter SECOND 3 Digits  of your PHONE NUMBER.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
         }
 
@@ -166,7 +191,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter LAST 4 Digits  of your PHONE NUMBER.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
         }
 
@@ -176,7 +201,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter LAST 3 Numbers  of your ADDRESS.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
         }
 
@@ -186,7 +211,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter your STREET NAME .");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
         }
 
@@ -196,7 +221,7 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter your CITY .");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
 
         }
@@ -207,9 +232,10 @@ public class AddCustomerController  implements Initializable {
             alert.setContentText("Please Enter your POSTAL CODE .");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
-            return;
+            return true;
 
 
         }
+        return false;
     }
 }

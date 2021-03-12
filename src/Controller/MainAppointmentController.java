@@ -33,6 +33,10 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * this class initializes the
+ */
 public class MainAppointmentController implements Initializable {
 
     public TableView appointmentTable;
@@ -70,7 +74,9 @@ public class MainAppointmentController implements Initializable {
 
 
 
-
+    /**
+     * this function changes the scene to the AddAppointment fxml
+     */
 
     @FXML
     void addAppointment(ActionEvent event) throws IOException {
@@ -95,7 +101,9 @@ public class MainAppointmentController implements Initializable {
         Platform.exit();
     }
 
-
+    /**
+     * this function changes the scene to the MainMenu fxml
+     */
     @FXML
     void back(ActionEvent event) throws IOException {
 
@@ -114,7 +122,9 @@ public class MainAppointmentController implements Initializable {
 
     }
 
-
+    /**
+     * this function sets the columns of the appointmentTable with the data from the database
+     */
     @FXML
     void showAllAppointments(ActionEvent event) throws IOException {
         try {
@@ -129,7 +139,10 @@ public class MainAppointmentController implements Initializable {
     }
 
 
-
+    /**
+     * this function Deletes the selected appointment from the database and refreshes the appointmentTable
+     *
+     */
     @FXML
     void deleteAppointmentButton(ActionEvent event) throws ParseException, SQLException {
         selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
@@ -146,10 +159,10 @@ public class MainAppointmentController implements Initializable {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("CONFIRM");
-        alert.setContentText("Are you sure you want to cancel" + "\n" + selectAppointment.getCustomerId() + "\n"
-                + selectAppointment.getAppointmentTitle() + "\n" + selectAppointment.getCustomerName());
-//            alert.initModality(Modality.APPLICATION_MODAL);
-        alert.showAndWait();
+        alert.setContentText("Are you sure you want to cancel The appointment on :" + "\n" + selectAppointment.getAppointmentStartDate()+"\n" +"At: " + selectAppointment.getAppointmentStartTime() + "\n"+
+               "Customer: " + selectAppointment.getCustomerName() + "\n" );
+            alert.initModality(Modality.APPLICATION_MODAL);
+
         Optional<ButtonType> decision = alert.showAndWait();
         if (decision.get() == ButtonType.OK) {
 
@@ -167,14 +180,19 @@ public class MainAppointmentController implements Initializable {
 
     }
 
+    /**
+     * this function changes the scene to ModifyAppointment controller fxml with the selected appointment
+     *
+     */
+
     @FXML
     void modifyAppointment(ActionEvent event) throws IOException {
         if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
             selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error.");
-            alert.setContentText("You must select an appointment In order to modify it..");
+            alert.setTitle("SELECT AN APPOINTMENT");
+            alert.setContentText("You MUST select an appointment In order to modify it..");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
             return;
@@ -194,7 +212,10 @@ public class MainAppointmentController implements Initializable {
         stage.show();
     }
 
-
+    /**
+     * this function displays all weekly appointments in the appointmentTable
+     *
+     */
 
     @FXML
     private void showWeeklyAppointments(ActionEvent event) {
@@ -209,7 +230,11 @@ public class MainAppointmentController implements Initializable {
     }
 
 
-
+    /**
+     * this function gets the the selected appointment
+     * @return  selectAppointment
+     *
+     */
     public static Appointment getSelectedAppointment() {
         return selectAppointment;
     }
@@ -223,6 +248,10 @@ public class MainAppointmentController implements Initializable {
 
     }
 
+    /**
+     * this function displays all the monthly appointments in the appointmentTable
+     *
+     */
     @FXML
     private void showMonthlyAppointments(ActionEvent event) {
         if(showMonthly.isSelected()){
@@ -236,7 +265,10 @@ public class MainAppointmentController implements Initializable {
     }
 
 
-
+    /**
+     * this function initializes the settings for the MainAppointment Controller
+     *
+     */
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

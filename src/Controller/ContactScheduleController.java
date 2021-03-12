@@ -29,6 +29,8 @@ import java.util.logging.Logger;
 
 import static Model.User.currentUser;
 
+
+
 public class ContactScheduleController implements Initializable {
 
     @FXML private TableColumn<?, ?> appointmentIdColumn;

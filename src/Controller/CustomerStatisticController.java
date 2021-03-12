@@ -27,6 +27,10 @@ import java.util.logging.Logger;
 
 import static Model.User.currentUser;
 
+
+/**
+ * This class handles all the logic for the CustomerStatistic fxml scene
+ */
 public class CustomerStatisticController implements Initializable {
 
 
@@ -38,7 +42,9 @@ public class CustomerStatisticController implements Initializable {
     @FXML private Label appointmentTypeText;
     @FXML private Label appointmentMonthText;
 
-
+    /**
+     * This function initializes the controller class
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb){
         ObservableList<String> month = FXCollections.observableArrayList();
@@ -53,6 +59,9 @@ public class CustomerStatisticController implements Initializable {
 
     }
 
+    /**
+     * This changes the scene back to the reports fxml
+     */
     @FXML
     void back(ActionEvent event) {
 
@@ -70,6 +79,9 @@ public class CustomerStatisticController implements Initializable {
 
     }
 
+    /**
+     * this function prints the report of the Contacts appointments by Month
+     */
     @FXML
     void printReportByMonth(ActionEvent event) {
         Date reportTime = Calendar.getInstance().getTime();
@@ -104,6 +116,10 @@ public class CustomerStatisticController implements Initializable {
 
     }
 
+
+    /**
+     * this function prints the report of the Contacts appointments by Type
+     */
     @FXML
     void printReportByType(ActionEvent event) {
         Date reportTime = Calendar.getInstance().getTime();
@@ -135,6 +151,10 @@ public class CustomerStatisticController implements Initializable {
 
     }
 
+
+    /**
+     * this function refreshes the combo boxes prompt text
+     */
     @FXML
     void refresh(ActionEvent event) {
         customerNameBox.getSelectionModel().clearSelection();
@@ -145,6 +165,10 @@ public class CustomerStatisticController implements Initializable {
         customerAppointmentMonth.setPromptText("Appointment Month");
     }
 
+
+    /**
+     * this function prints the string containing the customer name in the database of the selected appointment to a text field
+     */
     @FXML
     void showCustomerMonth(ActionEvent event) throws ParseException {
         String selectCustomerName = customerNameBox.getValue();
@@ -160,7 +184,9 @@ public class CustomerStatisticController implements Initializable {
     }
 
 
-
+    /**
+     * this function prints all the appointment for the selcted customer to a text file.
+     */
     @FXML
     void printAllAppointments(ActionEvent event) {
         Date reportTime = Calendar.getInstance().getTime();
@@ -191,12 +217,20 @@ public class CustomerStatisticController implements Initializable {
         }
     }
 
+
+    /**
+     * this function gets the customer name of the selected appointment to a string
+     */
     @FXML
     void showCustomerName(ActionEvent event) throws ParseException {
        String selectCustomerName = customerNameBox.getValue();
        customerNameText.setText(String.valueOf(CustomerDatabase.getAllAppointmentCountForCustomer(selectCustomerName)));
 
     }
+
+    /**
+     * this function gets the type  of the selected appointment to a string
+     */
 
     @FXML
     void showCustomerType(ActionEvent event) throws ParseException {

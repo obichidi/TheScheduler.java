@@ -34,6 +34,11 @@ import java.util.ResourceBundle;
 
 import static Util.Login.recordLogin;
 
+
+
+/**
+ * this us the classn that implements the functionality of the login fxml
+ */
 public class LoginController implements Initializable {
 
     @FXML private AnchorPane loginAnchor;
@@ -60,7 +65,9 @@ public class LoginController implements Initializable {
 //      exitButton.setText(rb.getString(("Exit")));
 
 
-
+    /**
+     * this function  initializes the settings for when the scene opens
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        usernameText.setText("test");
@@ -73,7 +80,9 @@ public class LoginController implements Initializable {
         }
     }
 
-
+    /**
+     * this function  configures the login of the user it uses a boolean  to see if the username and password match then the login is recorded to the login report.
+     */
     @FXML
     private void Login(ActionEvent event) throws IOException, ParseException {
 
@@ -88,11 +97,30 @@ public class LoginController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            String polo = null;
+            try {
+                polo = AppointmentDatabase.getAppointmentsIn15Mins();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if(polo == null){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("UPCOMING APPOINTMENTS");
+                alert.setContentText(("There are no upcoming Appointments in the next 15 minutes."));
+                alert.initModality(Modality.NONE);
+                alert.showAndWait();
+
+            }
+            else{ Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("UPCOMING APPOINTMENTS");
+                alert.setContentText((polo));
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();}
 
         } else {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("There are appointments within 15 minutes.");
+            alert.setTitle("Login Error");
             alert.setContentText("Please Input the Correct UserName");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
@@ -111,29 +139,12 @@ public class LoginController implements Initializable {
                 System.out.println("Exception: " + e);
             }
 
-
-            //    } else {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle(errorLabel);
-//            alert.setContentText(errorMessage);
-//            alert.initModality(Modality.APPLICATION_MODAL);
-//            alert.showAndWait();
-//        }
-            //}
-
-//    @FXML
-//    public void  Login(ActionEvent event) throws IOException {
-//
-////        System.out.println(usernameText.getText());
-////        System.out.println(password.getText());
-//
-//
-//        System.out.println("Default locale:" + Locale.getDefault().toString());
-//        System.out.println();
-//        Locale frenchLocale = new Locale("fr", "FR");
-//        Locale.setDefault(frenchLocale);
         }
     }
+
+    /**
+     * this function exits the whole program
+     */
 
         @FXML
         public void exit (ActionEvent event) throws IOException {
@@ -141,7 +152,9 @@ public class LoginController implements Initializable {
         }
 
 
-
+    /**
+     * this function that prints the recorded unsuccessful login to the login report.
+     */
 
 
         public void loginError(){

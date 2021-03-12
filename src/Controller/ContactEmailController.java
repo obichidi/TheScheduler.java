@@ -20,64 +20,65 @@ import java.util.ResourceBundle;
 
 import static Model.User.currentUser;
 
+
+/**
+ * This class is the controller which contains  logic for the ContactEmail fxml
+ */
 public class ContactEmailController implements Initializable {
 
 
     @FXML private ComboBox<String> customerNameBox;
     @FXML private ComboBox<String> contactNameBox;
     @FXML private ComboBox<String> appointmentBox;
-    @FXML private Label contactName;
-    @FXML private Label contactEmailText;
+    @FXML private Label contactNameText;
 
+
+
+    /**
+     * This function initializes the settings for when the scene loads
+     */
     @Override
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL url, ResourceBundle rb) {
         customerNameBox.setItems(CustomerDatabase.CustomerList());
         appointmentBox.setItems(CustomerDatabase.CustomerAppointmentList(customerNameBox.getValue()));
 
+//        customerNameBox.setPromptText();
 
 
     }
 
 
+
+    /**
+     * This function generates a report of the emails of the contacts for a selected appointment
+     */
     @FXML
-    void getContactEmail(ActionEvent event) {
-     String  contactNames = contactNameBox.getValue();
-        String contactEmail = contactEmailText.getText();
-     System.out.println(contactEmail);
-       contactEmailText.setText(String.valueOf(CustomerDatabase.ContactEmailList(contactNames)));
-
-    }
-
-
-
-    @FXML
-    void generateEmailReport(ActionEvent  event){
+    void generateContactReport(ActionEvent event) {
         Date reportTime = Calendar.getInstance().getTime();
         String selectCustomerName = customerNameBox.getValue();
 
         String selectedAppointment = appointmentBox.getValue();
-        String contactName =  contactNameBox.getValue();
-        String contactEmail = contactEmailText.getText();
+        String contactName = contactNameBox.getValue();
 
-        File reportsByMonthFile = new File(" ContactEmail_4Customer.txt");
-        if(!reportsByMonthFile.exists()){
+
+        File reportsByMonthFile = new File(" Contact$Customer.txt");
+        if (!reportsByMonthFile.exists()) {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" ContactEmail_4Customer.txt"), "utf-8"))) {
+                    new FileOutputStream(" Contact$Customer.txt"), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\n" +
                         "Report:\n" +
-                        "The Contact Email for Customer: " +  selectCustomerName + " For an appointment ON : "  +  selectedAppointment +   "is :" + contactEmail + " Contact Name: " + contactName + "\n");
+                        "The Contact  for Customer: " + selectCustomerName + " For an Appointment  ON : " + selectedAppointment + " is Contact Name: " + contactName + "\n");
             } catch (IOException ex) {
                 System.out.println("IOEception: " + ex);
             }
-        }
-        else {
+        } else {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" ContactEmail_4Customer.txt",true), "utf-8"))) {
+                    new FileOutputStream(" Contact$Customer.txt", true), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\n" +
                         "Report:\n" +
-                        "The Contact Email for Customer: " +  selectCustomerName + " For an Appointment  ON : "  +  selectedAppointment +   " is :" + contactEmail + " Contact Name: " + contactName + "\n");
+                        "The Contact  for Customer: " + selectCustomerName + " For an Appointment  ON : " + selectedAppointment + " is Contact Name: " + contactName + "\n");
             } catch (IOException ex) {
                 System.out.println("IOEception: " + ex);
             }
@@ -86,31 +87,32 @@ public class ContactEmailController implements Initializable {
 
     }
 
+    /**
+     * This Back function that changes the scene back to the Main Menu fxml
+     */
 
     @FXML
     void getAppointment(ActionEvent event) {
 
-           String selectedCustomer  = customerNameBox.getValue();
-            String selectedAppointment = appointmentBox.getValue();
+        String selectedCustomer = customerNameBox.getValue();
+        String selectedAppointment = appointmentBox.getValue();
 
 
-            contactNameBox.setItems(CustomerDatabase.appointmentContactList(selectedCustomer, selectedAppointment));
+        contactNameBox.setItems(CustomerDatabase.appointmentContactList(selectedCustomer, selectedAppointment));
 
-//         System.out.println(contactName);
 
-//
-//            System.out.println();
-       contactNameBox.setPromptText(String.valueOf(CustomerDatabase.appointmentContactList(selectedCustomer, selectedAppointment)));
 
-    }
 
-    @FXML
-    void getContact(ActionEvent event) {
-
-        String contactName = contactNameBox.getValue();
-
+        String contactName = CustomerDatabase.appointmentContactList(selectedCustomer, selectedAppointment).toString();
         contactNameBox.setPromptText(contactName);
+        contactNameBox.setValue(contactName);
+        contactNameText.setText(contactNameBox.getValue());
     }
+
+
+    /**
+     * This Back function that changes the scene back to the Main Menu fxml
+     */
     @FXML
     void back(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -127,15 +129,18 @@ public class ContactEmailController implements Initializable {
     }
 
 
-
+    /**
+     * This function gets the customer name of the selected appointment
+     */
     @FXML
     void getCustomerName(ActionEvent event) {
-            String selectedCustomer = customerNameBox.getValue();
+        String selectedCustomer = customerNameBox.getValue();
 
 
         appointmentBox.setItems(CustomerDatabase.CustomerAppointmentList(selectedCustomer));
 
     }
+
 
 
 }

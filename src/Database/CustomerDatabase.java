@@ -161,48 +161,6 @@ public class CustomerDatabase {
 
 
 
-    public static ObservableList<String> ContactEmailList(String contactName ) {
-        ObservableList<String> contactEmails = FXCollections.observableArrayList();
-        try {
-            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
-                    "SELECT  Email FROM contacts  " +
-                            " WHERE Contact_Name = ?  ;");
-            statement.setString(1,contactName);
-
-
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                if(!contactEmails.contains(rs.getString("Email"))) {
-                    contactEmails.add(rs.getString("Email"));
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println("SQL Exception: " + ex.getMessage());
-        }
-        return contactEmails;
-    }
-
-//    public static String ContactEmail(String contactName ) {
-//                    String contactEmails = null ;
-//        try {
-//            PreparedStatement statement = ConnectorDb.connectDb().prepareStatement(
-//                    "SELECT  Email FROM contacts " +
-//                            " Where Contact_Name = ? ;") ;
-//
-//            statement.setString(1,contactName);
-//
-//
-//            ResultSet rs = statement.executeQuery();
-//            while (rs.next()) {
-//
-//                    contactEmails =(rs.getString("Contact_Name"));
-//                }
-//
-//        } catch (SQLException ex) {
-//            System.out.println("SQL Exception: " + ex.getMessage());
-//        }
-//        return contactEmails;
-//    }
 
 
 

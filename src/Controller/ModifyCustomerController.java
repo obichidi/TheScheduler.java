@@ -38,31 +38,46 @@ public class ModifyCustomerController implements Initializable {
          void modifyCustomer(ActionEvent event) {
         customerToUpdate = MainCustomerController.getSelectCustomer();
 
-                errorChecks();
-        int customerId = customerToUpdate.getCustomerId();
-        String customerName = customerNameModify.getText();
-        String customerPhone = customerPhoneModify.getText();
-        String customerAddress = customerAddressModify.getText();
-        String customerZipCode = customerZipCodeModify.getText();
-        String customerCountry = customerCountryModify.getValue();
-        String customerDivision = customerDivisionModify.getValue();
-        int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision);
+           if(phoneValidated() == false){
 
-
-        CustomerDatabase.modifyCustomer(customerId, customerName, customerPhone, customerAddress, customerZipCode, customerDivisionId);
-        try {
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MainCustomer.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            System.out.println("IO Exception: " + ex.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error.");
+            alert.setContentText("Please enter the correct format for phone number.");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
+            return;
         }
 
-        testerTest.setText("Customer Id: " + customerId + "\nCustomer Name: " + customerName + "\nCustomer Phone: " + customerPhone + "\ncustomer Address: " + customerAddress + "\nCustomer Zip Code: " + customerZipCode + "\nCustomer Country: " + customerCountry +
-                "\nCustomer Division: " + customerDivision);
+            else{
+            errorChecks();
+            int customerId = customerToUpdate.getCustomerId();
+            String customerName = customerNameModify.getText();
+            String customerPhone = customerPhoneModify.getText();
+            String customerAddress = customerAddressModify.getText();
+            String customerZipCode = customerZipCodeModify.getText();
+            String customerCountry = customerCountryModify.getValue();
+            String customerDivision = customerDivisionModify.getValue();
+            int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision);
+
+
+            CustomerDatabase.modifyCustomer(customerId, customerName, customerPhone, customerAddress, customerZipCode, customerDivisionId);
+            try {
+                ((Node) (event.getSource())).getScene().getWindow().hide();
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("/view/MainCustomer.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                System.out.println("IO Exception: " + ex.getMessage());
+            }
+
+            testerTest.setText("Customer Id: " + customerId + "\nCustomer Name: " + customerName + "\nCustomer Phone: " + customerPhone + "\ncustomer Address: " + customerAddress + "\nCustomer Zip Code: " + customerZipCode + "\nCustomer Country: " + customerCountry +
+                    "\nCustomer Division: " + customerDivision);
+
+        }
+
+
     }
 
     @FXML
@@ -107,8 +122,23 @@ public class ModifyCustomerController implements Initializable {
     }
 
 
+    public boolean phoneValidated(){
+
+          String phoneValidate = customerPhoneModify.getText();
+        if(phoneValidate.matches("[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}")
+                || phoneValidate.matches("[0-9]{2}[-]{1}[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}")){
+            return true;
+        }
+        else{ return false;}
+
+
+
+
+    }
+
 
     public void errorChecks() {
+
 
 
         if ( customerToUpdate == null) {

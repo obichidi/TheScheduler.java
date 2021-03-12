@@ -37,7 +37,5 @@
         <Button fx:id="testerButton" layoutX="65.0" layoutY="451.0" mnemonicParsing="false" onAction="#test" text="Test" />
         <Label layoutX="36.0" layoutY="156.0" text="Title" />
       <ComboBox fx:id="typeModify" layoutX="84.0" layoutY="290.0" prefWidth="150.0" />
-      <ComboBox fx:id="startAmpPm" layoutX="517.0" layoutY="82.0" prefHeight="27.0" prefWidth="92.0" promptText="AM/PM" />
-      <ComboBox fx:id="endAmPm" layoutX="517.0" layoutY="138.0" prefHeight="27.0" prefWidth="92.0" promptText="AM/PM" />
     </children>
 </AnchorPane>

@@ -27,6 +27,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+/**
+ * this class is the main controller for tje MainCustomer fxml
+ *
+ */
+
 public class MainCustomerController  implements Initializable {
 
     @FXML private TableView<Customer> customerTable;
@@ -54,6 +59,10 @@ public class MainCustomerController  implements Initializable {
     }
 
 
+    /**
+     * this function changes the scene to the AddCustomer fxml
+     *
+     */
 
     @FXML
     void addCustomer(ActionEvent event) throws IOException {
@@ -72,13 +81,18 @@ public class MainCustomerController  implements Initializable {
     }
 
 
+    /**
+     * this function changs the scene to the MainMenu fxml
+     *
+     */
+
     @FXML
     void back(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/View/MainMenuController.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
         } catch (IOException ex) {
             System.out.println("IO Exception: " + ex);
         }
@@ -88,6 +102,11 @@ public class MainCustomerController  implements Initializable {
 
     }
 
+
+    /**
+     * this function Deletes the selected customer and associated appointments  from the database
+     *
+     */
     @FXML
     void deleteCustomer(ActionEvent event) throws ParseException, SQLException {
 
@@ -104,9 +123,11 @@ public class MainCustomerController  implements Initializable {
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("CONFIRM");
-        alert.setContentText("Please confirm the you want to cancel :");
+        alert.setContentText("Please confirm the you want to cancel :\n"+
+       "Customer ID: " + selectCustomer.getCustomerId() + "\n"+
+                "Customer Name:" +selectCustomer.getCustomerName()  );
         alert.initModality(Modality.APPLICATION_MODAL);
-        alert.showAndWait();
+
         Optional<ButtonType> decision = alert.showAndWait();
         if (decision.get() == ButtonType.OK) {
 

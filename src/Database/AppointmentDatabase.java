@@ -16,29 +16,16 @@ import java.time.format.FormatStyle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * this class implements the functionality of the the database calls from the controller classes
+ */
 public class AppointmentDatabase {
 
 
-
-    public static ObservableList<Contact> getAllContacts() throws ParseException, SQLException {
-        ObservableList<Contact> allContacts = FXCollections.observableArrayList();
-        try (Statement statement = ConnectorDb.connectDb().createStatement()) {
-            String query = "SELECT * FROM contacts";
-
-            ResultSet rs = statement.executeQuery(query);
-            while (rs.next()) {
-                int contactId = rs.getInt("Contact_ID");
-                String contactName = rs.getString("Contact_Name");
-                String contactEmail = rs.getString("Email");
-
-                Contact contact = new Contact(contactId,contactName,contactEmail);
-                allContacts.add(contact);
-            }
-        }
-        return allContacts;
-    }
-
-
+    /**
+     * this function locates the contact id from the database given the contact name
+     * @return contactId
+     */
     public static int findContactId(String  Contact){
         int selectContactId = 0;
         try {
@@ -56,7 +43,10 @@ public class AppointmentDatabase {
         return selectContactId;
     }
 
-
+    /**
+     * this function extracts all the appointments from the database
+     * @return  allAppointments
+     */
 
     public static ObservableList<Appointment> getAllAppointments() throws ParseException, SQLException {
         ObservableList<Appointment> allAppointments=FXCollections.observableArrayList();
@@ -117,7 +107,7 @@ public class AppointmentDatabase {
                 ZonedDateTime endTimeZonedTime = localEndDateTime.atZone(ZoneId.of("UTC"));
                 ZonedDateTime localEndTime = endTimeZonedTime.withZoneSameInstant(zoneId);
                 String appointmentEndTime = localEndTime.format(timeFormatter);
-                System.out.println(appointmentEndTime);
+
 
                 Appointment appointment = new Appointment(appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
                 allAppointments.add(appointment);
@@ -128,7 +118,10 @@ public class AppointmentDatabase {
     }
 
 
-
+    /**
+     * this function extracts all the appointments from the database for the week and returns an observable List
+     * @return  weeklyAppointments
+     */
 
     public static ObservableList<Appointment> getWeeklyAppointments() throws ParseException ,SQLException {
         LocalDateTime now = LocalDateTime.now();
@@ -200,7 +193,10 @@ public class AppointmentDatabase {
         return weeklyAppointments;
     }
 
-
+    /**
+     * this function extracts all the appointments from the database for the selected Month and returns an observable List
+     * @return  monthlyAppointments
+     */
     public static ObservableList<Appointment> getMonthlyAppointments(Integer month) throws ParseException{
         LocalDateTime now = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault();
@@ -209,7 +205,7 @@ public class AppointmentDatabase {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
         ObservableList<Appointment> weeklyAppointments=FXCollections.observableArrayList();
 
-        ObservableList<Appointment> allAppointments=FXCollections.observableArrayList();
+        ObservableList<Appointment> monthlyAppointments=FXCollections.observableArrayList();
         String monthPlusOne = Integer.toString(month+1);
         try (Statement statement = ConnectorDb.connectDb().createStatement()) {
             String query = "SELECT a.Appointment_ID, cu.Customer_Name, a.Title, a.Customer_ID, a.Type, c.Contact_Name, "
@@ -267,22 +263,25 @@ public class AppointmentDatabase {
 
 
                 Appointment appointment = new Appointment( appointmentId,  appointmentTitle,  customerId, customerName,  appointmentType,  appointmentLocation,  appointmentDescription, appointmentContact, appointmentStartDate,  appointmentStartTime, appointmentEndTime);
-                allAppointments.add(appointment);
+                monthlyAppointments.add(appointment);
             }
         } catch (SQLException ex) {
             Logger.getLogger(AppointmentDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return allAppointments;
+        return monthlyAppointments;
     }
 
 
 
 
-
+    /**
+     * this function returns an alert for appointments in the 15 minute range for that instant in time.
+     * @return  appointments
+     */
 
 
     public static String getAppointmentsIn15Mins() throws ParseException{
-        String upcomingAppointments = "";
+        String appointments = null;
         LocalDateTime now = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault();
         ZonedDateTime zoneNow = now.atZone(zoneId);
@@ -309,19 +308,36 @@ public class AppointmentDatabase {
                 LocalDateTime localDateTime = LocalDateTime.parse(startTime.toString());
                 ZonedDateTime startZonedTime = localDateTime.atZone(ZoneId.of("UTC"));
                 ZonedDateTime localStart = startZonedTime.withZoneSameInstant(zoneId);
-                upcomingAppointments += customer + " has an appointment at " + localStart.format(timeFormatter) + " with " + contact + " at the " + location + " Location. \n";
+
+                 appointments = customer + " has an appointment at " + localStart.format(timeFormatter) + " with " + contact + " at the " + location + " Location. \n";
+
+
+
+
             }
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex);
         }
 
-        System.out.println(upcomingAppointments);
-        return upcomingAppointments;
+
+        return appointments;
 
     }
 
 
-
+    /**
+     * this function adds the input from the AddAppointment fxml into the database
+     * @param customerId
+     * @param customerName
+     * @param title
+     * @param location
+     * @param description
+     * @param type
+     * @param contactId
+     * @param start
+     * @param end
+     * @return  weeklyAppointments
+     */
     public static void addAppointment(int customerId, String customerName, String title, String location, String description, String type, int contactId,
                                       Timestamp start, Timestamp end){
 
@@ -341,6 +357,21 @@ public class AppointmentDatabase {
         }
     }
 
+
+    /**
+     * this function Inserts new data into  the database from the ModifyAppointment fxml
+     * @param appointmentId
+     * @param customerId
+     * @param customerName
+     * @param title
+     * @param location
+     * @param description
+     * @param type
+     * @param contact
+     * @param start
+     * @param end
+     * @return  weeklyAppointments
+     */
     public static void modifyAppointment(int appointmentId, int customerId, String type, String customerName, String title, String location,
                                          String description, String contact, Timestamp start, Timestamp end){
         PreparedStatement statement;

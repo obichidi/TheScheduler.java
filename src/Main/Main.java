@@ -4,6 +4,8 @@ package Main;
 import Controller.MainAppointmentController;
 import Controller.ModifyAppointmentController;
 import Database.AppointmentDatabase;
+import Database.CustomerDatabase;
+import Util.ConnectorDb;
 import Util.TimestampToLocal;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,8 +30,8 @@ public class Main extends Application {
 //        timestampToLocal.setTime(13,27,6);
 //        System.out.println(timestampToLocal.toString());
 
+      AppointmentDatabase.getAppointmentsIn15Mins();
 
-//        System.out.println(timestampToLocal.toMilitary());
 
         ResourceBundle rb;
         ResourceBundle bundle = ResourceBundle.getBundle("Language/NAT");
@@ -44,22 +46,15 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+       ConnectorDb.connectDb();
+
 
 
         launch(args);
-//        ZoneId.getAvailableZoneIds().stream().forEach(System.out::println);
-//        ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("Asia")).forEach(System.out::println);
 
-//        LocalDate parisDate = LocalDate.of(2019, 10, 26);
-//        LocalTime parisTime = LocalTime.of(01,00);
-//        ZoneId   parisZoneId = ZoneId.of("Europe/Paris");
-//        ZonedDateTime  ParisZDT = ZonedDateTime.of(parisDate, parisTime, parisZoneId);
-//        ZoneId localZoneId =  ZoneId.of(TimeZone.getDefault().getID());
-//        Instant parisToGmt =  ParisZDT.toInstant();
-//        ZonedDateTime parisLocalZdt = ParisZDT.withZoneSameLocal(localZoneId);
-//        LocalDateTime  gmttoLocacZDT
-
+        ConnectorDb.disconnectDb();
 
     }
 

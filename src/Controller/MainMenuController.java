@@ -3,11 +3,13 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 
+import Database.AppointmentDatabase;
 import Model.User;
 
 
@@ -19,11 +21,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainMenuController implements  Initializable{
@@ -34,26 +38,26 @@ public class MainMenuController implements  Initializable{
 @Override
 
 public void initialize(URL url, ResourceBundle rb) {
-//  loginInfo.setText("The User  " + User.currentUser.getUsername() + " successfully logged in on " + Calendar.getInstance().getTime() + " From " + Locale.getDefault());
-//
+ loginInfo.setText("Welcome  " + User.currentUser.getUsername() + "!  You successfully logged in on " + Calendar.getInstance().getTime() + " From " + Locale.getDefault());
+
+
+
+
 
 }
 
     @FXML
-    void openTester(ActionEvent event) throws IOException {
-        try {
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/View/teserTime.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            System.out.println(" Error: " + e.getMessage());
-        }
+    void openTester(ActionEvent event) throws IOException, ParseException {
+
     }
 
 
+
+    public void AppointmentCheck() throws ParseException {
+    String polo = AppointmentDatabase.getAppointmentsIn15Mins();
+
+
+    }
 
 
     @FXML
