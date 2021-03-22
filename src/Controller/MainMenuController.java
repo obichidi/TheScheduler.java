@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -30,43 +35,57 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
+
+/**
+ * this is the class that implements the main menu fxml
+ *
+ */
 public class MainMenuController implements  Initializable{
    @FXML private Label loginInfo;
     @FXML private Button tester;
 
 
+/**This is the controller for the MainMenuController*/
+    public MainMenuController(){}
+
+
+    /**
+     * this function changes the scene to the AddAppointment fxml
+     * initializes the settings of the MainMenu fxml
+     */
 @Override
 
 public void initialize(URL url, ResourceBundle rb) {
- loginInfo.setText("Welcome  " + User.currentUser.getUsername() + "!  You successfully logged in on " + Calendar.getInstance().getTime() + " From " + Locale.getDefault());
 
-
-
+    LocalDateTime now = LocalDateTime.now();
+    ZoneId zoneId = ZoneId.systemDefault();
+    ZonedDateTime zoneNow = now.atZone(zoneId);
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.LONG);
 
 
 }
 
-    @FXML
-    void openTester(ActionEvent event) throws IOException, ParseException {
-
-    }
-
-
-
-    public void AppointmentCheck() throws ParseException {
-    String polo = AppointmentDatabase.getAppointmentsIn15Mins();
-
-
-    }
-
+/**
+     * this function function exits the program
+     * @param event this is an event driven function
+     *
+     */
 
     @FXML
-    void exit(ActionEvent event) throws IOException {
+    public void exit(ActionEvent event) {
         Platform.exit();
     }
 
+
+
+    /**
+     * this function changes the scene to the Main Appointment fxml
+     * @param event this is an event driven function
+     *
+     */
     @FXML
-    void showAppointments(ActionEvent event) {
+   public void showAppointments(ActionEvent event) {
         try {
             ((Node) (event.getSource())).getScene().getWindow().hide();
             Stage stage = new Stage();
@@ -79,8 +98,16 @@ public void initialize(URL url, ResourceBundle rb) {
         }
     }
 
+
+
+
+    /**
+     * this function changes the scene to the Main Appointment fxml
+     * @param event this is an event driven function
+     *
+     */
     @FXML
-    void showCustomers(ActionEvent event) {
+   public void showCustomers(ActionEvent event) {
         try {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/View/MainCustomer.fxml"));
@@ -92,23 +119,14 @@ public void initialize(URL url, ResourceBundle rb) {
         }
     }
 
-    @FXML
-    void showLogs(ActionEvent event) {
-        File file = new File("log.txt");
-        if (file.exists()) {
-            if (Desktop.isDesktopSupported()) {
-                try {
-                    Desktop.getDesktop().open(file);
-                } catch (IOException e) {
-                    System.out.println("Error Opening Log File: " + e.getMessage());
-                }
-            }
-        }
 
-    }
-
+    /**
+     * this function changes the scene to the Reports fxml
+     * @param event this is an event driven function
+     *
+     */
    @FXML
-    void Report(ActionEvent event) {
+   public void Report(ActionEvent event) {
        try {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));

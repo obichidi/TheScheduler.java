@@ -4,36 +4,34 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="monthPicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1204.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainAppointmentController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1274.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainAppointmentController">
     <children>
-        <TableView fx:id="appointmentTable" layoutX="85.0" layoutY="69.0" prefHeight="416.0" prefWidth="942.0">
+        <TableView fx:id="appointmentTable" layoutX="85.0" layoutY="69.0" prefHeight="416.0" prefWidth="1003.0">
             <columns>
-                <TableColumn fx:id="appointmentId" prefWidth="99.0" text="Appointment Id" />
-                <TableColumn fx:id="appointmentTitle" prefWidth="69.0" text="Title" />
-                <TableColumn fx:id="appointmentType" prefWidth="63.0" text="Type" />
-                <TableColumn fx:id="appointmentLocation" prefWidth="75.0" text="Location" />
+                <TableColumn fx:id="appointmentId" prefWidth="91.0" text="Appointment Id" />
+                <TableColumn fx:id="appointmentTitle" prefWidth="58.0" text="Title" />
+                <TableColumn fx:id="appointmentType" prefWidth="93.0" text="Type" />
+                <TableColumn fx:id="appointmentLocation" prefWidth="64.0" text="Location" />
                 <TableColumn fx:id="appointmentDescription" prefWidth="84.0" text="Description" />
                 <TableColumn fx:id="appointmentStartDate" prefWidth="95.0" text="Date" />
                 <TableColumn fx:id="appointmentStartTime" text="Start Time" />
                 <TableColumn fx:id="appointmentEndTime" prefWidth="76.0" text="End Time" />
                 <TableColumn fx:id="customerId" prefWidth="75.0" text="customer Id" />
                 <TableColumn fx:id="appointmentContact" prefWidth="114.0" text="Contact Name" />
-                <TableColumn fx:id="customerNameC" prefWidth="114.0" text="Customer Name" />
+                <TableColumn fx:id="customerNameC" prefWidth="105.0" text="Customer Name" />
             </columns>
         </TableView>
-        <Button fx:id="addAppointmentButton" layoutX="1060.0" layoutY="112.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />
-        <Button fx:id="modifyAppointmentButton" layoutX="1053.0" layoutY="163.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
-        <Button fx:id="deleteAppointment" layoutX="1053.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" text="Cancel Appointment" />
-        <Button layoutX="1096.0" layoutY="362.0" mnemonicParsing="false" onAction="#back" text="Back" />
-        <Button layoutX="1104.0" layoutY="409.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+        <Button fx:id="addAppointmentButton" layoutX="1119.0" layoutY="110.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />
+        <Button fx:id="modifyAppointmentButton" layoutX="1111.0" layoutY="160.0" mnemonicParsing="false" onAction="#modifyAppointment" text="Modify Appointment" />
+        <Button fx:id="deleteAppointment" layoutX="1111.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" text="Cancel Appointment" />
+        <Button layoutX="1142.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" text="Back" />
+        <Button layoutX="1146.0" layoutY="408.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
         <RadioButton fx:id="showMonthly" layoutX="381.0" layoutY="28.0" mnemonicParsing="false" onAction="#showMonthlyAppointments" text="Monthly">
             <toggleGroup>
                 <ToggleGroup fx:id="toggleAppointment" />
             </toggleGroup></RadioButton>
         <RadioButton fx:id="showWeekly" layoutX="554.0" layoutY="28.0" mnemonicParsing="false" onAction="#showWeeklyAppointments" text="Weekly" toggleGroup="$toggleAppointment" />
         <RadioButton fx:id="allAppointments" layoutX="658.0" layoutY="28.0" mnemonicParsing="false" onAction="#showAllAppointments" text="Refresh" toggleGroup="$toggleAppointment" />
-        <ComboBox fx:id="pickMonth" layoutX="269.0" layoutY="23.0" onAction="#showMonthlyAppointments" prefHeight="27.0" prefWidth="88.0" promptText="Month" />
-        <Button layoutX="98.0" layoutY="15.0" mnemonicParsing="false" onAction="#test" text="test" />
         <Label layoutX="819.0" layoutY="18.0" text="Appointments">
             <font>
                 <Font size="31.0" />

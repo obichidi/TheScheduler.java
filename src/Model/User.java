@@ -9,8 +9,12 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Calendar;
 
+
+/**
+ * this the class for the user model
+ *
+ */
 public class User {
     public static User currentUser;
     private static ObservableList<User> allUsers = FXCollections.observableArrayList();
@@ -18,57 +22,74 @@ public class User {
     private final SimpleStringProperty username = new SimpleStringProperty();
     private final SimpleStringProperty userPassword = new SimpleStringProperty();
 
+
+    /**
+     * this is the constructor method for the user class
+     * @param id  the user id
+     * @param name the user name
+     * @param password  the user password
+     */
     public User (int id, String name, String password) {
         setUserId(id);
         setUsername(name);
         setUserPassword(password);
     }
 
+
+
+    /**
+     * this is the setter method for the username
+     * @param username   returns users name
+     */
     public void setUsername(String username) {
         this.username.set(username);
     }
+
+    /**
+     * this is the getter method for the  userName
+     * @return  userName returns users name
+     */
     public String getUsername() {
         return username.get();
     }
 
+
+    /**
+     * this is the setter method for the userId
+     * @param userId   returns  the users id
+     */
     public void setUserId(int userId) {
         this.userId.set(userId);
     }
+
+    /**
+     * this is the getter method for the  userId
+     * @return  userId returns users Id
+     */
 
     public int getUserId() {
         return userId.get();
     }
 
+
+    /**
+     * this is the setter method for the userPassword
+     * @param userPassword returns users password
+     */
     public void setUserPassword(String userPassword) {
         this.userPassword.set(userPassword);
     }
 
+
+    /**
+     * this is the getter method for the  userPassword
+     * @return  userPassword returns users password
+     */
     public String getUserPassword() {
         return userPassword.get();
     }
 
 
 
-    public static ObservableList<User> getAllUsers() {
-        allUsers.clear();
-        try {
-            try (Statement statement = ConnectorDb.connectDb().createStatement()) {
-                String query = "SELECT userId, userName, password FROM user;";
-                ResultSet results = statement.executeQuery(query);
-                while(results.next()) {
-                    User user = new User(
-                            results.getInt("userId"),
-                            results.getString("userName"),
-                            results.getString("password"));
-                    allUsers.add(user);
 
-
-                }
-            }
-            return allUsers;
-        } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            return null;
-        }
-    }
 }

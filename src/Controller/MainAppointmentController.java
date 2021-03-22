@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -35,18 +36,15 @@ import java.util.logging.Logger;
 
 
 /**
- * this class initializes the
+ * this class is for the main appointment controller for the Main appointment fxml
  */
 public class MainAppointmentController implements Initializable {
 
-    public TableView appointmentTable;
 
 
-    @FXML private Button exit;
 
+   @FXML private TableView<Appointment> appointmentTable;
 
-    @FXML private TableView<Appointment> AppointmentTable;
-    @FXML private ComboBox<String> pickMonth;
     @FXML private TableColumn<Appointment, Integer> appointmentId;
     @FXML private TableColumn<Appointment, String> appointmentType;
 
@@ -55,6 +53,7 @@ public class MainAppointmentController implements Initializable {
     @FXML private TableColumn<Appointment, String> appointmentDescription;
     @FXML private TableColumn<Appointment, Integer> customerId;
     @FXML private TableColumn<Appointment, String> customerNameC;
+
     @FXML private TableColumn<Appointment, String> appointmentContact;
     @FXML private TableColumn<Appointment, LocalDate> appointmentStartDate;
     @FXML private TableColumn<Appointment, LocalTime> appointmentStartTime;
@@ -66,20 +65,23 @@ public class MainAppointmentController implements Initializable {
     @FXML private RadioButton showWeekly;
     @FXML private RadioButton allAppointments;
     @FXML private ToggleGroup toggleAppointment;
+
     static Appointment selectAppointment;
 
-    ObservableList<String> months = FXCollections.observableArrayList();
+
     private final ObservableList<Appointment>  refreshAppointments = FXCollections.observableArrayList();
 
-
-
+/**This is the constructor for the MainAppointmentController */
+public MainAppointmentController(){}
 
     /**
      * this function changes the scene to the AddAppointment fxml
+     * @param event  this i s an event driven function
+     * @throws IOException throws an io exception
      */
 
     @FXML
-    void addAppointment(ActionEvent event) throws IOException {
+  public  void addAppointment(ActionEvent event) throws IOException {
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
         Parent root = null;
@@ -94,8 +96,14 @@ public class MainAppointmentController implements Initializable {
 
     }
 
+
+    /**
+     * this function exits the program
+     * @param event  this is an event driven function
+
+     */
     @FXML
-    void exit(ActionEvent event) throws IOException {
+   public void exit(ActionEvent event)  {
 
 
         Platform.exit();
@@ -103,9 +111,10 @@ public class MainAppointmentController implements Initializable {
 
     /**
      * this function changes the scene to the MainMenu fxml
+     * @param event  this is an event driven function
      */
     @FXML
-    void back(ActionEvent event) throws IOException {
+   public void back(ActionEvent event)  {
 
 
         ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -124,9 +133,10 @@ public class MainAppointmentController implements Initializable {
 
     /**
      * this function sets the columns of the appointmentTable with the data from the database
+     * @param event this is an event driven function
      */
     @FXML
-    void showAllAppointments(ActionEvent event) throws IOException {
+   public void showAllAppointments(ActionEvent event)  {
         try {
             appointmentTable.getItems().clear();
             appointmentTable.setItems(AppointmentDatabase.getAllAppointments());
@@ -141,10 +151,13 @@ public class MainAppointmentController implements Initializable {
 
     /**
      * this function Deletes the selected appointment from the database and refreshes the appointmentTable
+     * @param event  this is an event driven function
+     * @throws  ParseException throws a parse exception
+     * @throws SQLException throws a sqLException
      *
      */
     @FXML
-    void deleteAppointmentButton(ActionEvent event) throws ParseException, SQLException {
+   public void deleteAppointmentButton(ActionEvent event) throws ParseException, SQLException {
         selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
         if (appointmentTable.getSelectionModel().getSelectedItem() == null) {
             Alert appointmentAlert = new Alert(Alert.AlertType.ERROR);
@@ -159,8 +172,8 @@ public class MainAppointmentController implements Initializable {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("CONFIRM");
-        alert.setContentText("Are you sure you want to cancel The appointment on :" + "\n" + selectAppointment.getAppointmentStartDate()+"\n" +"At: " + selectAppointment.getAppointmentStartTime() + "\n"+
-               "Customer: " + selectAppointment.getCustomerName() + "\n" );
+        alert.setContentText("Are you sure you want to cancel The appointment on :" + "\n" +  selectAppointment.getAppointmentStartDate()+"\n" +"At: " + selectAppointment.getAppointmentStartTime() + "\n"+
+               "Customer: " + selectAppointment.getCustomerName() + "\n"  + "Created By: "+ selectAppointment.getUserName() );
             alert.initModality(Modality.APPLICATION_MODAL);
 
         Optional<ButtonType> decision = alert.showAndWait();
@@ -182,11 +195,12 @@ public class MainAppointmentController implements Initializable {
 
     /**
      * this function changes the scene to ModifyAppointment controller fxml with the selected appointment
+     * @param event this is an event driven function
      *
      */
 
     @FXML
-    void modifyAppointment(ActionEvent event) throws IOException {
+   public void modifyAppointment(ActionEvent event)  {
         if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
             selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
         } else {
@@ -214,11 +228,12 @@ public class MainAppointmentController implements Initializable {
 
     /**
      * this function displays all weekly appointments in the appointmentTable
+     * @param event  this is an event driven function
      *
      */
 
     @FXML
-    private void showWeeklyAppointments(ActionEvent event) {
+   public void showWeeklyAppointments(ActionEvent event) {
         try {
             appointmentTable.getItems().clear();
             appointmentTable.setItems(AppointmentDatabase.getWeeklyAppointments());
@@ -241,23 +256,19 @@ public class MainAppointmentController implements Initializable {
 
 
 
-    @FXML
-    void test(ActionEvent event){
-        selectAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
 
-
-    }
 
     /**
      * this function displays all the monthly appointments in the appointmentTable
+     * @param event this is an event driven function
      *
      */
     @FXML
-    private void showMonthlyAppointments(ActionEvent event) {
+    public void showMonthlyAppointments(ActionEvent event) {
         if(showMonthly.isSelected()){
             try {
                 appointmentTable.getItems().clear();
-                appointmentTable.setItems(AppointmentDatabase.getMonthlyAppointments(pickMonth.getSelectionModel().getSelectedIndex()));
+                appointmentTable.setItems(AppointmentDatabase.getMonthlyAppointments());
             } catch (ParseException ex) {
                 Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -267,19 +278,28 @@ public class MainAppointmentController implements Initializable {
 
     /**
      * this function initializes the settings for the MainAppointment Controller
+     * @param url URL
+     * @param rb  ResourceBundle
      *
      */
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Locale  englishLocale = new Locale("en", "EN");
+        Locale.setDefault(englishLocale);
         appointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+
+
+
         appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
+
         appointmentLocation.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
         customerNameC.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
         customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         appointmentType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
         appointmentContact.setCellValueFactory(new PropertyValueFactory<>("appointmentContact"));
+          System.out.println("gfiygfkug" + appointmentStartTime);
         appointmentStartTime.setCellValueFactory(new PropertyValueFactory<>("appointmentStartTime"));
         appointmentEndTime.setCellValueFactory(new PropertyValueFactory<>("appointmentEndTime"));
         appointmentStartDate.setCellValueFactory(new PropertyValueFactory<>("appointmentStartDate"));
@@ -289,12 +309,6 @@ public class MainAppointmentController implements Initializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        months.addAll("January", "February", "March", "April", "May" ,"June" ,"July" ,"August" ,"September" ,"October" ,"November" ,"December");
-
-        pickMonth.setItems(months);
-        Calendar now = Calendar.getInstance();
-
-        pickMonth.getSelectionModel().select(now.get(Calendar.MONTH));
 
         try {
             appointmentTable.setItems(AppointmentDatabase.getAllAppointments());

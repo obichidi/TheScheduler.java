@@ -31,6 +31,10 @@ import static Model.User.currentUser;
 
 
 
+/**
+ * this class implements the ContactScheduleController for the ContactSchedule fxml
+ *
+ */
 public class ContactScheduleController implements Initializable {
 
     @FXML private TableColumn<?, ?> appointmentIdColumn;
@@ -42,26 +46,32 @@ public class ContactScheduleController implements Initializable {
     @FXML private TableColumn<?, ?> endTimeColumn;
     @FXML private TableColumn<?, ?> customerId;
     @FXML private ComboBox<String> contactNameBox;
+    @FXML private ComboBox<String> getAppointmentMonth;
     @FXML private ComboBox<String> appointmentMonth;
     @FXML private ComboBox<String> appointmentType;
     @FXML private TableView<Appointment> contactTable;
+    @FXML private Label appointMonthText;
 
-    @FXML private RadioButton refresh;
     @FXML private Button back;
 
     @FXML private Button printAppointmentByMonth;
     @FXML private Button printAppointmentByType;
- //   ObservableList<String> month = FXCollections.observableArrayList();
+
     static String selectedContact;
     static Integer selectedMonth;
     static String selectedType;
 
 
+    /**This is the constructor for ContactScheduleController */
+ContactScheduleController(){}
 
-
-
+    /**
+     * This changes the scene back to the reports fxml
+     * @param event  this is an event driven function
+     */
     @FXML
-    void back(ActionEvent event) {
+   public void back(ActionEvent event) {
+
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
         Parent root = null;
@@ -73,11 +83,17 @@ public class ContactScheduleController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
     }
 
 
+    /**
+     * this function gets the selected contacts appointments and sets them in the in the contact table
+     * @param event  this is an event driven function
+     *
+     */
     @FXML
-    void getContactsAppointments(ActionEvent event) {
+   public void getContactsAppointments(ActionEvent event) {
         selectedContact = contactNameBox.getValue();
 
         try {
@@ -91,13 +107,20 @@ public class ContactScheduleController implements Initializable {
 
     }
 
-    @FXML
-    void refresh(ActionEvent event) {
-        contactTable.getItems().clear();
-    }
 
+
+
+
+
+
+
+    /**
+     * this function gets the contact appointment data by type
+     * @param event  this is an event driven function
+     *
+     */
     @FXML
-    void getContactAppointmentByType(ActionEvent event) {
+   public void getContactAppointmentByType(ActionEvent event) {
         contactTable.getItems().clear();
         selectedType = appointmentType.getValue();
 
@@ -109,14 +132,15 @@ public class ContactScheduleController implements Initializable {
         } catch (ParseException | SQLException ex) {
             Logger.getLogger(MainAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
-
     }
 
-
+    /**
+     * this function gets the contact appointment data by Month
+     * @param event  this is an event driven function
+     *
+     */
     @FXML
-    void getAllAppointmentContactsByMonth(ActionEvent event) {
+   public void getAllAppointmentContactsByMonth(ActionEvent event) {
         try {
             contactTable.getItems().clear();
             contactTable.setItems(AppointmentDatabase.getContactsMonthlyAppointments(appointmentMonth.getSelectionModel().getSelectedIndex(), selectedContact));
@@ -128,7 +152,13 @@ public class ContactScheduleController implements Initializable {
 
 
 
-
+    /**
+     * this function initializes the settings for the
+     *  ContactSchedule controller fxml
+     * @param url  URL
+     * @param rb  Resource Bundle
+     *
+     */
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -154,24 +184,33 @@ public class ContactScheduleController implements Initializable {
     }
 
 
-
+    /**
+     * this function  prints the report of the selected appointments by  month to a text file
+     * @param event  this i s an event driven function
+     * @throws ParseException throws a parse exception
+     */
     @FXML
-    void printAppointmentByMonth(ActionEvent event) {
+  public  void printAppointmentByMonth(ActionEvent event) throws ParseException {
+
+
+
+
+
         Date reportTime = Calendar.getInstance().getTime();
 
-        File reportsByMonthFile = new File(" ReportsByMonth.txt");
+        File reportsByMonthFile = new File("ReportsByMonth.txt");
         if(!reportsByMonthFile.exists()){
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" ReportsByMonth.txt"), "utf-8"))) {
+                    new FileOutputStream("ReportsByMonth.txt"), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
-                        reportTime +  "\r\n");
+                        reportTime +  contactNameBox.getValue() );
             } catch (IOException ex) {
                 System.out.println("IOEception: " + ex);
             }
         }
         else {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" ReportsByMonth.txt", true), "utf-8"))) {
+                    new FileOutputStream("ReportsByMonth.txt", true), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\r\n");
             } catch (IOException ex) {
@@ -181,17 +220,20 @@ public class ContactScheduleController implements Initializable {
     }
 
 
-
-
+    /**
+     * this function  prints the report of the selected appointments by type to a text file
+     * @param event  this is an event driven function
+     *
+     */
     @FXML
-    void printAppointmentByType(ActionEvent event) {
+   public void printAppointmentByType(ActionEvent event) {
 
         Date reportTime = Calendar.getInstance().getTime();
 
         File reportsByMonthFile = new File(" ReportsByType.txt");
         if(!reportsByMonthFile.exists()){
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" ReportsByType.txt"), "utf-8"))) {
+                    new FileOutputStream("ReportsByType.txt"), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime +  "\r\n");
             } catch (IOException ex) {
@@ -200,7 +242,7 @@ public class ContactScheduleController implements Initializable {
         }
         else {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" ReportsByMonth.txt", true), "utf-8"))) {
+                    new FileOutputStream("ReportsByType.txt", true), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\r\n");
             } catch (IOException ex) {

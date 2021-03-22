@@ -5,7 +5,7 @@ import Database.AppointmentDatabase;
 import Database.UserDatabase;
 
 
-import Util.TimestampToLocal;
+import Lambda.getString;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +26,7 @@ import java.io.*;
 import java.net.URL;
 
 import java.text.ParseException;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -37,13 +38,17 @@ import static Util.Login.recordLogin;
 
 
 /**
- * this us the classn that implements the functionality of the login fxml
+ * this us the class that implements the functionality of the login fxml
+ * there is a LAMBDA expression in the login error function for messages.
  */
 public class LoginController implements Initializable {
 
     @FXML private AnchorPane loginAnchor;
     @FXML private TextField usernameText;
+    @FXML private Label titleText;
     @FXML private TextField passwordText;
+    @FXML private Label usernameLabel;
+    @FXML private  Label passwordLabel;
     @FXML private Button exitButton;
     @FXML private Button loginButton;
    @FXML private Label location;
@@ -52,17 +57,8 @@ public class LoginController implements Initializable {
     private String errorLabel;
     private String errorMessage;
 
-
-
-//    @Override
-//    public void initialize(URL url, ResourceBundle rb) {
-//
-//       Locale locale = Locale.getDefault();
-//      rb = ResourceBundle.getBundle("Language.NAT");
-//        loginButton.setText(rb.getString("Login"));
-//       usernameText.setText((rb.getString(("username"))));
-//
-//      exitButton.setText(rb.getString(("Exit")));
+/** this is the constructor for the Login controller*/
+public  LoginController(){}
 
 
     /**
@@ -70,21 +66,44 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        languageCheck("");
        usernameText.setText("test");
        passwordText.setText("test");
-       location.setText(Locale.getDefault().getCountry());
+
+
+
+//        Locale frenchLocale = new Locale("fr", "FR");
+//        Locale.setDefault(frenchLocale);
+//     rb = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
+//        if (Locale.getDefault().getLanguage().equals("fr")) {
+//
+//
+//
+//            System.out.println(rb.getString("Login"));
+//
+//
+//        }
+
+       location.setText(String.valueOf(ZoneId.systemDefault()));
         try {
             System.out.println(AppointmentDatabase.getAppointmentsIn15Mins());
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
+    String error = "Please Input the Correct Credentials";
 
-    /**
-     * this function  configures the login of the user it uses a boolean  to see if the username and password match then the login is recorded to the login report.
-     */
+
+
+
+
+/** this function  configures the login of the user it uses a boolean  to see if the username and password match then the login is recorded to the login report.
+ * there is a LAMBDA for get string to show repetitive messages easier*/
     @FXML
     private void Login(ActionEvent event) throws IOException, ParseException {
+
+        getString message = s -> s;
 
         String username = usernameText.getText();
         String password = passwordText.getText();
@@ -106,7 +125,7 @@ public class LoginController implements Initializable {
             if(polo == null){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("UPCOMING APPOINTMENTS");
-                alert.setContentText(("There are no upcoming Appointments in the next 15 minutes."));
+                alert.setContentText((message.getString("There are no upcoming Appointments in the next 15 minutes.")));
                 alert.initModality(Modality.NONE);
                 alert.showAndWait();
 
@@ -121,7 +140,8 @@ public class LoginController implements Initializable {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login Error");
-            alert.setContentText("Please Input the Correct UserName");
+
+            alert.setContentText(message.getString(error));
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
             loginError();
@@ -130,7 +150,7 @@ public class LoginController implements Initializable {
             try {
                 if (appointmentAlert.length() > 0) {
                     alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("There are appointments within 15 minutes.");
+                    alert.setTitle(message.getString("There are appointments within 15 minutes."));
                     alert.setContentText(appointmentAlert);
                     alert.initModality(Modality.APPLICATION_MODAL);
                     alert.showAndWait();
@@ -142,8 +162,27 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**This function changes the languages  message languages for the login scene by locale
+     * @param code  */
+    private void languageCheck(String code){
+
+
+        ResourceBundle  rb = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
+
+        passwordText.setText(rb.getString("Password"));
+        titleText.setText(rb.getString("title"));
+        usernameLabel.setText(rb.getString("usernameLabel"));
+        passwordLabel.setText(rb.getString("passwordLabel"));
+        exitButton.setText(rb.getString("exit"));
+        loginButton.setText(rb.getString("login"));
+        error = rb.getString("error");
+
+    }
+
     /**
      * this function exits the whole program
+     * @throws IOException for errors
+     * @param event this is an ActionEvent driven function
      */
 
         @FXML
@@ -154,32 +193,37 @@ public class LoginController implements Initializable {
 
     /**
      * this function that prints the recorded unsuccessful login to the login report.
+     * there is a LAMBDA expression getString  the lambda is useful  for repeating messages.
+     *
+     *
      */
 
+    public void loginError(){
+         // the get string lambda expression
+           getString message = s -> s;
 
-        public void loginError(){
-            Date loginTime = Calendar.getInstance().getTime();
-            File loginFile = new File(" login_activity.txt");
-            if (!loginFile.exists()) {
-                try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream(" login_activity.txt"), "utf-8"))) {
-                    writer.write( " There was an Unsuccessful attempt to log in on " +
-                            loginTime + "\r\n");
-                } catch (IOException ex) {
-                    System.out.println("IOException: " + ex);
-                }
-            } else {
-                try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream(" login_activity.txt", true), "utf-8"))) {
-                    writer.write("There was an Unsuccessful attempt to log in on" +
-                            loginTime + "\r\n");
-                } catch (IOException ex) {
-                    System.out.println("IOException: " + ex);
-                }
-
+        Date loginTime = Calendar.getInstance().getTime();
+        File loginFile = new File("login_activity.txt");
+        if (!loginFile.exists()) {
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream("login_activity.txt"), "utf-8"))) {
+                writer.write( message.getString("There was an Unsuccessful attempt to log in on") +
+                        loginTime + "\r\n");
+            } catch (IOException ex) {
+                System.out.println("IOException: " + ex);
+            }
+        } else {
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream("login_activity.txt", true), "utf-8"))) {
+                writer.write(message.getString("There was an Unsuccessful attempt to log in on")+
+                        loginTime + "\r\n");
+            } catch (IOException ex) {
+                System.out.println("IOException: " + ex);
             }
 
         }
+
+    }
     }
 
 

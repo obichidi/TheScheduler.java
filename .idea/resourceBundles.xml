@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ResourceBundleManager">
-    <file url="file://$PROJECT_DIR$/src/Language/NAT.properties" />
-    <file url="file://$PROJECT_DIR$/src/Language/NAT_en.properties" />
-    <file url="file://$PROJECT_DIR$/src/Language/NAT_fr.properties" />
+    <file url="file://$PROJECT_DIR$/src/Language/Nat..properties" />
+    <file url="file://$PROJECT_DIR$/src/Language/Nat._Nat_en.properties" />
+    <file url="file://$PROJECT_DIR$/src/Language/Nat._Nat_fr.properties" />
     <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/src/Language/Nat_en.properties" />
       <file value="file://$PROJECT_DIR$/src/Language/Nat_fr.properties" />
@@ -13,12 +13,6 @@
       <file value="file://$PROJECT_DIR$/src/Language/Nat_en.properties" />
       <file value="file://$PROJECT_DIR$/src/Language/Nat_fr.properties" />
       <base-name>Nat</base-name>
-    </custom-resource-bundle>
-    <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/src/Language/NAT.properties" />
-      <file value="file://$PROJECT_DIR$/src/Language/NAT_en.properties" />
-      <file value="file://$PROJECT_DIR$/src/Language/NAT_fr.properties" />
-      <base-name>NAT</base-name>
     </custom-resource-bundle>
   </component>
 </project>

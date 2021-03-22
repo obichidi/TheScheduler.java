@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="579.0" prefWidth="929.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ContactScheduleController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="579.0" prefWidth="956.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ContactScheduleController">
    <children>
       <TableView fx:id="contactTable" layoutX="14.0" layoutY="71.0" prefHeight="438.0" prefWidth="724.0">
         <columns>
@@ -19,13 +19,10 @@
       </TableView>
       <ComboBox fx:id="contactNameBox" layoutX="31.0" layoutY="26.0" onAction="#getContactsAppointments" prefWidth="150.0" promptText="Contact Name" />
       <Button fx:id="back" layoutX="782.0" layoutY="471.0" mnemonicParsing="false" onAction="#back" prefHeight="27.0" prefWidth="58.0" text="Back" />
-      <RadioButton fx:id="refresh" layoutX="643.0" layoutY="31.0" mnemonicParsing="false" onAction="#refresh" text="Refresh">
-         <toggleGroup>
-            <ToggleGroup fx:id="typeAppointments" />
-         </toggleGroup></RadioButton>
       <ComboBox fx:id="appointmentType" layoutX="208.0" layoutY="26.0" onAction="#getContactAppointmentByType" prefWidth="150.0" promptText="Appointment Type" />
       <ComboBox fx:id="appointmentMonth" layoutX="386.0" layoutY="26.0" onAction="#getAllAppointmentContactsByMonth" prefHeight="27.0" prefWidth="169.0" promptText="Appointment Month" />
       <Button fx:id="printAppointmentByType" layoutX="751.0" layoutY="207.0" mnemonicParsing="false" onAction="#printAppointmentByType" text="Print Appointment By Type" />
       <Button fx:id="printAppointmentByMonth" layoutX="748.0" layoutY="263.0" mnemonicParsing="false" onAction="#printAppointmentByMonth" text="Print Appointment By Month" />
+      <ComboBox fx:id="appointmentsMonth" layoutX="758.0" layoutY="108.0" prefWidth="150.0" visible="false" />
    </children>
 </AnchorPane>

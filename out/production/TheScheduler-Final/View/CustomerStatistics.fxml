@@ -8,8 +8,8 @@
    <children>
       <Label layoutX="274.0" layoutY="180.0" text="Appointments By  Type" />
       <ComboBox fx:id="customerNameBox" layoutX="14.0" layoutY="91.0" onAction="#showCustomerName" prefWidth="150.0" promptText="Customer" />
-      <ComboBox fx:id="customerAppointmentType" layoutX="177.0" layoutY="91.0" onAction="#showCustomerType" prefWidth="150.0" promptText="Type" />
-      <ComboBox fx:id="customerAppointmentMonth" layoutX="337.0" layoutY="91.0" onAction="#showCustomerMonth" prefWidth="150.0" promptText="Month" />
+      <ComboBox fx:id="customerAppointmentType" layoutX="177.0" layoutY="91.0" onAction="#showCustomerType" prefHeight="27.0" prefWidth="138.0" promptText="Type" />
+      <ComboBox fx:id="customerAppointmentMonth" layoutX="337.0" layoutY="91.0" onAction="#showCustomerMonth" prefHeight="27.0" prefWidth="140.0" promptText="Month" />
       <Button layoutX="570.0" layoutY="350.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <RadioButton fx:id="refresh" layoutX="550.0" layoutY="61.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
       <Label layoutX="185.0" layoutY="14.0" text="Customer Appointment Statistics">

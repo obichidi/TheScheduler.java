@@ -1,6 +1,0 @@
-test Generated This report on :Fri Mar 12 09:21:51 EST 2021
-Report:
-The Contact  for Customer: Daddy Warbucks For an Appointment  ON : 2020-05-28 12:00:00 is Contact Name: null
-test Generated This report on :Fri Mar 12 09:25:11 EST 2021
-Report:
-The Contact  for Customer: Daddy Warbucks For an Appointment  ON : 2020-05-28 12:00:00 is Contact Name: [Li Lee]

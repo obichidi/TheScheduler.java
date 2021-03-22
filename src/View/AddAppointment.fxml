@@ -7,10 +7,10 @@
 <Pane fx:id="scheduleAppointment" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddAppointmentController">
    <children>
       <ComboBox fx:id="appointmentType" editable="true" layoutX="86.0" layoutY="108.0" prefWidth="150.0" promptText="Appointment type" />
-      <ComboBox fx:id="locationAdd" layoutX="73.0" layoutY="196.0" prefWidth="150.0" promptText="Location" />
-      <DatePicker fx:id="datePicker" editable="false" layoutX="398.0" layoutY="68.0" promptText="Pick a date" />
+      <ComboBox fx:id="locationAdd" layoutX="86.0" layoutY="209.0" prefWidth="150.0" promptText="Location" />
+      <DatePicker fx:id="datePicker" editable="false" layoutX="492.0" layoutY="68.0" promptText="Pick a date" />
       <Label layoutX="5.0" layoutY="113.0" text="Appointments" />
-      <Label layoutX="12.0" layoutY="201.0" prefHeight="17.0" prefWidth="61.0" text="Locations" />
+      <Label layoutX="13.0" layoutY="214.0" prefHeight="17.0" prefWidth="61.0" text="Locations" />
       <TableView fx:id="customerTable" layoutX="274.0" layoutY="209.0" prefHeight="347.0" prefWidth="257.0">
         <columns>
           <TableColumn fx:id="IdCustomer" prefWidth="75.0" text="ID" />
@@ -19,7 +19,7 @@
       </TableView>
       <Button fx:id="addAppointment" layoutX="632.0" layoutY="459.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />
       <Button fx:id="back" layoutX="680.0" layoutY="506.0" mnemonicParsing="false" onAction="#back" text="Back" />
-      <Label layoutX="350.0" layoutY="73.0" text="Date" />
+      <Label layoutX="452.0" layoutY="73.0" text="Date" />
       <ComboBox fx:id="startTime" layoutX="437.0" layoutY="130.0" prefWidth="150.0" promptText="Start TimeHour" />
       <ComboBox fx:id="endTime" layoutX="437.0" layoutY="166.0" prefWidth="150.0" promptText="End TimeHour" />
       <Label layoutX="248.0" layoutY="21.0" text="Schedule Appointment">
@@ -31,13 +31,16 @@
       <Label layoutX="372.0" layoutY="166.0" text="End Time" />
       <Label layoutX="43.0" layoutY="73.0" text="Title" />
       <Label fx:id="userInfo" layoutX="32.0" layoutY="42.0" />
-      <Label fx:id="appointmentInfo" layoutX="556.0" layoutY="228.0" prefHeight="225.0" prefWidth="251.0" />
       <TextField fx:id="appointmentTitleAdd" layoutX="86.0" layoutY="68.0" promptText="Title" />
-      <TextArea fx:id="appointmentDescription" layoutX="32.0" layoutY="430.0" prefHeight="76.0" prefWidth="200.0" promptText="write description" />
-      <Label layoutX="86.0" layoutY="413.0" text="Description" />
+      <TextArea fx:id="appointmentDescription" layoutX="32.0" layoutY="459.0" prefHeight="76.0" prefWidth="200.0" promptText="write description" />
+      <Label layoutX="82.0" layoutY="442.0" text="Description" />
       <ComboBox fx:id="startMinutes" layoutX="596.0" layoutY="130.0" prefHeight="27.0" prefWidth="100.0" promptText="Minutes" />
       <ComboBox fx:id="endMinutes" layoutX="596.0" layoutY="166.0" prefHeight="27.0" prefWidth="100.0" promptText="Minutes" />
-      <ComboBox fx:id="contact" layoutX="73.0" layoutY="239.0" prefWidth="150.0" promptText="Contact" />
-      <Label layoutX="21.0" layoutY="244.0" text="Contact" />
+      <ComboBox fx:id="contact" layoutX="86.0" layoutY="255.0" prefWidth="150.0" promptText="Contact" />
+      <Label layoutX="22.0" layoutY="260.0" text="Contact" />
+      <ComboBox fx:id="startAmPm" layoutX="708.0" layoutY="130.0" prefHeight="27.0" prefWidth="100.0" promptText="AM/PM" />
+      <ComboBox fx:id="endAmPm" layoutX="708.0" layoutY="170.0" prefHeight="27.0" prefWidth="100.0" promptText="AM/PM" />
+      <ComboBox fx:id="userBox" layoutX="86.0" layoutY="299.0" prefWidth="150.0" promptText="User" />
+      <Label layoutX="30.0" layoutY="304.0" text="User" />
    </children>
 </Pane>

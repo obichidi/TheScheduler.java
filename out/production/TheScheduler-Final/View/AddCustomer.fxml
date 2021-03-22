@@ -15,16 +15,16 @@
       <TextField fx:id="customerZipText" layoutX="181.0" layoutY="238.0" promptText="Customer Zip" />
       <Label layoutX="72.0" layoutY="203.0" text="Customer Address" />
       <Label layoutX="97.0" layoutY="243.0" text="Customer Zip" />
-      <Label fx:id="customerCountry" layoutX="73.0" layoutY="324.0" text="Customer Country" />
+      <Label fx:id="customerCountry" layoutX="73.0" layoutY="280.0" text="Customer Country" />
       <Label layoutX="241.0" layoutY="14.0" text="Add Customer">
          <font>
             <Font size="33.0" />
          </font>
       </Label>
       <Button layoutX="467.0" layoutY="353.0" mnemonicParsing="false" onAction="#back" text="Back" />
-      <ComboBox fx:id="customerCountryBox" layoutX="186.0" layoutY="319.0" prefWidth="150.0" />
-      <ComboBox fx:id="customerDivisionBox" layoutX="186.0" layoutY="279.0" prefWidth="150.0" />
-      <Label layoutX="102.0" layoutY="284.0" text="Division" />
+      <ComboBox fx:id="customerCountryBox" layoutX="186.0" layoutY="275.0" onAction="#chooseDivision" prefWidth="150.0" />
+      <ComboBox fx:id="customerDivisionBox" layoutX="186.0" layoutY="319.0" prefWidth="150.0" />
+      <Label layoutX="101.0" layoutY="324.0" text="Division" />
       <TextField fx:id="phoneAdd2" layoutX="227.0" layoutY="152.0" prefHeight="27.0" prefWidth="46.0" promptText="123" />
       <TextField fx:id="phoneAdd3" layoutX="272.0" layoutY="152.0" prefHeight="27.0" prefWidth="65.0" promptText="1234" />
       <TextField fx:id="customerAddressStreet" layoutX="235.0" layoutY="198.0" prefHeight="27.0" prefWidth="113.0" promptText="street name" />

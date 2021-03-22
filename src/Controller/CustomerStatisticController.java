@@ -44,26 +44,29 @@ public class CustomerStatisticController implements Initializable {
 
     /**
      * This function initializes the controller class
+     * @param rb ResourceBundle
+     * @param url URL
      */
     @Override
     public void initialize(URL url, ResourceBundle rb){
         ObservableList<String> month = FXCollections.observableArrayList();
         customerNameBox.setItems(CustomerDatabase.CustomerList());
         customerAppointmentType.setItems(AppointmentDatabase.TypeList());
-        customerAppointmentMonth.setItems(month);
+
 
         month.addAll("January", "February", "March", "April", "May" ,"June" ,"July" ,"August" ,"September" ,"October" ,"November" ,"December");
         Calendar now = Calendar.getInstance();
        customerAppointmentMonth.getSelectionModel().select(now.get(Calendar.MONTH));
-
+        customerAppointmentMonth.setItems(month);
 
     }
 
     /**
      * This changes the scene back to the reports fxml
+     * @param event  this is an event driven function
      */
     @FXML
-    void back(ActionEvent event) {
+   public void back(ActionEvent event) {
 
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
@@ -80,10 +83,11 @@ public class CustomerStatisticController implements Initializable {
     }
 
     /**
-     * this function prints the report of the Contacts appointments by Month
+     * this function prints the report of the Contacts appointments by Month to a text file
+     * @param event  this is an even driven function
      */
     @FXML
-    void printReportByMonth(ActionEvent event) {
+   public void printReportByMonth(ActionEvent event) {
         Date reportTime = Calendar.getInstance().getTime();
         String selectCustomerName = customerNameBox.getValue();
         String selectedMonth = customerAppointmentMonth.getValue();
@@ -93,7 +97,7 @@ public class CustomerStatisticController implements Initializable {
         File reportsByMonthFile = new File(" AppointmentsByMonthFor_Customer.txt");
         if(!reportsByMonthFile.exists()){
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" AppointmentsByMonthFor_Customer.txt"), "utf-8"))) {
+                    new FileOutputStream("AppointmentsByMonthFor_Customer.txt"), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\n" +
                         "Report:\n" +
@@ -104,7 +108,7 @@ public class CustomerStatisticController implements Initializable {
         }
         else {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" AppointmentsByMonthFor_Customer.txt", true), "utf-8"))) {
+                    new FileOutputStream("AppointmentsByMonthFor_Customer.txt", true), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\n" +
                         "Report:\n" +
@@ -119,16 +123,17 @@ public class CustomerStatisticController implements Initializable {
 
     /**
      * this function prints the report of the Contacts appointments by Type
+     * @param event  this is an event driven function
      */
     @FXML
-    void printReportByType(ActionEvent event) {
+   public void printReportByType(ActionEvent event) {
         Date reportTime = Calendar.getInstance().getTime();
         String selectCustomerName = customerNameBox.getValue();
 
         File reportsByMonthFile = new File(" AppointmentsByTypeFor_Customer.txt");
         if(!reportsByMonthFile.exists()){
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" AppointmentsByTypeFor_Customer.txt"), "utf-8"))) {
+                    new FileOutputStream("AppointmentsByTypeFor_Customer.txt"), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\n" +
                         "Report:\n" +
@@ -139,7 +144,7 @@ public class CustomerStatisticController implements Initializable {
         }
         else {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" AppointmentsByTypeFor_Customer.txt", true), "utf-8"))) {
+                    new FileOutputStream("AppointmentsByTypeFor_Customer.txt", true), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\n" +
                         "Report:\n" +
@@ -154,23 +159,30 @@ public class CustomerStatisticController implements Initializable {
 
     /**
      * this function refreshes the combo boxes prompt text
+     * @param event  this is an event driven function
      */
     @FXML
-    void refresh(ActionEvent event) {
+   public void refresh(ActionEvent event) {
         customerNameBox.getSelectionModel().clearSelection();
-        customerNameBox.setPromptText("Customer Name");
+
          customerAppointmentType.getSelectionModel().clearSelection();
-        customerAppointmentType.setPromptText("Appointment Type");
+
         customerAppointmentMonth.getSelectionModel().clearSelection();
-        customerAppointmentMonth.setPromptText("Appointment Month");
+
+
+        customerAppointmentType.setPromptText("Type");
+        customerAppointmentMonth.setPromptText(" Month");
+        customerNameBox.setPromptText(" Name");
     }
 
 
     /**
      * this function prints the string containing the customer name in the database of the selected appointment to a text field
+     * @param event  this is an event driven function
+     * @throws ParseException throws a parse exception
      */
     @FXML
-    void showCustomerMonth(ActionEvent event) throws ParseException {
+   public void showCustomerMonth(ActionEvent event) throws ParseException {
         String selectCustomerName = customerNameBox.getValue();
             int selectMonth = customerAppointmentMonth.getSelectionModel().getSelectedIndex();
         if (selectCustomerName != null) {
@@ -186,16 +198,17 @@ public class CustomerStatisticController implements Initializable {
 
     /**
      * this function prints all the appointment for the selcted customer to a text file.
+     * @param event  this is an event driven function
      */
     @FXML
-    void printAllAppointments(ActionEvent event) {
+   public void printAllAppointments(ActionEvent event) {
         Date reportTime = Calendar.getInstance().getTime();
         String selectCustomerName = customerNameBox.getValue();
 
         File reportsByMonthFile = new File(" All_AppointmentsFor_Customer.txt");
         if(!reportsByMonthFile.exists()){
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" All_AppointmentsFor_Customer.txt"), "utf-8"))) {
+                    new FileOutputStream("All_AppointmentsFor_Customer.txt"), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime +  "\r\n" +
                         "Report:\n" +
@@ -206,7 +219,7 @@ public class CustomerStatisticController implements Initializable {
         }
         else {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(" All_AppointmentsFor_Customer.txt", true), "utf-8"))) {
+                    new FileOutputStream("All_AppointmentsFor_Customer.txt", true), "utf-8"))) {
                 writer.write(currentUser.getUsername() + " Generated This report on :" +
                         reportTime + "\n" +
                         "Report:\n" +
@@ -220,9 +233,11 @@ public class CustomerStatisticController implements Initializable {
 
     /**
      * this function gets the customer name of the selected appointment to a string
+     * @param event  this is an event driven function
+     * @throws ParseException throws a parse expression
      */
     @FXML
-    void showCustomerName(ActionEvent event) throws ParseException {
+   public void showCustomerName(ActionEvent event) throws ParseException {
        String selectCustomerName = customerNameBox.getValue();
        customerNameText.setText(String.valueOf(CustomerDatabase.getAllAppointmentCountForCustomer(selectCustomerName)));
 
@@ -230,10 +245,12 @@ public class CustomerStatisticController implements Initializable {
 
     /**
      * this function gets the type  of the selected appointment to a string
+     * @param event  this is an event driven function
+     *
      */
 
     @FXML
-    void showCustomerType(ActionEvent event) throws ParseException {
+   public void showCustomerType(ActionEvent event)  {
 
         String selectCustomerName = customerNameBox.getValue();
         String selectType = customerAppointmentType.getValue();

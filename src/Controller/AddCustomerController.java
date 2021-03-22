@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+
 import java.util.ResourceBundle;
 
 /**
@@ -39,15 +40,16 @@ public class AddCustomerController  implements Initializable {
     @FXML private ComboBox<String> customerCountryBox;
     @FXML private ComboBox<String> customerDivisionBox;
 
-
-
+/**This is the constructor for the AddCustomerController*/
+ public  AddCustomerController(){}
 
     /**
      *  This function adds the  customer data into the database
+     * @param event  this function is triggered by an event
      */
 
     @FXML
-    void addCustomer(ActionEvent event) {
+   public void addCustomer(ActionEvent event) {
 
         if(errorChecks() == false){
             String customerName = firstNameAdd.getText() + " " + lastNameAdd.getText() ;
@@ -81,13 +83,33 @@ public class AddCustomerController  implements Initializable {
 
 
 
+    /**
+     *  This function the selects the Division with the given countryId and sets the correct Divisions in the division box per country
+     * @param event  this function is triggered by an event
+     */
+    @FXML
+   public void chooseDivision(ActionEvent event) {
+        String country= customerCountryBox.getValue();
+        int countryId = CustomerDatabase.findCountryId(country);
+
+
+
+
+       customerDivisionBox.setItems(CustomerDatabase.DivisionList(countryId));
+
+
+    }
+
+
+
 
     /**
      * This function changes the scene to the maincustomer.fxml
+     * @param event  this function is triggered by an event
      */
 
     @FXML
-    void back(ActionEvent event) {
+   public void back(ActionEvent event) {
         String fxml =  "/View/MainCustomer.fxml";
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
@@ -105,23 +127,69 @@ public class AddCustomerController  implements Initializable {
 
     /**
      * This function initializing the initial values when the scene is loaded.
+     * @param rb  resource bundle
+     * @param url URL
+     *
      */
 
     @Override
     public void initialize (URL url, ResourceBundle rb){
 
         customerCountryBox.setItems(CustomerDatabase.CountryList());
-        customerDivisionBox.setItems(CustomerDatabase.DivisionList());
+
+
+
+
+
 
     }
 
+    /**
+     *  This function checks to see if the phone number inputted is in the correct format for London, Canada, and USA
+     * @return  boolean true or false if the phone number is entered correctly
+     */
+    public boolean phoneValidated() {
+
+
+        String phoneValidate = phoneAdd1.getText() + "-" + phoneAdd2.getText() + "-" + phoneAdd3.getText();
+        if (phoneValidate.matches("[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}")
+                || phoneValidate.matches("[0-9]{2}[-]{1}[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}")) {
+            return true;
+        }
+        return  false;
+    }
+
+
 
     /**
-     * This Boolean function checks to make sure the input information is correct. retuning true if there is an error and false if there is not.
+     * This Boolean function checks to make sure there are no errors with the user input.
      * @return  returns true or false depending on if there is an error or not.
      */
 
     public Boolean errorChecks() {
+        System.out.println(phoneValidated());
+
+
+        if(phoneValidated() == false) {
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error.");
+                alert.setContentText("Please Input phone number in the correct format");
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();
+                return true;
+
+            }
+
+
+if(customerCountryBox == null){
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error.");
+    alert.setContentText("Please Select A DIVISION Before Country");
+    alert.initModality(Modality.APPLICATION_MODAL);
+    alert.showAndWait();
+    return true;
+}
 
 
         if (customerCountryBox.getSelectionModel().isEmpty()) {

@@ -18,7 +18,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ResourceBundle;
+
+
+
+
+/**
+ * This class is for the controller class of the modify customer fxml
+ */
 
 public class ModifyCustomerController implements Initializable {
     @FXML private ComboBox<String> customerCountryModify;
@@ -28,20 +37,32 @@ public class ModifyCustomerController implements Initializable {
     @FXML private TextField customerAddressModify;
     @FXML private TextField customerZipCodeModify;
 
+    String Division;
+int countryId;
 
 
-
-    @FXML private Label testerTest;
+/**Theis the constructor for the ModifyCustomerController */
+public ModifyCustomerController(){}
     private static Customer customerToUpdate;
 
+
+
+    /**
+     * this function modifies the customer data through the ModifyCustomer fxml
+     * @param event this is an event driven function
+     *
+     */
+
     @FXML
-         void modifyCustomer(ActionEvent event) {
+       public  void modifyCustomer(ActionEvent event) {
         customerToUpdate = MainCustomerController.getSelectCustomer();
+
+
 
            if(phoneValidated() == false){
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error.");
+            alert.setTitle("Error");
             alert.setContentText("Please enter the correct format for phone number.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
@@ -55,9 +76,12 @@ public class ModifyCustomerController implements Initializable {
             String customerPhone = customerPhoneModify.getText();
             String customerAddress = customerAddressModify.getText();
             String customerZipCode = customerZipCodeModify.getText();
+
             String customerCountry = customerCountryModify.getValue();
+
             String customerDivision = customerDivisionModify.getValue();
             int customerDivisionId = CustomerDatabase.findDivisionId(customerDivision);
+
 
 
             CustomerDatabase.modifyCustomer(customerId, customerName, customerPhone, customerAddress, customerZipCode, customerDivisionId);
@@ -72,22 +96,27 @@ public class ModifyCustomerController implements Initializable {
                 System.out.println("IO Exception: " + ex.getMessage());
             }
 
-            testerTest.setText("Customer Id: " + customerId + "\nCustomer Name: " + customerName + "\nCustomer Phone: " + customerPhone + "\ncustomer Address: " + customerAddress + "\nCustomer Zip Code: " + customerZipCode + "\nCustomer Country: " + customerCountry +
-                    "\nCustomer Division: " + customerDivision);
+
 
         }
 
 
     }
 
+
+
+
+
+
+
+    /**
+     * this function cchanges the sce to the MainCustomer fxml
+     * @param event  this is an event driven function
+     * @throws IOException throws an IO exception
+     */
+
     @FXML
-    void test(ActionEvent event) {
-
-
-    }
-
-    @FXML
-    void back(ActionEvent event) throws IOException {
+ public   void back(ActionEvent event) throws IOException {
 
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
@@ -98,11 +127,18 @@ public class ModifyCustomerController implements Initializable {
     }
 
 
+
+
+    /**
+     * this function  initializes  the configuration
+     * @param rb  ResourceBundle
+     * @param url URL
+     *
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         customerToUpdate = MainCustomerController.getSelectCustomer();
-
 
         customerCountryModify.setItems(CustomerDatabase.CountryList());
         customerCountryModify.setPromptText(customerToUpdate.getCustomerCountry());
@@ -111,7 +147,9 @@ public class ModifyCustomerController implements Initializable {
 
 
 
-        customerDivisionModify.setItems(CustomerDatabase.DivisionList());
+
+//        customerDivisionModify.setItems(CustomerDatabase.DivisionList(countryId));
+
         customerDivisionModify.setPromptText(customerToUpdate.getCustomerDivision());
         customerDivisionModify.setValue(customerDivisionModify.getPromptText());
 
@@ -122,6 +160,13 @@ public class ModifyCustomerController implements Initializable {
     }
 
 
+
+    /**
+     * this function validates the phone number is in correct format
+     * @return    returns a boolean
+
+     */
+
     public boolean phoneValidated(){
 
           String phoneValidate = customerPhoneModify.getText();
@@ -130,20 +175,41 @@ public class ModifyCustomerController implements Initializable {
             return true;
         }
         else{ return false;}
+    }
 
+
+
+    /**
+     * this function  finds the Division from the country Id
+     * @param event this is an event driven function
+     */
+    @FXML
+   public void chooseDivision(ActionEvent event) {
+        String country= customerCountryModify.getValue();
+        int countryId = CustomerDatabase.findCountryId(country);
+
+
+
+
+        customerDivisionModify.setItems(CustomerDatabase.DivisionList(countryId));
 
 
 
     }
 
 
+
+    /**
+     * this function checks for errors in the
+     * ModifyCustomer fxml
+     */
     public void errorChecks() {
 
 
 
         if ( customerToUpdate == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error.");
+            alert.setTitle("Error!!");
             alert.setContentText("Please select a CUSTOMER.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
@@ -153,7 +219,7 @@ public class ModifyCustomerController implements Initializable {
 
         if (customerCountryModify.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error.");
+            alert.setTitle("Error!!");
             alert.setContentText("Please select a COUNTRY");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
@@ -167,7 +233,7 @@ public class ModifyCustomerController implements Initializable {
 
          if(customerDivisionModify.getSelectionModel().isEmpty()){
              Alert alert = new Alert(Alert.AlertType.ERROR);
-             alert.setTitle("Error.");
+             alert.setTitle("Error!!");
              alert.setContentText("Please select a DIVISION.");
              alert.initModality(Modality.APPLICATION_MODAL);
              alert.showAndWait();
@@ -180,7 +246,7 @@ public class ModifyCustomerController implements Initializable {
 
         if (customerNameModify.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error.");
+            alert.setTitle("Error!!");
             alert.setContentText("Please Enter CUSTOMER NAME.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
@@ -191,7 +257,7 @@ public class ModifyCustomerController implements Initializable {
 
         if (customerPhoneModify.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error.");
+            alert.setTitle("Error!!");
             alert.setContentText("Please Enter PHONE.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
@@ -202,7 +268,7 @@ public class ModifyCustomerController implements Initializable {
 
         if (customerAddressModify.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error.");
+            alert.setTitle("Error!!");
             alert.setContentText("Please Enter the ADDRESS.");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();

@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 
 /**
- * this class is the main controller for tje MainCustomer fxml
+ * this class is the main controller for the MainCustomer fxml
  *
  */
 
@@ -58,14 +58,17 @@ public class MainCustomerController  implements Initializable {
         return selectCustomer;
     }
 
+    /**This is the constructor for the MainCustomerController*/
+    public MainCustomerController(){}
 
     /**
      * this function changes the scene to the AddCustomer fxml
+     * @param event this is an event driven function
      *
      */
 
     @FXML
-    void addCustomer(ActionEvent event) throws IOException {
+    void addCustomer(ActionEvent event) {
 
         ((Node) (event.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
@@ -83,6 +86,7 @@ public class MainCustomerController  implements Initializable {
 
     /**
      * this function changs the scene to the MainMenu fxml
+     * @param event this is an event driven function
      *
      */
 
@@ -105,6 +109,9 @@ public class MainCustomerController  implements Initializable {
 
     /**
      * this function Deletes the selected customer and associated appointments  from the database
+     * @param event this is an event driven function
+     * @throws  ParseException throws a parse exception
+     * @throws  SQLException throws a sql exception
      *
      */
     @FXML
@@ -138,6 +145,14 @@ public class MainCustomerController  implements Initializable {
             customerTable.setItems(refreshCustomers);
         }
     }
+
+
+
+
+    /**
+     * this function modifies the customer information
+     * @param event  this is an event driven function
+     */
     @FXML
     void editCustomer(ActionEvent event) {
 
@@ -172,6 +187,11 @@ public class MainCustomerController  implements Initializable {
 
     }
 
+    /**
+     * this function initializes
+     * @param url  URL
+     * @param rb ResourceBundle
+     */
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -199,12 +219,7 @@ public class MainCustomerController  implements Initializable {
 
 
 
-    @FXML
-    void test(ActionEvent event) throws ParseException, SQLException {
-        selectCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
 
-
-    }
 
 
 }
